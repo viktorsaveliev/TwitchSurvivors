@@ -26,12 +26,12 @@ public class UnitWeapons
             _weapons.Remove(weapon);
     }
 
-    public void Attack(IEnemyDetection enemyDetection)
+    public void Attack(IEnemyCounter enemyDetection)
     {
         _monoBehaviour.StartCoroutine(AttackWithDelay(enemyDetection));
     }
 
-    private IEnumerator AttackWithDelay(IEnemyDetection enemyDetection)
+    private IEnumerator AttackWithDelay(IEnemyCounter enemyDetection)
     {
         WaitForSeconds delayBetweenAnotherWeapons = new(_delayBetweenAnotherWeapons);
 

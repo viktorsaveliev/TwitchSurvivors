@@ -5,23 +5,35 @@ using Zenject;
 public class PlayerBehaviour : MonoBehaviour
 {
     [Inject] private readonly PlayerUnit _playerUnit;
-    [Inject] private readonly IEnemyDetection _enemyDetection;
+    [Inject] private readonly IEnemyCounter _enemyDetection;
 
-    [SerializeField] private Weapon _weapon;
+    [SerializeField] private Weapon[] _weapons;
 
     private Coroutine _attackTimer;
-    private float _delayBetweenAttacks = 2f;
+    private readonly float _delayBetweenAttacks = 1f;
 
     private bool _isCanAttack;
 
     public void Init()
     {
-        _playerUnit.Weapons.AddWeapon(_weapon);
+        foreach(Weapon weapon in _weapons)
+        {
+            _playerUnit.Weapons.AddWeapon(weapon);
+        }
 
         _isCanAttack = true;
         _attackTimer = StartCoroutine(StartAttackTimer());
     }
 
+    public void DeInit()
+    {
+        if(_attackTimer != null)
+        {
+            StopCoroutine(_attackTimer);
+            _attackTimer = null;
+        }
+    }
+    
     private IEnumerator StartAttackTimer()
     {
         WaitForSeconds delayBetweenAttacks = new(_delayBetweenAttacks);
@@ -32,5 +44,4 @@ public class PlayerBehaviour : MonoBehaviour
             yield return delayBetweenAttacks;
         }
     }
-
 }

@@ -5,12 +5,14 @@ public sealed class Bootstrap : MonoBehaviour
 {
     [Inject] private readonly PlayerUnit _playerUnit;
     [Inject] private readonly EnemyFactory _enemyFactory;
+    [Inject] private readonly TwitchIntegration _twitch;
 
     [SerializeField] private Collider2D _spawnArea;
     [SerializeField] private PlayerBehaviour _playerBehaviour;
 
     private EnemySpawner _enemySpawner;
     private CameraShaker _cameraShaker;
+    private CombineEnemyAndTwitch _combineEnemyAndTwitch;
 
     private void Awake()
     {
@@ -23,5 +25,8 @@ public sealed class Bootstrap : MonoBehaviour
         _cameraShaker.Init();
 
         _playerBehaviour.Init();
+
+        _combineEnemyAndTwitch = new(_twitch, _enemySpawner);
+        _combineEnemyAndTwitch.Init();
     }
 }

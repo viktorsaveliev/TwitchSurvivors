@@ -1,8 +1,11 @@
+using DG.Tweening;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(Animator))]
 public abstract class Unit : MonoBehaviour
 {
+    [SerializeField] private ParticleSystem _deathFX;
+
     private Rigidbody2D _rigidbody;
     private Animator _animator;
     
@@ -18,6 +21,7 @@ public abstract class Unit : MonoBehaviour
 
         Health ??= new();
         Health.OnHealthOver += OnUnitDeath;
+        Health.OnTakedDamage += OnTakedDamage;
 
         Animation ??= new(_animator, this);
         Animation.Init();
@@ -29,6 +33,11 @@ public abstract class Unit : MonoBehaviour
     {
         direction.Normalize();
         _rigidbody.velocity = Speed * direction;
+    }
+
+    protected virtual void OnTakedDamage()
+    {
+        _deathFX.Play();
     }
 
     protected virtual void OnUnitDeath()

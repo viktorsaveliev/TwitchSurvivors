@@ -7,10 +7,9 @@ public sealed class PlayerUnit : Unit
     public override void Init()
     {
         base.Init();
+
         Speed = 7;
-
         Health.SetMaxHealth(100);
-
         Weapons = new(this);
     }
 

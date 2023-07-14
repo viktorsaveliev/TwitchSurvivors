@@ -1,8 +1,11 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
 public class EnemySpawner
 {
+    public event Action<Enemy> OnEnemySpawned;
+
     private readonly MonoBehaviour _monoBehaviour;
     private readonly EnemyFactory _enemyFactory;
     private readonly Transform _target;
@@ -88,12 +91,14 @@ public class EnemySpawner
 
             Bounds bounds = _spawnArea.bounds;
 
-            float randomX = Random.Range(bounds.min.x, bounds.max.x);
-            float randomY = Random.Range(bounds.min.y, bounds.max.y);
+            float randomX = UnityEngine.Random.Range(bounds.min.x, bounds.max.x);
+            float randomY = UnityEngine.Random.Range(bounds.min.y, bounds.max.y);
 
             enemy.transform.position = new Vector2(randomX, randomY);
             enemy.gameObject.SetActive(true);
+            enemy.OnSpawn();
 
+            OnEnemySpawned?.Invoke(enemy);
             break;
         }
     }
