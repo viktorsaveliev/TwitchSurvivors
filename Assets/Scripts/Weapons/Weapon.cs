@@ -9,17 +9,18 @@ public abstract class Weapon : MonoBehaviour
     
     protected float Range;
     protected float Cooldown;
-    protected int BulletsCount;
+    protected int ChargesCount;
 
     public float CurrentCooldown { get; protected set; }
     public float DelayBetweenShoots { get; protected set; }
     public int CurrentChargesCount { get; protected set; }
+    public bool IsActive { get; protected set; }
 
     public abstract void Init();
 
     protected void CreateCharges(bool setParent = false)
     {
-        for (int i = 0; i < BulletsCount; i++)
+        for (int i = 0; i < ChargesCount; i++)
         {
             Bullet charge = Instantiate(ChargePrefab, setParent ? transform : null).GetComponent<Bullet>();
             charge.Init();
@@ -27,6 +28,4 @@ public abstract class Weapon : MonoBehaviour
             ChargesList.Add(charge);
         }
     }
-
-    public abstract void Shoot(IEnemyCounter enemyDetection);
 }

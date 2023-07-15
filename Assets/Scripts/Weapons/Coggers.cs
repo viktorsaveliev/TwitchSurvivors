@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Coggers : Weapon
+public class Coggers : Weapon, IChargesUser
 {
     [SerializeField] private Vector2[] _positionsForCoggers;
     private readonly float _rotationSpeed = 200f;
@@ -8,7 +8,7 @@ public class Coggers : Weapon
     public override void Init()
     {
         Cooldown = 10f;
-        BulletsCount = 4;
+        ChargesCount = 4;
 
         CreateCharges(true);
 
@@ -24,7 +24,7 @@ public class Coggers : Weapon
         transform.Rotate(_rotationSpeed * Time.deltaTime * Vector3.forward);
     }
 
-    public override void Shoot(IEnemyCounter enemyDetection)
+    public void Shoot(IEnemyCounter enemyDetection)
     {
         if (Time.time < CurrentCooldown) return;
 

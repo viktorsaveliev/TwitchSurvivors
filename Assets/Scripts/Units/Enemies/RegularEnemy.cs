@@ -6,7 +6,7 @@ public class RegularEnemy : Enemy
     {
         base.Init(target);
 
-        Speed = 3;
+        RegularSpeed = CurrentSpeed = 3;
         Damage = 10;
 
         Health.SetMaxHealth(10);

@@ -1,17 +1,20 @@
 using System.Collections;
 using UnityEngine;
 
-public class WeaponWithBullets : Weapon
+public class WeaponWithCharges : Weapon, IChargesUser
 {
     public override void Init()
     {
         
     }
 
-    public override void Shoot(IEnemyCounter enemyDetection)
+    public void Shoot(IEnemyCounter enemyDetection)
     {
-        if (Time.time < CurrentCooldown || enemyDetection.GetClosestEnemyPosition(transform.position) == Vector2.zero) return;
+        if (CurrentCooldown > Time.time  
+            || enemyDetection.GetClosestEnemyPosition(transform.position) == Vector2.zero
+            || IsActive) return;
 
+        IsActive = true;
         StartCoroutine(ShootWithDelay(enemyDetection));
 
         CurrentCooldown = Time.time + Cooldown;
@@ -37,16 +40,10 @@ public class WeaponWithBullets : Weapon
 
             charge.Shoot(transform.position, direction);
 
-            if (--CurrentChargesCount <= 0)
-            {
-                OnBulletsEnded();
-                break;
-            }
-            else
-            {
-                yield return delayBetweenShoots;
-            }
+            yield return delayBetweenShoots;
         }
+
+        OnChargesEnded();
     }
 
     private void LookAtTarget(Vector3 direction)
@@ -55,8 +52,9 @@ public class WeaponWithBullets : Weapon
         transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
     }
 
-    private void OnBulletsEnded()
+    private void OnChargesEnded()
     {
-        CurrentChargesCount = BulletsCount;
+        CurrentChargesCount = ChargesCount;
+        IsActive = false;
     }
 }

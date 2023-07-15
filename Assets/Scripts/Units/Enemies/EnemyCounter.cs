@@ -32,4 +32,11 @@ public class EnemyCounter : IEnemyCounter
 
         return closestEnemy == null ? Vector2.zero : closestEnemy.transform.position;
     }
+
+    public Vector2 GetRandomEnemyPosition(Vector2 position)
+    {
+        if (_enemies == null || _enemies.Count < 1) return Vector2.zero;
+
+        return _enemies[Random.Range(0, _enemies.Count)].transform.position;
+    }
 }

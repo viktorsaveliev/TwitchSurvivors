@@ -6,7 +6,7 @@ public class TwitchConnect
 {
     private readonly string _username = "justinfan1923";
     private readonly string _password = "pass";
-    private readonly string _channelName = "evelone2004"; // evelone192
+    private readonly string _channelName = "evelone192";
 
     public TcpClient TwitchClient { get; private set; }
     public StreamReader Reader { get; private set; }

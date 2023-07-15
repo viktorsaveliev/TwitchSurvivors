@@ -1,29 +1,32 @@
-using DG.Tweening;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(Animator))]
 public abstract class Unit : MonoBehaviour
 {
-    [SerializeField] private ParticleSystem _deathFX;
+    [SerializeField] protected ParticleSystem DeathFX;
 
-    private Rigidbody2D _rigidbody;
-    private Animator _animator;
+    protected Animator Animator;
     
+    private readonly float _spawnDelay = 2f;
+    
+    private Rigidbody2D _rigidbody;
     private UnitAnimation Animation;
 
     public Health Health { get; private set; }
-    public float Speed { get; protected set; }
+    public float CurrentSpeed { get; protected set; }
+    public float CurrentSpawnDelay { get; protected set; }
+    public float RegularSpeed { get; protected set; }
 
     public virtual void Init()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
-        _animator = GetComponent<Animator>();
+        Animator = GetComponent<Animator>();
 
         Health ??= new();
-        Health.OnHealthOver += OnUnitDeath;
+        Health.OnHealthOver += OnDeath;
         Health.OnTakedDamage += OnTakedDamage;
 
-        Animation ??= new(_animator, this);
+        Animation ??= new(Animator, this);
         Animation.Init();
     }
 
@@ -32,17 +35,24 @@ public abstract class Unit : MonoBehaviour
     public void Move(Vector2 direction)
     {
         direction.Normalize();
-        _rigidbody.velocity = Speed * direction;
+        _rigidbody.velocity = CurrentSpeed * direction;
     }
 
     protected virtual void OnTakedDamage()
     {
-        _deathFX.Play();
+        
     }
 
-    protected virtual void OnUnitDeath()
+    protected virtual void OnDeath()
     {
         DeInit();
+
+        CurrentSpawnDelay = Time.time + _spawnDelay;
+
+        DeathFX.transform.parent = null;
+        DeathFX.transform.position = transform.position;
+        DeathFX.Play();
+
         gameObject.SetActive(false);
     }
 }

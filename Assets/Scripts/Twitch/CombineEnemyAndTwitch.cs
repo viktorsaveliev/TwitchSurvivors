@@ -23,7 +23,8 @@ public class CombineEnemyAndTwitch
 
     private void ChangeEnemyNickname(Enemy enemy)
     {
-        string nickname = "anon2004";
+        string nickname = _twitch.RandomNicknameForReinsurance;
+
         if (_twitch.ChatNicknames.Count > 0)
         {
             nickname = _twitch.ChatNicknames[Random.Range(0, _twitch.ChatNicknames.Count)];

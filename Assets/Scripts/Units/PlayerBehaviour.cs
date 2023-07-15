@@ -18,7 +18,8 @@ public class PlayerBehaviour : MonoBehaviour
     {
         foreach(Weapon weapon in _weapons)
         {
-            _playerUnit.Weapons.AddWeapon(weapon);
+            Weapon newWeapon = Instantiate(weapon, _playerUnit.transform);
+            _playerUnit.Weapons.AddWeapon(newWeapon);
         }
 
         _isCanAttack = true;

@@ -1,12 +1,16 @@
-using DG.Tweening;
 using System;
+using System.Collections;
 using UnityEngine;
 
 public abstract class Enemy : Unit
 {
     public event Action<string> OnNicknameChanged;
+    public event Action<Enemy> OnEnemyDead;
+
     protected Transform Target;
     protected int Damage;
+
+    private Coroutine _recoverySpeed;
 
     public string Nickname 
     {
@@ -23,6 +27,14 @@ public abstract class Enemy : Unit
 
     public bool IsCanMove { get; protected set; }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.TryGetComponent(out PlayerUnit player))
+        {
+            player.Health.TakeDamage(Damage);
+        }
+    }
+
     public virtual void Init(Transform target)
     {
         base.Init();
@@ -31,22 +43,44 @@ public abstract class Enemy : Unit
         IsCanMove = true;
     }
 
+    public virtual void OnSpawn()
+    {
+        CurrentSpeed = RegularSpeed;
+
+        DeathFX.transform.parent = transform;
+        transform.localScale = Vector2.one;
+    }
+
     protected override void DeInit()
     {
         Health.SetHealth(Health.MaxValue);
+        if (_recoverySpeed != null) StopCoroutine(_recoverySpeed);
     }
 
-    public virtual void OnSpawn()
+    protected override void OnTakedDamage()
     {
-        transform.localScale = Vector2.zero;
-        transform.DOScale(1, 0.5f);
-    }
+        base.OnTakedDamage();
+        CurrentSpeed = 1;
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if(collision.TryGetComponent(out PlayerUnit player))
+        if (_recoverySpeed != null) StopCoroutine(_recoverySpeed);
+
+        if (gameObject.activeSelf)
         {
-            player.Health.TakeDamage(Damage);
+            _recoverySpeed = StartCoroutine(RecoverySpeed());
         }
+    }
+
+    protected override void OnDeath()
+    {
+        base.OnDeath();
+        OnEnemyDead?.Invoke(this);
+    }
+
+    private IEnumerator RecoverySpeed()
+    {
+        yield return new WaitForSeconds(0.5f);
+        CurrentSpeed = RegularSpeed;
+
+        _recoverySpeed = null;
     }
 }

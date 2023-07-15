@@ -1,18 +1,8 @@
 using UnityEngine;
 
-public class SkillzorRap : Weapon
+public class SkillzorRap : Weapon, IAttackable
 {
-    private readonly int _damage = 5;
-
-    public override void Init()
-    {
-        Cooldown = 3f;
-    }
-
-    public override void Shoot(IEnemyCounter enemyDetection)
-    {
-        
-    }
+    public int Damage { get; set; }
 
     private void OnTriggerStay2D(Collider2D collision)
     {
@@ -20,8 +10,20 @@ public class SkillzorRap : Weapon
 
         if (collision.TryGetComponent(out Enemy enemy))
         {
-            enemy.Health.TakeDamage(_damage);
+            enemy.Health.TakeDamage(Damage);
             CurrentCooldown = Time.time + Cooldown;
         }
+    }
+
+    public override void Init()
+    {
+        Damage = 5;
+        Cooldown = 1f;
+    }
+
+    public void SetDamage(int value)
+    {
+        if (value < 1 || value > 100) return;
+        Damage = value;
     }
 }

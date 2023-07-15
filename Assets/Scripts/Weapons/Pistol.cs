@@ -1,11 +1,11 @@
 
 
-public class Pistol : WeaponWithBullets
+public class Pistol : WeaponWithCharges
 {
     public override void Init()
     {
         Cooldown = 2f;
-        BulletsCount = 3;
+        ChargesCount = 3;
 
         DelayBetweenShoots = 0.1f;
 

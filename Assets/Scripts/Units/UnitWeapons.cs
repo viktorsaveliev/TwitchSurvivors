@@ -28,7 +28,10 @@ public class UnitWeapons
 
     public void Attack(IEnemyCounter enemyDetection)
     {
-        _monoBehaviour.StartCoroutine(AttackWithDelay(enemyDetection));
+        if (_monoBehaviour.gameObject.activeSelf)
+        {
+            _monoBehaviour.StartCoroutine(AttackWithDelay(enemyDetection));
+        }
     }
 
     private IEnumerator AttackWithDelay(IEnemyCounter enemyDetection)
@@ -37,7 +40,11 @@ public class UnitWeapons
 
         foreach(Weapon weapon in _weapons)
         {
-            weapon.Shoot(enemyDetection);
+            if (weapon is IChargesUser user && !weapon.IsActive)
+            {
+                user.Shoot(enemyDetection);
+            }
+            
             yield return delayBetweenAnotherWeapons;
         }
     }
