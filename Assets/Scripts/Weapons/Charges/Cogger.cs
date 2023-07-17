@@ -5,10 +5,9 @@ public class Cogger : Bullet
 {
     private readonly float _rotationSpeed = 100f;
 
-    public override void Init()
+    public override void Init(int damage)
     {
-        base.Init();
-        Damage = 6;
+        base.Init(damage);
         LifeTime = 5f;
     }
 

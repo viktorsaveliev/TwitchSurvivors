@@ -1,0 +1,14 @@
+
+public class VIP : Item
+{
+    public override void Init()
+    {
+        ItemName = "Випка";
+        Price = 250;
+
+        AddPropertie(PlayerData.Properties.Armor, 5);
+        AddPropertie(PlayerData.Properties.Dodge, 5);
+        AddPropertie(PlayerData.Properties.Health, 5);
+        AddPropertie(PlayerData.Properties.Regeneration, 5);
+    }
+}

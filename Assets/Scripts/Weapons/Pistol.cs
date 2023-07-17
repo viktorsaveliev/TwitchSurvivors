@@ -1,14 +1,15 @@
 
 
-public class Pistol : WeaponWithCharges
+public class Pistol : ShootableWeapon
 {
     public override void Init()
     {
-        Cooldown = 2f;
+        SetCooldown(2f);
+        SetDamage(5);
+
         ChargesCount = 3;
+        DelayBetweenShoots = 0.5f;
 
-        DelayBetweenShoots = 0.1f;
-
-        CreateCharges();
+        CreateCharges(Damage);
     }
 }

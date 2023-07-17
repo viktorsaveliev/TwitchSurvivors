@@ -2,7 +2,7 @@ using System;
 
 public class Health : IDamageable
 {
-    public event Action OnTakedDamage;
+    public event Action<int> OnTakedDamage;
     public event Action OnHealthChanged;
     public event Action OnHealthOver;
 
@@ -12,12 +12,15 @@ public class Health : IDamageable
     private int _maxHealth;
     private int _health;
 
-    public void SetMaxHealth(int value)
+    public void SetMaxHealth(int value, bool setCurrentHealthToMax)
     {
         if (value < 10 || value > 1000) return;
-
         _maxHealth = value;
-        SetHealth(value);
+
+        if (setCurrentHealthToMax)
+        {
+            SetHealth(value);
+        }
     }
 
     public void SetHealth(int value)
@@ -30,12 +33,10 @@ public class Health : IDamageable
 
     public void GiveHealth(int value) => SetHealth(_health + value);
 
-    public void MaximizeHealth(int value) => SetMaxHealth(_maxHealth + value);
-
     public void TakeDamage(int value)
     {
         _health -= value;
-        OnTakedDamage?.Invoke();
+        OnTakedDamage?.Invoke(value);
 
         if (_health <= 0)
         {

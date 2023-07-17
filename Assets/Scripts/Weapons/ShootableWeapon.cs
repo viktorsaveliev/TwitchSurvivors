@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class WeaponWithCharges : Weapon, IChargesUser
+public class ShootableWeapon : Weapon, IChargesUser
 {
     public override void Init()
     {
@@ -17,7 +17,7 @@ public class WeaponWithCharges : Weapon, IChargesUser
         IsActive = true;
         StartCoroutine(ShootWithDelay(enemyDetection));
 
-        CurrentCooldown = Time.time + Cooldown;
+        ActivateCooldown();
     }
 
     private IEnumerator ShootWithDelay(IEnemyCounter enemyCounter)
@@ -56,5 +56,10 @@ public class WeaponWithCharges : Weapon, IChargesUser
     {
         CurrentChargesCount = ChargesCount;
         IsActive = false;
+    }
+
+    protected override void Improve()
+    {
+        
     }
 }

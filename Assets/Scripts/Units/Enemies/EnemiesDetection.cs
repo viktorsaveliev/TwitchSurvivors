@@ -2,11 +2,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
+[RequireComponent(typeof(CircleCollider2D))]
 public class EnemiesDetection : MonoBehaviour
 {
     [Inject] private readonly EnemyCounter _enemyDetection;
 
     private readonly List<Enemy> _closestEnemies = new();
+    private CircleCollider2D _collider;
+
+    public float CurrentRadius { get; private set; }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -30,5 +34,17 @@ public class EnemiesDetection : MonoBehaviour
                 _enemyDetection.UpdateEnemiesList(_closestEnemies);
             }
         }
+    }
+
+    public void Init()
+    {
+        _collider = GetComponent<CircleCollider2D>();
+        UpdateRadius(11f);
+    }
+
+    public void UpdateRadius(float value)
+    {
+        _collider.radius = value;
+        CurrentRadius = value;
     }
 }

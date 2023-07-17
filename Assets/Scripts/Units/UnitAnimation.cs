@@ -16,7 +16,7 @@ public class UnitAnimation
         _unit.Health.OnTakedDamage += OnTakeDamage;
     }
 
-    private void OnTakeDamage()
+    private void OnTakeDamage(int damage)
     {
         _animator.SetTrigger("TakeDamage");
     }

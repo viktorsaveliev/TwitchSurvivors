@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using Unity.Mathematics;
 using UnityEngine;
 
 public class EnemySpawner
@@ -13,6 +12,7 @@ public class EnemySpawner
     
     private readonly int _poolSizeForRegularEnemies = 20;
     
+    private readonly float _minDistanceToTarget = 2f;
     private readonly float _spawnInterval = 2f;
     private readonly Collider2D _spawnArea;
 
@@ -106,7 +106,11 @@ public class EnemySpawner
         float randomX = UnityEngine.Random.Range(bounds.min.x, bounds.max.x);
         float randomY = UnityEngine.Random.Range(bounds.min.y, bounds.max.y);
 
-        enemy.transform.position = new Vector2(randomX, randomY);
+        Vector2 enemyPosition = new(randomX, randomY);
+
+        if (Vector2.Distance(enemyPosition, _target.position) < _minDistanceToTarget) return;
+
+        enemy.transform.position = enemyPosition;
         enemy.gameObject.SetActive(true);
         enemy.OnSpawn();
 

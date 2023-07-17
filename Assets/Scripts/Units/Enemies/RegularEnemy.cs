@@ -9,7 +9,7 @@ public class RegularEnemy : Enemy
         RegularSpeed = CurrentSpeed = 3;
         Damage = 10;
 
-        Health.SetMaxHealth(10);
+        Health.SetMaxHealth(10, true);
     }
 
     private void FixedUpdate()

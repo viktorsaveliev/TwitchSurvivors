@@ -31,7 +31,8 @@ public abstract class Enemy : Unit
     {
         if(collision.TryGetComponent(out PlayerUnit player))
         {
-            player.Health.TakeDamage(Damage);
+            int damage = (int) PlayerData.CalculatePropertieValue(PlayerData.Properties.Armor, Damage, false);
+            player.Health.TakeDamage(damage);
         }
     }
 
@@ -57,9 +58,9 @@ public abstract class Enemy : Unit
         if (_recoverySpeed != null) StopCoroutine(_recoverySpeed);
     }
 
-    protected override void OnTakedDamage()
+    protected override void OnTakedDamage(int damage)
     {
-        base.OnTakedDamage();
+        base.OnTakedDamage(damage);
         CurrentSpeed = 1;
 
         if (_recoverySpeed != null) StopCoroutine(_recoverySpeed);

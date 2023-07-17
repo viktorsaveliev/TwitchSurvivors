@@ -9,13 +9,11 @@ public class RegularBullet : Bullet
         transform.position -= new Vector3(movement.x, movement.y, 0);
     }
 
-    public override void Init()
+    public override void Init(int damage)
     {
-        base.Init();
+        base.Init(damage);
 
         Speed = 30f;
-        Damage = 5;
-
         LifeTime = 0.8f;
     }
 

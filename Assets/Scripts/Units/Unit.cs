@@ -16,6 +16,7 @@ public abstract class Unit : MonoBehaviour
     public float CurrentSpeed { get; protected set; }
     public float CurrentSpawnDelay { get; protected set; }
     public float RegularSpeed { get; protected set; }
+    public float DamageImmunity { get; set; }
 
     public virtual void Init()
     {
@@ -38,7 +39,7 @@ public abstract class Unit : MonoBehaviour
         _rigidbody.velocity = CurrentSpeed * direction;
     }
 
-    protected virtual void OnTakedDamage()
+    protected virtual void OnTakedDamage(int damage)
     {
         
     }

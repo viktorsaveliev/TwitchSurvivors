@@ -2,28 +2,25 @@ using UnityEngine;
 
 public class SkillzorRap : Weapon, IAttackable
 {
-    public int Damage { get; set; }
-
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (CurrentCooldown > Time.time) return;
-
         if (collision.TryGetComponent(out Enemy enemy))
         {
-            enemy.Health.TakeDamage(Damage);
-            CurrentCooldown = Time.time + Cooldown;
+            if (enemy.DamageImmunity > Time.time) return;
+
+            enemy.Health.TakeDamage(GetDamageValue());
+            enemy.DamageImmunity = Time.time + GetCooldownValue();
         }
     }
 
     public override void Init()
     {
-        Damage = 5;
-        Cooldown = 1f;
+        SetDamage(5);
+        SetCooldown(0.8f);
     }
 
-    public void SetDamage(int value)
+    protected override void Improve()
     {
-        if (value < 1 || value > 100) return;
-        Damage = value;
+        throw new System.NotImplementedException();
     }
 }

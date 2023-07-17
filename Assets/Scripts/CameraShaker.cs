@@ -24,7 +24,7 @@ public class CameraShaker
         _player.Health.OnTakedDamage -= CameraShake;
     }
 
-    public void CameraShake()
+    public void CameraShake(int damage)
     {
         if (tween != null) _camera.DOKill();
         tween = _camera.DOShakePosition(0.2f, 0.3f, 3, 10);

@@ -1,11 +1,12 @@
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
 
 public abstract class Bullet : MonoBehaviour
 {
     public float Speed { get; protected set; }
     public float LifeTime { get; protected set; }
     public float CurrentLifeTime { get; protected set; }
-    public int Damage { get; protected set; }
+    public int Damage { get; private set; }
 
     protected Vector2 Direction;
 
@@ -21,13 +22,20 @@ public abstract class Bullet : MonoBehaviour
     {
         if (collision.TryGetComponent(out Enemy enemy))
         {
-            enemy.Health.TakeDamage(Damage);
+            int damage = (int)PlayerData.CalculatePropertieValue(PlayerData.Properties.Damage, Damage);
+            enemy.Health.TakeDamage(damage);
             OnHitEnemy();
         }
     }
 
-    public virtual void Init()
+    public void SetDamage(int value)
     {
+        Damage = value;
+    }
+
+    public virtual void Init(int damage)
+    {
+        SetDamage(damage);
         gameObject.SetActive(false);
     }
 
