@@ -1,5 +1,5 @@
 
-public class RedStone : Item
+public class RedStone : PropertyItem
 {
     public override void Init()
     {
@@ -7,7 +7,7 @@ public class RedStone : Item
         Price = 400;
 
         AddPropertie(PlayerData.Properties.Damage, 20);
-        AddPropertie(PlayerData.Properties.AttackDistance, 30);
+        AddPropertie(PlayerData.Properties.Distance, 30);
 
         AddPropertie(PlayerData.Properties.MoveSpeed, -20);
         AddPropertie(PlayerData.Properties.Health, -10);

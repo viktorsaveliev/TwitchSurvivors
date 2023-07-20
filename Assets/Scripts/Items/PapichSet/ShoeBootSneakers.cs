@@ -1,5 +1,5 @@
 
-public class ShoeBootSneakers : Item
+public class ShoeBootSneakers : PropertyItem
 {
     public override void Init()
     {

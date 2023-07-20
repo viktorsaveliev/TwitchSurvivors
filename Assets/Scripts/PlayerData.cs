@@ -12,7 +12,7 @@ public class PlayerData
         Damage,
         CriticalDamage,
         AttackSpeed,
-        AttackDistance,
+        Distance,
         Armor,
         Dodge,
         MoveSpeed,
@@ -25,7 +25,7 @@ public class PlayerData
         "Здоровье",
         "Регенерация",
         "Урон",
-        "Критический урон",
+        "Крит. урон",
         "Перезарядка",
         "Дистанция",
         "Броня",
@@ -37,7 +37,7 @@ public class PlayerData
 
     public static string[] PropertiesName => _propertiesName;
 
-    public static List<Item> Items => _properties.Items;
+    public static List<PropertyItem> Items => _properties.Items;
 
     public void Init()
     {

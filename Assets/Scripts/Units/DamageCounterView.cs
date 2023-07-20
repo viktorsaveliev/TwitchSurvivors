@@ -7,6 +7,9 @@ public class DamageCounterView : MonoBehaviour
     [SerializeField] private TMP_Text[] _texts;
     [SerializeField] private Unit _currentUnit;
 
+    private readonly Vector2 _finalAnchorPos = new(-0.718f, -0.378f);
+    private readonly float _duration = 0.3f;
+
     private void Start()
     {
         _currentUnit.Health.OnTakedDamage += EnableDamageCounter;
@@ -18,7 +21,7 @@ public class DamageCounterView : MonoBehaviour
         text.rectTransform.anchoredPosition = Vector2.zero;
         text.text = $"{damage}";
         text.gameObject.SetActive(true);
-        text.rectTransform.DOAnchorPos(new Vector2(-0.718f, -0.378f), 0.3f).OnComplete(() 
+        text.rectTransform.DOAnchorPos(_finalAnchorPos, _duration).OnComplete(() 
             => text.gameObject.SetActive(false));
     }
 

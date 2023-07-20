@@ -1,9 +1,9 @@
 
-public class LoafDog : Item
+public class LoafDog : PropertyItem
 {
     public override void Init()
     {
-        ItemName = "Собака Каравая";
+        ItemName = "С ДР";
         Price = 150;
 
         AddPropertie(PlayerData.Properties.Fortune, 5);

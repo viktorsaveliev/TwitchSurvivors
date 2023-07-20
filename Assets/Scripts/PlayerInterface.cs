@@ -15,12 +15,16 @@ public class PlayerInterface : MonoBehaviour
 
     [Header("Shop")]
     [SerializeField] private GameObject _cardsView;
-    [SerializeField] private ItemCard _cardPrefab;
+
+    [SerializeField] private ItemCard _itemCardPrefab;
+    [SerializeField] private WeaponCard _weaponCardPrefab;
+
     [SerializeField] private Transform _content;
     [SerializeField] private Button _fightButton;
 
-    private readonly List<ItemCard> _cards = new();
+    private readonly List<ShopCard> _cards = new();
 
+    public event Action OnShopOpened;
     public event Action OnShopClosed;
 
     public void Init()
@@ -32,11 +36,12 @@ public class PlayerInterface : MonoBehaviour
     public void ShowShop()
     {
         _cardsView.SetActive(true);
+        OnShopOpened?.Invoke();
     }
 
-    public ItemCard CreateCard(Item item)
+    public ShopCard CreateCard(Item item)
     {
-        ItemCard card = Instantiate(_cardPrefab, _content);
+        ShopCard card = (ShopCard) Instantiate(item is PropertyItem ? _itemCardPrefab : _weaponCardPrefab, _content);
         card.Init(item);
         _cards.Add(card);
 
@@ -53,16 +58,25 @@ public class PlayerInterface : MonoBehaviour
 
     public void UpdatePriceForCards()
     {
-        foreach (ItemCard card in _cards)
+        foreach (ShopCard card in _cards)
         {
             card.UpdatePrice();
         }
     }
 
-    public void DeleteCard(ItemCard card)
+    public void DeleteCard(ShopCard card)
     {
         _cards.Remove(card);
         Destroy(card.gameObject);
+    }
+
+    public void DeleteAllCards()
+    {
+        foreach (ShopCard card in _cards)
+        {
+            Destroy(card.gameObject);
+        }
+        _cards.Clear();
     }
 
     private void HideShop()
@@ -71,7 +85,7 @@ public class PlayerInterface : MonoBehaviour
 
         if (_cards.Count > 0)
         {
-            foreach (ItemCard card in _cards)
+            foreach (ShopCard card in _cards)
             {
                 Destroy(card.gameObject);
             }

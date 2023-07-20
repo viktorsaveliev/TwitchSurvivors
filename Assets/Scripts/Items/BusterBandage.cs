@@ -1,4 +1,4 @@
-public class BusterBandage : Item
+public class BusterBandage : PropertyItem
 {
     public override void Init()
     {

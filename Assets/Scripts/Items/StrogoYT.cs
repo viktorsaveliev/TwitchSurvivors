@@ -1,5 +1,5 @@
 
-public class StrogoYT : Item
+public class StrogoYT : PropertyItem
 {
     public override void Init()
     {
@@ -12,7 +12,7 @@ public class StrogoYT : Item
         AddPropertie(PlayerData.Properties.Damage, -1);
         AddPropertie(PlayerData.Properties.AttackSpeed, -1);
         AddPropertie(PlayerData.Properties.CriticalDamage, -1);
-        AddPropertie(PlayerData.Properties.AttackDistance, -1);
+        AddPropertie(PlayerData.Properties.Distance, -1);
         AddPropertie(PlayerData.Properties.Armor, -1);
         AddPropertie(PlayerData.Properties.Dodge, -1);
         AddPropertie(PlayerData.Properties.MoveSpeed, -1);

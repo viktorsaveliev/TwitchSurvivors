@@ -1,5 +1,5 @@
 
-public class VIP : Item
+public class VIP : PropertyItem
 {
     public override void Init()
     {

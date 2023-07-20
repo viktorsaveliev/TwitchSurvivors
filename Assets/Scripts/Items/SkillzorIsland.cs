@@ -1,5 +1,5 @@
 
-public class SkillzorIsland : Item
+public class SkillzorIsland : PropertyItem
 {
     public override void Init()
     {

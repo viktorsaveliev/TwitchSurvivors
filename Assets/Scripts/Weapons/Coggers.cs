@@ -7,6 +7,9 @@ public class Coggers : Weapon, IChargesUser
 
     public override void Init()
     {
+        ItemName = "COGGERS";
+        Price = 500;
+
         SetDamage(5);
         SetCooldown(10f);
         ChargesCount = 2;
@@ -26,13 +29,13 @@ public class Coggers : Weapon, IChargesUser
 
         foreach (Bullet charge in ChargesList)
         {
-            charge.Shoot(Vector2.zero, Vector2.zero);
+            charge.Shoot(Vector2.zero, Vector2.zero, 0);
         }
 
         ActivateCooldown();
     }
 
-    protected override void Improve()
+    public override void Improve()
     {
         if (ImprovementLevel > 4) return;
         ImprovementLevel++;
@@ -40,12 +43,14 @@ public class Coggers : Weapon, IChargesUser
         switch (ImprovementLevel)
         {
             case 1:
-                SetCooldown(8f);
+                SetCooldown(9f);
                 SetDamage(10);
+                CreateCharge(Damage, true);
+                UpdatePositionForCoggers();
                 break;
 
             case 2:
-                SetCooldown(7f);
+                SetCooldown(8f);
                 CreateCharge(Damage, true);
                 UpdatePositionForCoggers();
                 break;
@@ -53,11 +58,12 @@ public class Coggers : Weapon, IChargesUser
             case 3:
                 SetCooldown(6f);
                 SetDamage(15);
+                CreateCharge(Damage, true);
+                UpdatePositionForCoggers();
                 break;
 
             case 4:
-                CreateCharge(Damage, true);
-                UpdatePositionForCoggers();
+                
                 SetDamage(20);
                 break;
         }

@@ -8,6 +8,8 @@ public class BitsDetection : MonoBehaviour
 
     private CircleCollider2D _circleCollider;
 
+    public float CurrentRadius { get; private set; }
+
     private void Start()
     {
         _circleCollider = GetComponent<CircleCollider2D>();
@@ -15,7 +17,7 @@ public class BitsDetection : MonoBehaviour
 
     public void SetDetectionRadius(float value)
     {
-        if (value < 1 || value > 9) return;
+        if (value < 1 || value > 25) return;
         _circleCollider.radius = value;
     }
 

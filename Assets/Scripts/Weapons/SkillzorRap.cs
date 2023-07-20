@@ -15,12 +15,44 @@ public class SkillzorRap : Weapon, IAttackable
 
     public override void Init()
     {
+        ItemName = "Ðýï Ñêèëëçîðà";
+        Price = 500;
+
         SetDamage(5);
         SetCooldown(0.8f);
     }
 
-    protected override void Improve()
+    public override void Improve()
     {
-        throw new System.NotImplementedException();
+        if (ImprovementLevel > 3) return;
+        ImprovementLevel++;
+
+        switch (ImprovementLevel)
+        {
+            case 1:
+                SetRadius(7f);
+                SetDamage(8);
+                break;
+
+            case 2:
+                SetRadius(9f);
+                SetDamage(10);
+                break;
+
+            case 3:
+                SetRadius(11f);
+                SetDamage(15);
+                break;
+
+            case 4:
+                SetRadius(13f);
+                SetDamage(20);
+                break;
+        }
+    }
+
+    private void SetRadius(float value)
+    {
+        transform.localScale = new Vector2(value, value);
     }
 }

@@ -1,23 +1,22 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public abstract class Weapon : MonoBehaviour
+public abstract class Weapon : Item
 {
     [SerializeField] protected GameObject ChargePrefab;
-
+    
     protected List<Bullet> ChargesList = new();
-    
-    protected float Range;
-    protected int ChargesCount;
 
-    private float _cooldown;
-    
-    public int Damage { get; private set; }
-    public float CurrentCooldown { get; private set; }
+    public int ChargesCount { get; protected set; }
     public float DelayBetweenShoots { get; protected set; }
     public int CurrentChargesCount { get; protected set; }
-    public int ImprovementLevel { get; protected set; }
+    public int ImprovementLevel { get; protected set; } = -1;
     public bool IsActive { get; protected set; }
+
+    public int Damage { get; private set; }
+    public float Cooldown { get; private set; }
+    public float CurrentCooldown { get; private set; }
 
     public void SetDamage(int value)
     {
@@ -28,12 +27,24 @@ public abstract class Weapon : MonoBehaviour
     public void SetCooldown(float value)
     {
         if (value < 0.01 || value > 60f) return;
-        _cooldown = value;
+
+        Cooldown = value;
+        ActivateCooldown();
     }
 
-    public abstract void Init();
+    public void DestroyObject() => Destroy(gameObject);
 
-    protected abstract void Improve();
+    public override void Use()
+    {
+        ImprovementLevel = 0;
+    }
+
+    public override void UnUse()
+    {
+        ImprovementLevel = -1;
+    }
+
+    public abstract void Improve();
 
     protected void CreateCharges(int damage, bool setParent = false)
     {
@@ -64,13 +75,13 @@ public abstract class Weapon : MonoBehaviour
 
     protected void ActivateCooldown()
     {
-        float cooldown = PlayerData.CalculatePropertieValue(PlayerData.Properties.AttackSpeed, _cooldown, false);
+        float cooldown = PlayerData.CalculatePropertieValue(PlayerData.Properties.AttackSpeed, Cooldown, false);
         CurrentCooldown = Time.time + cooldown;
     }
 
     protected float GetCooldownValue()
     {
-        float cooldown = PlayerData.CalculatePropertieValue(PlayerData.Properties.AttackSpeed, _cooldown);
+        float cooldown = PlayerData.CalculatePropertieValue(PlayerData.Properties.AttackSpeed, Cooldown);
         return cooldown;
     }
 

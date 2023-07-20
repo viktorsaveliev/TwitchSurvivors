@@ -18,17 +18,12 @@ public class Cogger : Bullet
 
     public void SetPosition(Vector2 position) => transform.localPosition = position;
 
-    public override void Shoot(Vector2 startPosition, Vector2 direction)
+    public override void Shoot(Vector2 startPosition, Vector2 direction, float speed)
     {
-        base.Shoot(startPosition, direction);
+        base.Shoot(startPosition, direction, speed);
 
         transform.localScale = Vector2.zero;
         transform.DOScale(1f, 0.5f);
-    }
-
-    protected override void OnHitEnemy()
-    {
-        
     }
 
     protected override void OnLifeTimeEnded()

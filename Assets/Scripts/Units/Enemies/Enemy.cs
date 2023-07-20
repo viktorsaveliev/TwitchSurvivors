@@ -31,8 +31,11 @@ public abstract class Enemy : Unit
     {
         if(collision.TryGetComponent(out PlayerUnit player))
         {
-            int damage = (int) PlayerData.CalculatePropertieValue(PlayerData.Properties.Armor, Damage, false);
-            player.Health.TakeDamage(damage);
+            if (!player.IsDodged())
+            {
+                int damage = (int)PlayerData.CalculatePropertieValue(PlayerData.Properties.Armor, Damage, false);
+                player.Health.TakeDamage(damage);
+            }
         }
     }
 

@@ -1,5 +1,5 @@
 
-public class Stray : Item
+public class Stray : PropertyItem
 {
     public override void Init()
     {
@@ -9,6 +9,6 @@ public class Stray : Item
         AddPropertie(PlayerData.Properties.Greed, 10);
         AddPropertie(PlayerData.Properties.Dodge, 10);
 
-        AddPropertie(PlayerData.Properties.AttackDistance, -10);
+        AddPropertie(PlayerData.Properties.Distance, -10);
     }
 }

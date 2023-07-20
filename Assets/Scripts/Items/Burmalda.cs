@@ -1,5 +1,5 @@
 
-public class Burmalda : Item
+public class Burmalda : PropertyItem
 {
     public override void Init()
     {

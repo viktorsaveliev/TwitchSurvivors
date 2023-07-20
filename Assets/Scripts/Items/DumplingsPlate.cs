@@ -1,5 +1,5 @@
 
-public class DumplingsPlate : Item
+public class DumplingsPlate : PropertyItem
 {
     public override void Init()
     {

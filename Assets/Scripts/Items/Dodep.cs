@@ -1,5 +1,5 @@
 
-public class Dodep : Item
+public class Dodep : PropertyItem
 {
     public override void Init()
     {

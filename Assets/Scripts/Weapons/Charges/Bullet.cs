@@ -1,5 +1,5 @@
+using System;
 using UnityEngine;
-using static UnityEngine.Rendering.DebugUI;
 
 public abstract class Bullet : MonoBehaviour
 {
@@ -8,7 +8,12 @@ public abstract class Bullet : MonoBehaviour
     public float CurrentLifeTime { get; protected set; }
     public int Damage { get; private set; }
 
+    public event Action OnHitEnemy;
+    public event Action LifeTimeEnded;
+
     protected Vector2 Direction;
+
+    protected Transform Target;
 
     protected virtual void FixedUpdate()
     {
@@ -24,8 +29,14 @@ public abstract class Bullet : MonoBehaviour
         {
             int damage = (int)PlayerData.CalculatePropertieValue(PlayerData.Properties.Damage, Damage);
             enemy.Health.TakeDamage(damage);
-            OnHitEnemy();
+
+            OnHitEnemy?.Invoke();
         }
+    }
+
+    public void SetTarget(Transform target)
+    {
+        Target = target;
     }
 
     public void SetDamage(int value)
@@ -39,8 +50,9 @@ public abstract class Bullet : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    public virtual void Shoot(Vector2 startPosition, Vector2 direction)
+    public virtual void Shoot(Vector2 startPosition, Vector2 direction, float speed)
     {
+        Speed = speed;
         gameObject.SetActive(true);
         CurrentLifeTime = Time.time + LifeTime;
     }
@@ -48,7 +60,12 @@ public abstract class Bullet : MonoBehaviour
     protected virtual void OnLifeTimeEnded()
     {
         CurrentLifeTime = 0;
+        LifeTimeEnded?.Invoke();
     }
 
-    protected abstract void OnHitEnemy();
+    protected void LookAtTarget(Vector3 direction)
+    {
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+    }
 }

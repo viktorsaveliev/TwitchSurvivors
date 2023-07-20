@@ -555,10 +555,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e28dacae0872d0f4b8310d14bb165b3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _nameText: {fileID: 7110889421498980433}
-  _price: {fileID: 1374537076946121807}
-  _icon: {fileID: 4346357462293992965}
-  _propertiesText:
+  NameText: {fileID: 7110889421498980433}
+  Price: {fileID: 1374537076946121807}
+  Icon: {fileID: 4346357462293992965}
+  PropertiesText:
   - {fileID: 929216919190773350}
   - {fileID: 2126743925147288586}
   - {fileID: 5068257779959573605}

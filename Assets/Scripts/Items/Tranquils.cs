@@ -1,5 +1,5 @@
 
-public class Tranquils : Item
+public class Tranquils : PropertyItem
 {
     public override void Init()
     {

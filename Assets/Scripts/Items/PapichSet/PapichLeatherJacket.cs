@@ -1,5 +1,5 @@
 
-public class PapichLeatherJacket : Item
+public class PapichLeatherJacket : PropertyItem
 {
     public override void Init()
     {

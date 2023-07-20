@@ -1,12 +1,11 @@
 using UnityEngine;
 
-public class RegularBullet : Bullet
+public class RegularBullet : Bullet, IMoveable
 {
     protected override void FixedUpdate()
     {
         base.FixedUpdate();
-        Vector2 movement = Speed * Time.fixedDeltaTime * Direction;
-        transform.position -= new Vector3(movement.x, movement.y, 0);
+        Move();
     }
 
     public override void Init(int damage)
@@ -15,25 +14,28 @@ public class RegularBullet : Bullet
 
         Speed = 30f;
         LifeTime = 0.8f;
+
+        OnHitEnemy += OnLifeTimeEnded;
     }
 
-    public override void Shoot(Vector2 startPosition, Vector2 direction)
+    public override void Shoot(Vector2 startPosition, Vector2 direction, float speed)
     {
-        base.Shoot(startPosition, direction);
+        base.Shoot(startPosition, direction, speed);
 
         transform.parent = null;
         transform.position = startPosition;
         Direction = direction;
     }
 
-    protected override void OnHitEnemy()
-    {
-        OnLifeTimeEnded();
-    }
-
     protected override void OnLifeTimeEnded()
     {
         base.OnLifeTimeEnded();
         gameObject.SetActive(false);
+    }
+
+    public void Move()
+    {
+        Vector2 movement = Speed * Time.fixedDeltaTime * Direction;
+        transform.position -= new Vector3(movement.x, movement.y, 0);
     }
 }

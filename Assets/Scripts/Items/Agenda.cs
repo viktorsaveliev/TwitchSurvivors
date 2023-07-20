@@ -1,4 +1,4 @@
-public class Agenda : Item
+public class Agenda : PropertyItem
 {
     public override void Init()
     {
@@ -6,6 +6,6 @@ public class Agenda : Item
         Price = 150;
 
         AddPropertie(PlayerData.Properties.Dodge, 20);
-        AddPropertie(PlayerData.Properties.AttackDistance, 10);
+        AddPropertie(PlayerData.Properties.Distance, 10);
     }
 }

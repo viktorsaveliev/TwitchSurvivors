@@ -1,65 +1,41 @@
 using System.Collections;
 using UnityEngine;
 
-public class ShootableWeapon : Weapon, IChargesUser
+public abstract class ShootableWeapon : Weapon, IChargesUser
 {
-    public override void Init()
+    protected float BulletSpeed;
+    protected Transform Target;
+    
+    public virtual void Shoot(IEnemyCounter enemyCounter)
     {
-        
-    }
-
-    public void Shoot(IEnemyCounter enemyDetection)
-    {
-        if (CurrentCooldown > Time.time  
-            || enemyDetection.GetClosestEnemyPosition(transform.position) == Vector2.zero
-            || IsActive) return;
+        if (CurrentCooldown > Time.time || IsActive || ChargesList.Count < 1) return;
 
         IsActive = true;
-        StartCoroutine(ShootWithDelay(enemyDetection));
 
+        StartCoroutine(ShootBehaviour(enemyCounter));
         ActivateCooldown();
     }
 
-    private IEnumerator ShootWithDelay(IEnemyCounter enemyCounter)
+    protected void SetBulletSpeed(float speed)
     {
-        if (ChargesList.Count < 1) yield break;
+        if (speed < 1 || speed > 100) return;
 
-        WaitForSeconds delayBetweenShoots = new(DelayBetweenShoots);
-        foreach (Bullet charge in ChargesList)
-        {
-            if (charge.gameObject.activeSelf) continue;
-
-            Vector2 enemyPosition = enemyCounter.GetClosestEnemyPosition(transform.position);
-
-            if (enemyPosition == Vector2.zero) break;
-
-            Vector2 direction = (Vector2)transform.position - enemyPosition;
-
-            direction.Normalize();
-            LookAtTarget(direction);
-
-            charge.Shoot(transform.position, direction);
-
-            yield return delayBetweenShoots;
-        }
-
-        OnChargesEnded();
+        BulletSpeed = speed;
     }
 
-    private void LookAtTarget(Vector3 direction)
+    protected abstract void SetNextTarget(IEnemyCounter enemyCounter);
+
+    protected abstract IEnumerator ShootBehaviour(IEnemyCounter enemyCounter);
+
+    protected void LookAtTarget(Vector3 direction)
     {
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
     }
 
-    private void OnChargesEnded()
+    protected void OnChargesEnded()
     {
         CurrentChargesCount = ChargesCount;
         IsActive = false;
-    }
-
-    protected override void Improve()
-    {
-        
     }
 }

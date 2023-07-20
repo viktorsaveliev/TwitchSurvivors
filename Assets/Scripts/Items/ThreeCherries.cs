@@ -1,4 +1,4 @@
-public class ThreeCherries : Item
+public class ThreeCherries : PropertyItem
 {
     public override void Init()
     {

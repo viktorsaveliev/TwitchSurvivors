@@ -43,4 +43,10 @@ public class Health : IDamageable
             OnHealthOver?.Invoke();
         }
     }
+
+    public void Regenerate()
+    {
+        int value = (int) (PlayerData.GetPropertieValue(PlayerData.Properties.Regeneration) / 100f * _maxHealth);
+        GiveHealth(value);
+    }
 }

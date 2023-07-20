@@ -1,5 +1,5 @@
 
-public class ZubarevTooth : Item
+public class ZubarevTooth : PropertyItem
 {
     public override void Init()
     {

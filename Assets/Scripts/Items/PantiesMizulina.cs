@@ -1,5 +1,5 @@
 
-public class PantiesMizulina : Item
+public class PantiesMizulina : PropertyItem
 {
     public override void Init()
     {

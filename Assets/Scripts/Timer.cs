@@ -4,20 +4,31 @@ using System;
 using TMPro;
 
 [RequireComponent(typeof(TMP_Text))]
-public class Timer : MonoBehaviour
+public class Timer : MonoBehaviour, ITimerSubject
 {
+    private ITimerObserver _observer;
+
     private TMP_Text _timerText;
 
     private readonly float _timerDuration = 1f;
+    private readonly float _secondsCounterForRegeneration = 10;
+    
     private bool _isPause;
     private float _currentPlayTime;
+    private float _secondsCounter;
 
-    private void Start()
+    public void Init(ITimerObserver observer)
     {
         _timerText = GetComponent<TMP_Text>();
         _isPause = false;
+        _observer = observer;
 
         StartCoroutine(UpdateTimer());
+    }
+
+    public void Notify()
+    {
+        _observer.OnTimerReachedValue();
     }
 
     private IEnumerator UpdateTimer()
@@ -28,6 +39,12 @@ public class Timer : MonoBehaviour
             yield return second;
             _currentPlayTime++;
             UpdateUI();
+
+            if (++_secondsCounter >= _secondsCounterForRegeneration)
+            {
+                _secondsCounter = 0;
+                Notify();
+            }
         }
     }
 

@@ -1,7 +1,9 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public interface IEnemyCounter
 {
-    public Vector2 GetClosestEnemyPosition(Vector2 position);
-    public Vector2 GetRandomEnemyPosition(Vector2 position);
+    public List<Enemy> FindClosestEnemies(Vector2 targetPosition, int capacity);
+    public Transform GetClosestEnemy(Vector2 position);
+    public Transform GetRandomEnemy();
 }

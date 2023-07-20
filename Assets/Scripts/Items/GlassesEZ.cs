@@ -1,4 +1,4 @@
-public class GlassesEZ : Item
+public class GlassesEZ : PropertyItem
 {
     public override void Init()
     {
@@ -9,6 +9,6 @@ public class GlassesEZ : Item
         AddPropertie(PlayerData.Properties.Armor, 3);
         AddPropertie(PlayerData.Properties.AttackSpeed, 3);
         AddPropertie(PlayerData.Properties.CriticalDamage, 3);
-        AddPropertie(PlayerData.Properties.AttackDistance, 3);
+        AddPropertie(PlayerData.Properties.Distance, 3);
     }
 }

@@ -4,26 +4,28 @@ using UnityEngine;
 
 public class UnitWeapons
 {
-    private readonly MonoBehaviour _monoBehaviour;
-
     private readonly List<Weapon> _weapons = new();
-    private readonly float _delayBetweenAnotherWeapons = 0.2f;
+
+    private readonly MonoBehaviour _monoBehaviour;
+    private readonly float _delayBetweenAnotherWeapons = 0.1f;
 
     public UnitWeapons(MonoBehaviour monoBehaviour)
     {
         _monoBehaviour = monoBehaviour;
     }
 
-    public void AddWeapon(Weapon weapon)
+    public void Equip(Weapon weapon)
     {
-        weapon.Init();
+        weapon.gameObject.SetActive(true);
         _weapons.Add(weapon);
     }
 
     public void RemoveWeapon(Weapon weapon)
     {
-        if(_weapons.Contains(weapon))
+        if (_weapons.Contains(weapon))
+        {
             _weapons.Remove(weapon);
+        }
     }
 
     public void Attack(IEnemyCounter enemyDetection)
@@ -44,7 +46,7 @@ public class UnitWeapons
             {
                 user.Shoot(enemyDetection);
             }
-            
+
             yield return delayBetweenAnotherWeapons;
         }
     }

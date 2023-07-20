@@ -5,13 +5,20 @@ public class FirstBratik : Weapon, IChargesUser
 {
     private readonly float _speed = 0.4f;
 
+    private void OnEnable()
+    {
+        transform.parent = null;
+    }
+
     public override void Init()
     {
+        ItemName = "Первый Братик";
+        Price = 500;
+
         SetCooldown(3);
         SetDamage(25);
 
         CurrentChargesCount = ChargesCount = 2;
-        transform.parent = null;
     }
 
     public void Shoot(IEnemyCounter enemyDetection)
@@ -20,12 +27,16 @@ public class FirstBratik : Weapon, IChargesUser
 
         IsActive = true;
 
-        Vector2 position = enemyDetection.GetClosestEnemyPosition(transform.position);
-        transform.DOMove(position, _speed).OnComplete(() 
+        Transform target = enemyDetection.GetClosestEnemy(transform.position);
+
+        if (target != null)
+        {
+            transform.DOMove(target.position, _speed).OnComplete(()
             => IsActive = false);
+        }
     }
 
-    protected override void Improve()
+    public override void Improve()
     {
         
     }

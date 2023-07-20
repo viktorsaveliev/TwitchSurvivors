@@ -1,5 +1,5 @@
 
-public class PapichTrousers : Item
+public class PapichTrousers : PropertyItem
 {
     public override void Init()
     {

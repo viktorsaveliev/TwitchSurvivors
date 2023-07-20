@@ -1,4 +1,4 @@
-public class Midas : Item
+public class Midas : PropertyItem
 {
     public override void Init()
     {
