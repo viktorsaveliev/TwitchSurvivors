@@ -1,7 +1,7 @@
 using System.Collections;
-using System.Linq;
 using UnityEngine;
 using Zenject;
+using static PlayerData;
 
 public class PlayerBehaviour : MonoBehaviour
 {
@@ -17,7 +17,10 @@ public class PlayerBehaviour : MonoBehaviour
 
     public void Init()
     {
-        AddRandomWeapon();
+        InitPlayerProperties();
+
+        AddItem<Condamn>();
+        AddItem<Pistol>();
 
         _isCanAttack = true;
         _attackTimer = StartCoroutine(StartAttackTimer());
@@ -31,16 +34,38 @@ public class PlayerBehaviour : MonoBehaviour
             _attackTimer = null;
         }
     }
-    
-    private void AddRandomWeapon()
-    {
-        Item[] items = _itemFactory.Items.ToArray();
-        ArrayHandler array = new();
-        items = array.MixArray(items);
 
-        foreach (Item item in items)
+    private void InitPlayerProperties()
+    {
+        ResetProperties();
+
+        if (SelectedCharacter == null) return;
+
+        AppendPropertieValue(Properties.Health,         SelectedCharacter.Health);
+        AppendPropertieValue(Properties.Regeneration,   SelectedCharacter.Regeneration);
+        AppendPropertieValue(Properties.Damage,         SelectedCharacter.Damage);
+        AppendPropertieValue(Properties.CriticalDamage, SelectedCharacter.CriticalDamage);
+        AppendPropertieValue(Properties.AttackSpeed,    SelectedCharacter.AttackSpeed);
+        AppendPropertieValue(Properties.Distance,       SelectedCharacter.Distance);
+        AppendPropertieValue(Properties.Armor,          SelectedCharacter.Armor);
+        AppendPropertieValue(Properties.Dodge,          SelectedCharacter.Dodge);
+        AppendPropertieValue(Properties.MoveSpeed,      SelectedCharacter.MoveSpeed);
+        AppendPropertieValue(Properties.Fortune,        SelectedCharacter.Fortune);
+        AppendPropertieValue(Properties.Greed,          SelectedCharacter.Greed);
+    }
+
+    private void AddItem<T>()
+    {
+        foreach (Item item in _itemFactory.Items)
         {
-            if (item is Zeus == false) continue;
+            if (item is T == false) continue;
+
+            if (item is IFollower follower)
+            {
+                follower.SetFollowTarget(_playerUnit.transform);
+            }
+
+            item.Use();
             _playerUnit.Inventory.AddItem(item);
 
             break;

@@ -18,9 +18,9 @@ public class Cogger : Bullet
 
     public void SetPosition(Vector2 position) => transform.localPosition = position;
 
-    public override void Shoot(Vector2 startPosition, Vector2 direction, float speed)
+    public override void Shoot(Vector2 startPosition, Transform target, float speed)
     {
-        base.Shoot(startPosition, direction, speed);
+        base.Shoot(startPosition, target, speed);
 
         transform.localScale = Vector2.zero;
         transform.DOScale(1f, 0.5f);

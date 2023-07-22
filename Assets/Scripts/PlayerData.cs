@@ -2,8 +2,10 @@ using System.Collections.Generic;
 
 public class PlayerData
 {
+    public static CharacterDataConfig SelectedCharacter;
+
     private static readonly PropertiesData _properties = new();
-    private static readonly Money _money = new();
+    private readonly Money _money = new();
 
     public enum Properties
     {
@@ -47,12 +49,20 @@ public class PlayerData
 
     public static int GetPropertieValue(Properties properties) => _properties.Properties[properties];
 
-    public static void SetPropertieValue(Properties properties, int percents)
+    public static void AppendPropertieValue(Properties properties, int percents)
     {
-        if (percents < -50 || percents > 50) return;
+        if (percents < -50 || percents > 50 || percents == 0) return;
         _properties.Properties[properties] += percents;
     }
 
-    public static float CalculatePropertieValue(Properties propertie, float value, bool increasePercentToValue = true) 
-        => _properties.CalculatePropertieValue(propertie, value, increasePercentToValue);
+    public static void ResetProperties()
+    {
+        for (int i = 0; i < _properties.Properties.Count; i++)
+        {
+            _properties.Properties[(Properties)i] = 0;
+        }
+    }
+
+    public static float CalculateValueWithPropertie(Properties propertie, float value, bool increasePercentToValue = true) 
+        => _properties.CalculateValueWithPropertie(propertie, value, increasePercentToValue);
 }

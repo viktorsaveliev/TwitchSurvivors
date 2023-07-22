@@ -15,9 +15,11 @@ public abstract class Bullet : MonoBehaviour
 
     protected Transform Target;
 
+    private bool _isLifeTimeEnded;
+
     protected virtual void FixedUpdate()
     {
-        if(CurrentLifeTime <= Time.time)
+        if(CurrentLifeTime <= Time.time && !_isLifeTimeEnded)
         {
             OnLifeTimeEnded();
         }
@@ -27,16 +29,11 @@ public abstract class Bullet : MonoBehaviour
     {
         if (collision.TryGetComponent(out Enemy enemy))
         {
-            int damage = (int)PlayerData.CalculatePropertieValue(PlayerData.Properties.Damage, Damage);
+            int damage = (int)PlayerData.CalculateValueWithPropertie(PlayerData.Properties.Damage, Damage);
             enemy.Health.TakeDamage(damage);
 
             OnHitEnemy?.Invoke();
         }
-    }
-
-    public void SetTarget(Transform target)
-    {
-        Target = target;
     }
 
     public void SetDamage(int value)
@@ -50,22 +47,32 @@ public abstract class Bullet : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    public virtual void Shoot(Vector2 startPosition, Vector2 direction, float speed)
+    public virtual void Shoot(Vector2 startPosition, Transform target, float speed)
     {
+        _isLifeTimeEnded = false;
+
+        Target = target;
         Speed = speed;
+
         gameObject.SetActive(true);
+
         CurrentLifeTime = Time.time + LifeTime;
     }
 
     protected virtual void OnLifeTimeEnded()
     {
+        _isLifeTimeEnded = true;
         CurrentLifeTime = 0;
         LifeTimeEnded?.Invoke();
     }
 
-    protected void LookAtTarget(Vector3 direction)
+    protected void LookAtTarget(Transform target)
     {
+        Vector2 direction = (Vector2) (transform.position - target.position);
+        direction.Normalize();
+
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+
         transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
     }
 }

@@ -25,7 +25,7 @@ public class WeaponCard : ShopCard
 
         for (int i = 0; i < _stars.Length; i++)
         {
-            _stars[i].color = _weapon.ImprovementLevel+1 >= i ? Color.magenta : Color.grey;
+            _stars[i].color = _weapon.ImprovementLevel+1 >= i ? Color.green : Color.grey;
         }
     }
 

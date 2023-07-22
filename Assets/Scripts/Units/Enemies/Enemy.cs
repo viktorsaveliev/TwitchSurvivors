@@ -5,7 +5,7 @@ using UnityEngine;
 public abstract class Enemy : Unit
 {
     public event Action<string> OnNicknameChanged;
-    public event Action<Enemy> OnEnemyDead;
+    public event Action<Enemy> OnDead;
 
     protected Transform Target;
     protected int Damage;
@@ -33,7 +33,7 @@ public abstract class Enemy : Unit
         {
             if (!player.IsDodged())
             {
-                int damage = (int)PlayerData.CalculatePropertieValue(PlayerData.Properties.Armor, Damage, false);
+                int damage = (int)PlayerData.CalculateValueWithPropertie(PlayerData.Properties.Armor, Damage, false);
                 player.Health.TakeDamage(damage);
             }
         }
@@ -50,8 +50,6 @@ public abstract class Enemy : Unit
     public virtual void OnSpawn()
     {
         CurrentSpeed = RegularSpeed;
-
-        DeathFX.transform.parent = transform;
         transform.localScale = Vector2.one;
     }
 
@@ -77,7 +75,7 @@ public abstract class Enemy : Unit
     protected override void OnDeath()
     {
         base.OnDeath();
-        OnEnemyDead?.Invoke(this);
+        OnDead?.Invoke(this);
     }
 
     private IEnumerator RecoverySpeed()

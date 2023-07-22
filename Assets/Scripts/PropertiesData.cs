@@ -7,20 +7,20 @@ public class PropertiesData
 
     public void Init()
     {
-        Properties.Add(PlayerData.Properties.Health, 0);
-        Properties.Add(PlayerData.Properties.Regeneration, 0);
-        Properties.Add(PlayerData.Properties.Damage, 0);
-        Properties.Add(PlayerData.Properties.CriticalDamage, 0);
-        Properties.Add(PlayerData.Properties.AttackSpeed, 0);
-        Properties.Add(PlayerData.Properties.Distance, 0);
-        Properties.Add(PlayerData.Properties.Armor, 0);
-        Properties.Add(PlayerData.Properties.Dodge, 0);
-        Properties.Add(PlayerData.Properties.MoveSpeed, 0);
-        Properties.Add(PlayerData.Properties.Fortune, 0);
-        Properties.Add(PlayerData.Properties.Greed, 0);
+        Properties.Add(PlayerData.Properties.Health,        0);
+        Properties.Add(PlayerData.Properties.Regeneration,  0);
+        Properties.Add(PlayerData.Properties.Damage,        0);
+        Properties.Add(PlayerData.Properties.CriticalDamage,0);
+        Properties.Add(PlayerData.Properties.AttackSpeed,   0);
+        Properties.Add(PlayerData.Properties.Distance,      0);
+        Properties.Add(PlayerData.Properties.Armor,         0);
+        Properties.Add(PlayerData.Properties.Dodge,         0);
+        Properties.Add(PlayerData.Properties.MoveSpeed,     0);
+        Properties.Add(PlayerData.Properties.Fortune,       0);
+        Properties.Add(PlayerData.Properties.Greed,         0);
     }
 
-    public float CalculatePropertieValue(PlayerData.Properties propertie, float value, bool increasePercentToValue = true)
+    public float CalculateValueWithPropertie(PlayerData.Properties propertie, float value, bool increasePercentToValue = true)
     {
         int propertieValue = PlayerData.GetPropertieValue(propertie);
 

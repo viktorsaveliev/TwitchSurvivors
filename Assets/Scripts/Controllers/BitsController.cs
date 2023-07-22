@@ -29,7 +29,7 @@ public class BitsController : MonoBehaviour
 
     private void OnEnemyCreated(Enemy enemy)
     {
-        enemy.OnEnemyDead += SpawnBits;
+        enemy.OnDead += SpawnBits;
     }
 
     private void SpawnBits(Enemy enemy)

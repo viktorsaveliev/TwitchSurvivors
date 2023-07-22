@@ -40,9 +40,9 @@ public class UnitWeapons
     {
         WaitForSeconds delayBetweenAnotherWeapons = new(_delayBetweenAnotherWeapons);
 
-        foreach(Weapon weapon in _weapons)
+        for (int i = 0; i < _weapons.Count; i++)
         {
-            if (weapon is IChargesUser user && !weapon.IsActive)
+            if (_weapons[i] is IChargesUser user && !_weapons[i].IsActive)
             {
                 user.Shoot(enemyDetection);
             }

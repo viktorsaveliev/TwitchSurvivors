@@ -24,8 +24,8 @@ public class Bits : MonoBehaviour
 
     public void Pickup(PlayerUnit player)
     {
-        int exp = (int)PlayerData.CalculatePropertieValue(PlayerData.Properties.Fortune, _givesExperience);
-        int money = (int)PlayerData.CalculatePropertieValue(PlayerData.Properties.Greed, _givesMoney);
+        int exp = (int)PlayerData.CalculateValueWithPropertie(PlayerData.Properties.Fortune, _givesExperience);
+        int money = (int)PlayerData.CalculateValueWithPropertie(PlayerData.Properties.Greed, _givesMoney);
 
         player.Experience.GiveExp(exp);
         Money.Give(money);

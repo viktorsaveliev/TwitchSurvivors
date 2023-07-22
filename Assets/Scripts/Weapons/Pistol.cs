@@ -5,7 +5,7 @@ public class Pistol : ShootableWeapon
 {
     public override void Init()
     {
-        ItemName = "Глок 19 \"JO-JO\"";
+        Name = "Глок 19 \"JO-JO\"";
         Price = 500;
 
         SetCooldown(2f);
@@ -34,7 +34,7 @@ public class Pistol : ShootableWeapon
 
             case 2:
                 SetDamage(8);
-                SetCooldown(1.5f);
+                SetCooldown(2f);
 
                 SetBulletSpeed(45f);
                 break;
@@ -66,24 +66,19 @@ public class Pistol : ShootableWeapon
 
     protected override IEnumerator ShootBehaviour(IEnemyCounter enemyCounter)
     {
-        SetNextTarget(enemyCounter);
-
         WaitForSeconds delayBetweenShoots = new(DelayBetweenShoots);
 
         for (int i = 0; i < ChargesCount; i++)
         {
             if (ChargesList[i].gameObject.activeSelf) continue;
 
+            SetNextTarget(enemyCounter);
+
             if (Target == null) break;
 
-            Vector2 direction = (Vector2)transform.position - (Vector2) Target.position;
+            ChargesList[i].Shoot(transform.position, Target, BulletSpeed);
+            LookAtTarget(Target);
 
-            direction.Normalize();
-            LookAtTarget(direction);
-
-            ChargesList[i].Shoot(transform.position, direction, BulletSpeed);
-
-            SetNextTarget(enemyCounter);
             yield return delayBetweenShoots;
         }
 

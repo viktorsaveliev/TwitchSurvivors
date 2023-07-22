@@ -2,7 +2,7 @@ public class GlassesEZ : PropertyItem
 {
     public override void Init()
     {
-        ItemName = "Очки EZ";
+        Name = "Очки EZ";
         Price = 250;
 
         AddPropertie(PlayerData.Properties.Damage, 3);

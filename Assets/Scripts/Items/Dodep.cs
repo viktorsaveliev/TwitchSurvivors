@@ -3,7 +3,7 @@ public class Dodep : PropertyItem
 {
     public override void Init()
     {
-        ItemName = "Додеп";
+        Name = "Додеп";
         Price = 200;
 
         AddPropertie(PlayerData.Properties.Greed, 10);

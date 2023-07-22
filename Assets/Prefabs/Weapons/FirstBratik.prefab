@@ -98,6 +98,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3f6e6b3e0ad3344fb4a38a6c8ad1ada, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _icon: {fileID: 0}
   ChargePrefab: {fileID: 0}
 --- !u!58 &8285432886050442831
 CircleCollider2D:

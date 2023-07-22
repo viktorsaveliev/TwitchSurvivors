@@ -15,26 +15,29 @@ public sealed class Bootstrap : MonoBehaviour
     [Inject] private readonly TwitchIntegration _twitch;
     [Inject] private readonly BitsController _bits;
     [Inject] private readonly Timer _timer;
+    [Inject] private readonly DeathFXController _deathFX;
 
     [SerializeField] private Collider2D _spawnArea;
     [SerializeField] private PlayerBehaviour _playerBehaviour;
+    [SerializeField] private AudioLowPassFilter _audioFilter;
 
     private Shop _shop;
     private EnemySpawner _enemySpawner;
     private CameraShaker _cameraShaker;
     private CombineEnemyAndTwitch _combineEnemyAndTwitch;
 
-    private PlayerData _playerData;
-
     private PauseHandler _pause;
+    private AudioController _audioController;
 
     private void Awake()
     {
-        _playerData = new();
-        _playerData.Init();
+        Application.targetFrameRate = 60;
+        Money.Set(0);
 
         _playerUnit.Init();
         _playerUI.Init();
+
+        _deathFX.Init();
 
         _itemFactory.Init();
 
@@ -59,6 +62,7 @@ public sealed class Bootstrap : MonoBehaviour
         _pause = new(this, _playerUI);
         _pause.Init();
 
-        Application.targetFrameRate = 60;
+        _audioController = new(_audioFilter, _pause);
+        _audioController.Init();
     }
 }

@@ -1,13 +1,14 @@
 using System;
+using UnityEngine;
 
 public class Experience
 {
     public event Action OnPlayerGotNewLevel;
     public event Action OnExpValueChanged;
 
-    public int ExpForNewLevel => Level * _expMultipleForNextLevel * 3; 
+    public int ExpForNewLevel => (int)(24 * Mathf.Pow(_expMultipleForNextLevel, Level - 1)); // Level * _expMultipleForNextLevel * 3;
 
-    private readonly int _expMultipleForNextLevel = 8;
+    private readonly float _expMultipleForNextLevel = 3f;
 
     public int Level { get; private set; }
     public int Exp { get; private set; }

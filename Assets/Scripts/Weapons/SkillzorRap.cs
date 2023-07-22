@@ -15,7 +15,7 @@ public class SkillzorRap : Weapon, IAttackable
 
     public override void Init()
     {
-        ItemName = "Рэп Скиллзора";
+        Name = "Рэп Скиллзора";
         Price = 500;
 
         SetDamage(5);

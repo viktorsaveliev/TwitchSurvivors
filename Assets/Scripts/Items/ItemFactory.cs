@@ -6,8 +6,8 @@ public class ItemFactory : MonoBehaviour
     [SerializeField] private Item[] _itemPrefabs;
     [SerializeField] private Transform _container;
 
-    private readonly List<Item> _shopItems = new();
-    public IReadOnlyList<Item> Items => _shopItems;
+    private readonly List<Item> _items = new();
+    public IReadOnlyList<Item> Items => _items;
 
     public void Init()
     {
@@ -22,7 +22,7 @@ public class ItemFactory : MonoBehaviour
             itemObject.gameObject.SetActive(false);
             itemObject.Init();
 
-            _shopItems.Add(itemObject);
+            _items.Add(itemObject);
         }
     }
 

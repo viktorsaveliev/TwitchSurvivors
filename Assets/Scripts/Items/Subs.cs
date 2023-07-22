@@ -4,7 +4,7 @@ public class Subs : PropertyItem
 {
     public override void Init()
     {
-        ItemName = "брсър";
+        Name = "брсър";
         Price = 500;
 
         AddPropertie(PlayerData.Properties.Damage, 5);

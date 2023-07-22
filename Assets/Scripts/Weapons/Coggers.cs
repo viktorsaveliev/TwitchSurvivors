@@ -7,7 +7,7 @@ public class Coggers : Weapon, IChargesUser
 
     public override void Init()
     {
-        ItemName = "COGGERS";
+        Name = "COGGERS";
         Price = 500;
 
         SetDamage(5);
@@ -29,7 +29,7 @@ public class Coggers : Weapon, IChargesUser
 
         foreach (Bullet charge in ChargesList)
         {
-            charge.Shoot(Vector2.zero, Vector2.zero, 0);
+            charge.Shoot(Vector2.zero, null, 0);
         }
 
         ActivateCooldown();

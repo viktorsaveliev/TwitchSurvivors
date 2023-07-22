@@ -3,7 +3,7 @@ public class VIP : PropertyItem
 {
     public override void Init()
     {
-        ItemName = "Випка";
+        Name = "Випка";
         Price = 250;
 
         AddPropertie(PlayerData.Properties.Armor, 5);

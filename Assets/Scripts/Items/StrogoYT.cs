@@ -3,7 +3,7 @@ public class StrogoYT : PropertyItem
 {
     public override void Init()
     {
-        ItemName = "Ютуб Строго";
+        Name = "Ютуб Строго";
         Price = 100;
 
         AddPropertie(PlayerData.Properties.Greed, 20);

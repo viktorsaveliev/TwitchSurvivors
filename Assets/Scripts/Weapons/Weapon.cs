@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public abstract class Weapon : Item
@@ -75,21 +74,21 @@ public abstract class Weapon : Item
 
     protected void ActivateCooldown()
     {
-        float cooldown = PlayerData.CalculatePropertieValue(PlayerData.Properties.AttackSpeed, Cooldown, false);
+        float cooldown = PlayerData.CalculateValueWithPropertie(PlayerData.Properties.AttackSpeed, Cooldown, false);
         CurrentCooldown = Time.time + cooldown;
     }
 
     protected float GetCooldownValue()
     {
-        float cooldown = PlayerData.CalculatePropertieValue(PlayerData.Properties.AttackSpeed, Cooldown);
+        float cooldown = PlayerData.CalculateValueWithPropertie(PlayerData.Properties.AttackSpeed, Cooldown);
         return cooldown;
     }
 
     protected int GetDamageValue()
     {
-        int damage = (int) PlayerData.CalculatePropertieValue(PlayerData.Properties.Damage, Damage);
+        int damage = (int) PlayerData.CalculateValueWithPropertie(PlayerData.Properties.Damage, Damage);
 
-        int criticalDamagePercent = (int) PlayerData.CalculatePropertieValue(
+        int criticalDamagePercent = (int) PlayerData.CalculateValueWithPropertie(
             PlayerData.Properties.CriticalDamage, 
             PlayerData.GetPropertieValue(PlayerData.Properties.CriticalDamage)
         );

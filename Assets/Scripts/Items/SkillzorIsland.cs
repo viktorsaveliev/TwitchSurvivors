@@ -3,7 +3,7 @@ public class SkillzorIsland : PropertyItem
 {
     public override void Init()
     {
-        ItemName = "Остров Скилзора";
+        Name = "Остров Скилзора";
         Price = 150;
 
         AddPropertie(PlayerData.Properties.AttackSpeed, 25);

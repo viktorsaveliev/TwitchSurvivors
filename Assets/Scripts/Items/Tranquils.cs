@@ -3,7 +3,7 @@ public class Tranquils : PropertyItem
 {
     public override void Init()
     {
-        ItemName = "Транквилы";
+        Name = "Транквилы";
         Price = 200;
 
         AddPropertie(PlayerData.Properties.Regeneration, 10);

@@ -5,12 +5,36 @@ public class BanHammer : Weapon, IChargesUser
 {
     public override void Improve()
     {
-        
+        if (ImprovementLevel > 4) return;
+        ImprovementLevel++;
+
+        switch (ImprovementLevel)
+        {
+            case 1:
+                CreateCharges(Damage);
+                break;
+
+            case 2:
+                SetCooldown(3f);
+                CreateCharge(Damage);
+                break;
+
+            case 3:
+                CreateCharge(Damage);
+                SetDamage(25);
+                break;
+
+            case 4:
+                SetDamage(50);
+                break;
+        }
+
+        UpdateChargesDamage();
     }
 
     public override void Init()
     {
-        ItemName = "Бан хаммер";
+        Name = "Бан хаммер";
         Price = 500;
 
         SetCooldown(5);
@@ -44,7 +68,7 @@ public class BanHammer : Weapon, IChargesUser
 
             if (target != null)
             {
-                charge.Shoot(target.position, Vector2.zero, 0);
+                charge.Shoot(target.position, target, 0);
             }
 
             yield return delayBetweenShoots;

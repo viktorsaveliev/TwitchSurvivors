@@ -97,4 +97,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a91e4ccbdfea28341b770f34015c8e3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _icon: {fileID: 0}
   ChargePrefab: {fileID: 7995818080113323452, guid: 4dd9230565d738744bc671856979302e, type: 3}

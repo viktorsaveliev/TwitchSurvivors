@@ -13,7 +13,6 @@ public abstract class ShootableWeapon : Weapon, IChargesUser
         IsActive = true;
 
         StartCoroutine(ShootBehaviour(enemyCounter));
-        ActivateCooldown();
     }
 
     protected void SetBulletSpeed(float speed)
@@ -27,8 +26,11 @@ public abstract class ShootableWeapon : Weapon, IChargesUser
 
     protected abstract IEnumerator ShootBehaviour(IEnemyCounter enemyCounter);
 
-    protected void LookAtTarget(Vector3 direction)
+    protected void LookAtTarget(Transform target)
     {
+        Vector2 direction = (Vector2)(transform.position - target.position);
+        direction.Normalize();
+
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
     }
@@ -37,5 +39,7 @@ public abstract class ShootableWeapon : Weapon, IChargesUser
     {
         CurrentChargesCount = ChargesCount;
         IsActive = false;
+
+        ActivateCooldown();
     }
 }

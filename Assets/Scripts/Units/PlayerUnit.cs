@@ -36,7 +36,7 @@ public sealed class PlayerUnit : Unit, ITimerObserver
 
     public bool IsDodged()
     {
-        int dodgePercent = (int) PlayerData.CalculatePropertieValue(
+        int dodgePercent = (int) PlayerData.CalculateValueWithPropertie(
             PlayerData.Properties.Dodge,
             PlayerData.GetPropertieValue(PlayerData.Properties.Dodge)
         );
@@ -87,21 +87,21 @@ public sealed class PlayerUnit : Unit, ITimerObserver
 
     private void UpdateMoveSpeed()
     {
-        RegularSpeed = CurrentSpeed = PlayerData.CalculatePropertieValue(PlayerData.Properties.MoveSpeed, RegularSpeed);
+        RegularSpeed = CurrentSpeed = PlayerData.CalculateValueWithPropertie(PlayerData.Properties.MoveSpeed, RegularSpeed);
     }
 
     private void UpdateMaxHealthValue(bool setHealthToMax)
     {
-        int maxHealth = (int)PlayerData.CalculatePropertieValue(PlayerData.Properties.Health, Health.MaxValue);
+        int maxHealth = (int)PlayerData.CalculateValueWithPropertie(PlayerData.Properties.Health, Health.MaxValue);
         Health.SetMaxHealth(maxHealth, setHealthToMax);
     }
 
     private void UpdateDistance()
     {
-        float newRadius = PlayerData.CalculatePropertieValue(PlayerData.Properties.Distance, _enemyDetection.CurrentRadius);
+        float newRadius = PlayerData.CalculateValueWithPropertie(PlayerData.Properties.Distance, _enemyDetection.CurrentRadius);
         _enemyDetection.SetDetectionRadius(newRadius);
 
-        newRadius = PlayerData.CalculatePropertieValue(PlayerData.Properties.Distance, _bitsDetection.CurrentRadius);
+        newRadius = PlayerData.CalculateValueWithPropertie(PlayerData.Properties.Distance, _bitsDetection.CurrentRadius);
         _bitsDetection.SetDetectionRadius(newRadius);
     }
 }

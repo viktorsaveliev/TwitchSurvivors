@@ -71,6 +71,11 @@ public class Shop
 
         item.Use();
 
+        if (item is IFollower follower)
+        {
+            follower.SetFollowTarget(_player.transform);
+        }
+
         _player.Inventory.AddItem(item);
 
         _interface.DeleteCard(card);

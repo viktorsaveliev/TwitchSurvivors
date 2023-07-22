@@ -2,7 +2,7 @@ public class ThreeCherries : PropertyItem
 {
     public override void Init()
     {
-        ItemName = "Три вишенки";
+        Name = "Три вишенки";
         Price = 50;
 
         AddPropertie(PlayerData.Properties.Greed, 10);

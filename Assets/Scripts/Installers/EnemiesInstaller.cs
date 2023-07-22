@@ -9,7 +9,7 @@ public class EnemiesInstaller : MonoInstaller
     {
         Container.BindInstance(_enemyFactory).AsSingle();
 
-        EnemyCounter enemyCounter = new();
+        EnemyCounter enemyCounter = new(_enemyFactory);
 
         Container.Bind<IEnemyCounter>().FromInstance(enemyCounter).AsSingle();
         Container.Bind<EnemyCounter>().FromInstance(enemyCounter).AsSingle();

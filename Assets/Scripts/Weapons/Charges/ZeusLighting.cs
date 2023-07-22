@@ -2,8 +2,7 @@ using UnityEngine;
 
 public class ZeusLighting : Bullet, IMoveable
 {
-    private Vector2 _startPos;
-    private float _elapsedTime;
+    public Transform LastHittedTarget { get; private set; }
 
     protected override void FixedUpdate()
     {
@@ -17,23 +16,17 @@ public class ZeusLighting : Bullet, IMoveable
 
         Speed = 30f;
         LifeTime = 3f;
+
+        OnHitEnemy += () => LastHittedTarget = Target;
     }
 
-    public override void Shoot(Vector2 startPosition, Vector2 direction, float speed)
+    public override void Shoot(Vector2 startPosition, Transform target, float speed)
     {
-        base.Shoot(startPosition, direction, speed);
+        base.Shoot(startPosition, target, speed);
 
-        _startPos = transform.position;
         transform.parent = null;
-        Direction = direction;
 
-        LookAtTarget(direction);
-    }
-
-    protected override void OnLifeTimeEnded()
-    {
-        base.OnLifeTimeEnded();
-        gameObject.SetActive(false);
+        LookAtTarget(target);
     }
 
     public void Move()
@@ -41,7 +34,13 @@ public class ZeusLighting : Bullet, IMoveable
         Direction = (Vector2)(transform.position - Target.position);
         Direction.Normalize();
 
-        Vector2 movement = Speed * Time.fixedDeltaTime * Direction;
-        transform.position -= new Vector3(movement.x, movement.y, 0);
+        Vector3 movement = Speed * Time.fixedDeltaTime * Direction;
+        transform.position -= movement;
+    }
+
+    protected override void OnLifeTimeEnded()
+    {
+        base.OnLifeTimeEnded();
+        gameObject.SetActive(false);
     }
 }

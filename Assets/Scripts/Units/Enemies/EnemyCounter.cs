@@ -1,12 +1,20 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class EnemyCounter : IEnemyCounter
 {
-    private readonly List<Enemy> _enemiesInPlayerRange = new();
-    private readonly List<Enemy> _closestEnemies = new();
+    private readonly EnemyFactory _enemyFactory;
 
+    private readonly List<Enemy> _enemiesInPlayerRange = new();
+
+    private readonly List<Enemy> _sortedClosestEnemies = new();
     private readonly List<EnemyDistance> _enemyDistances = new();
+
+    public EnemyCounter(EnemyFactory enemyFactory)
+    {
+        _enemyFactory = enemyFactory;
+    }
 
     public void AddEnemy(Enemy enemy)
     {
@@ -27,9 +35,9 @@ public class EnemyCounter : IEnemyCounter
     public List<Enemy> FindClosestEnemies(Vector2 targetPosition, int capacity)
     {
         _enemyDistances.Clear();
-        _closestEnemies.Clear();
+        _sortedClosestEnemies.Clear();
 
-        foreach (Enemy enemy in _enemiesInPlayerRange)
+        foreach (Enemy enemy in _enemyFactory.Enemies)
         {
             if (!enemy.gameObject.activeSelf) continue;
 
@@ -39,13 +47,17 @@ public class EnemyCounter : IEnemyCounter
 
         _enemyDistances.Sort((a, b) => a.DistanceToTarget.CompareTo(b.DistanceToTarget));
 
-        for (int i = 0; i < Mathf.Min(capacity, _enemyDistances.Count); i++)
+        int count = Mathf.Min(capacity, _enemyDistances.Count);
+
+        for (int i = 0; i < count; i++)
         {
-            _closestEnemies.Add(_enemyDistances[i].Enemy);
+            _sortedClosestEnemies.Add(_enemyDistances[i].Enemy);
         }
 
-        return _closestEnemies;
+        return _sortedClosestEnemies;
     }
+
+    public Enemy[] GetAllEnemies() => _enemyFactory.Enemies.ToArray();
 
     public Transform GetClosestEnemy(Vector2 position)
     {

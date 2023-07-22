@@ -9,7 +9,7 @@ public abstract class PropertyItem : Item
     {
         foreach (var pair in _properties)
         {
-            PlayerData.SetPropertieValue(pair.Key, pair.Value);
+            PlayerData.AppendPropertieValue(pair.Key, pair.Value);
         }
 
         PlayerData.Items.Add(this);
@@ -19,7 +19,7 @@ public abstract class PropertyItem : Item
     {
         foreach (var pair in _properties)
         {
-            PlayerData.SetPropertieValue(pair.Key, -pair.Value);
+            PlayerData.AppendPropertieValue(pair.Key, -pair.Value);
         }
     }
 

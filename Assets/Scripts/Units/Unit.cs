@@ -3,8 +3,6 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D), typeof(Animator))]
 public abstract class Unit : MonoBehaviour
 {
-    [SerializeField] protected ParticleSystem DeathFX;
-
     protected Animator Animator;
     
     private readonly float _spawnDelay = 2f;
@@ -49,11 +47,6 @@ public abstract class Unit : MonoBehaviour
         DeInit();
 
         CurrentSpawnDelay = Time.time + _spawnDelay;
-
-        DeathFX.transform.parent = null;
-        DeathFX.transform.position = transform.position;
-        DeathFX.Play();
-
         gameObject.SetActive(false);
     }
 }

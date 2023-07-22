@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 public class Zeus : ShootableWeapon
 {
@@ -9,22 +8,45 @@ public class Zeus : ShootableWeapon
 
     public override void Improve()
     {
-        throw new System.NotImplementedException();
+        if (ImprovementLevel > 4) return;
+        ImprovementLevel++;
+
+        switch (ImprovementLevel)
+        {
+            case 1:
+                ChargesCount = 4;
+                break;
+
+            case 2:
+                SetCooldown(4f);
+                break;
+
+            case 3:
+                SetDamage(25);
+                break;
+
+            case 4:
+                ChargesCount = 6;
+                SetCooldown(2f);
+                break;
+        }
+
+        UpdateChargesDamage();
     }
 
     public override void Init()
     {
-        ItemName = "Молнии Олимпуса";
+        Name = "Молнии Олимпуса";
         Price = 500;
 
         SetCooldown(6);
         SetDamage(10);
         SetBulletSpeed(20f);
 
-        CurrentChargesCount = ChargesCount = 5;
+        CurrentChargesCount = ChargesCount = 2;
         CreateCharge(Damage);
 
-        ChargesList[0].OnHitEnemy += MoveToNextTarget;
+        ChargesList[0].OnHitEnemy += ShootOnNextTarget;
         ChargesList[0].LifeTimeEnded += OnChargesEnded;
     }
 
@@ -33,39 +55,34 @@ public class Zeus : ShootableWeapon
         _enemyCounter = enemyCounter;
 
         ChargesList[0].transform.position = transform.position;
-        MoveToNextTarget();
 
-        yield break;
-    }
-
-    private void MoveToNextTarget()
-    {
         if (_closestEnemies.Count == 0)
         {
             UpdateTargets();
         }
 
-        if (CurrentChargesCount-- > 0)
+        ShootOnNextTarget();
+
+        yield break;
+    }
+
+    private void ShootOnNextTarget()
+    {
+        if (_closestEnemies.Count > 0 && CurrentChargesCount-- > 0)
         {
             SetNextTarget(_enemyCounter);
 
-            if (Target == null)
+            if (Target == null || !Target.gameObject.activeSelf)
             {
-                ChargesList[0].gameObject.SetActive(false);
-                OnChargesEnded();
+                DisableCharge();
                 return;
             }
 
-            Vector2 direction = (Vector2)ChargesList[0].transform.position - (Vector2) Target.position;
-            direction.Normalize();
-
-            ChargesList[0].Shoot(transform.position, direction, BulletSpeed);
-            ChargesList[0].SetTarget(Target);
+            ChargesList[0].Shoot(transform.position, Target, BulletSpeed);
         }
         else
         {
-            ChargesList[0].gameObject.SetActive(false);
-            OnChargesEnded();
+            DisableCharge();
         }
     }
 
@@ -84,7 +101,13 @@ public class Zeus : ShootableWeapon
 
     private void UpdateTargets()
     {
-        if (_closestEnemies.Count > 0) return;
         _closestEnemies = _enemyCounter.FindClosestEnemies(transform.position, ChargesCount);
+    }
+
+    private void DisableCharge()
+    {
+        _closestEnemies.Clear();
+        ChargesList[0].gameObject.SetActive(false);
+        OnChargesEnded();
     }
 }

@@ -18,12 +18,16 @@ public class RegularBullet : Bullet, IMoveable
         OnHitEnemy += OnLifeTimeEnded;
     }
 
-    public override void Shoot(Vector2 startPosition, Vector2 direction, float speed)
+    public override void Shoot(Vector2 startPosition, Transform target, float speed)
     {
-        base.Shoot(startPosition, direction, speed);
+        base.Shoot(startPosition, target, speed);
 
         transform.parent = null;
         transform.position = startPosition;
+
+        Vector2 direction = (Vector2)(transform.position - target.position);
+        direction.Normalize();
+
         Direction = direction;
     }
 
@@ -35,7 +39,7 @@ public class RegularBullet : Bullet, IMoveable
 
     public void Move()
     {
-        Vector2 movement = Speed * Time.fixedDeltaTime * Direction;
-        transform.position -= new Vector3(movement.x, movement.y, 0);
+        Vector3 movement = Speed * Time.fixedDeltaTime * Direction;
+        transform.position -= movement;
     }
 }
