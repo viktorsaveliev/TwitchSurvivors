@@ -3,7 +3,7 @@ public class BusterBandage : PropertyItem
     public override void Init()
     {
         Name = "Повязка Бустера";
-        Price = 150;
+        CurrentPrice = 25;
 
         AddPropertie(PlayerData.Properties.Damage, 5);
         AddPropertie(PlayerData.Properties.AttackSpeed, 5);

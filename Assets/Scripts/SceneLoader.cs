@@ -1,20 +1,28 @@
+using DG.Tweening;
 using UnityEngine.SceneManagement;
 
 public class SceneLoader
 {
     public enum Scene
     {
-        Menu,
+        Menu = 1,
         Level
     }
 
     public void LoadMenu()
     {
+        ResetData();
         SceneManager.LoadSceneAsync((int) Scene.Menu, LoadSceneMode.Single);
     }
 
     public void LoadLevel()
     {
-        SceneManager.LoadSceneAsync((int)Scene.Level, LoadSceneMode.Single);
+        ResetData();
+        SceneManager.LoadSceneAsync((int) Scene.Level, LoadSceneMode.Single);
+    }
+
+    private void ResetData()
+    {
+        DOTween.Clear();
     }
 }

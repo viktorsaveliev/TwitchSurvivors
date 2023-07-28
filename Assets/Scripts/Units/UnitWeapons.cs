@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class UnitWeapons
 {
+    public const int MAX_WEAPONS = 6;
+    public int Count => _weapons.Count;
+
     private readonly List<Weapon> _weapons = new();
 
     private readonly MonoBehaviour _monoBehaviour;

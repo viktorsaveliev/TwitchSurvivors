@@ -18,6 +18,9 @@ public class UnitAnimation
 
     private void OnTakeDamage(int damage)
     {
-        _animator.SetTrigger("TakeDamage");
+        if (_animator.runtimeAnimatorController != null)
+        {
+            _animator.SetTrigger("TakeDamage");
+        }
     }
 }

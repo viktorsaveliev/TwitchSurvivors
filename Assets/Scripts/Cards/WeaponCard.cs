@@ -3,7 +3,10 @@ using UnityEngine.UI;
 
 public class WeaponCard : ShopCard
 {
-    [SerializeField] private Image[] _stars;
+    [SerializeField] private WeaponCardConfig _config;
+
+    [SerializeField] private Image[] _backgrounds;
+
     private Weapon _weapon;
 
     public override void Init(Item item) 
@@ -18,14 +21,11 @@ public class WeaponCard : ShopCard
     {
         base.UpdateStats();
 
-        PropertiesText[0].text = $"Урон: <color=grey>{_weapon.Damage} ед.</color>";
-        PropertiesText[1].text = $"Перезарядка: <color=grey>{_weapon.Cooldown} сек.</color>";
-        PropertiesText[2].text = string.Empty; // $"Зарядов: <color=grey>{_weapon.ChargesCount} шт.</color>";
-        //PropertiesText[3].text = string.Empty;
+        PropertiesText[0].text = _weapon.GetDescriptionForNextLevel();
 
-        for (int i = 0; i < _stars.Length; i++)
+        foreach (Image bg in _backgrounds)
         {
-            _stars[i].color = _weapon.ImprovementLevel+1 >= i ? Color.green : Color.grey;
+            bg.color = _config.ColorForLevel[_weapon.ImprovementLevel + 1];
         }
     }
 

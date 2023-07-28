@@ -1,10 +1,13 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class Weapon : Item
 {
     [SerializeField] protected GameObject ChargePrefab;
-    
+    [SerializeField] protected string[] Descriptions = new string[5];
+
+    protected const int MAX_IMPROVE_LEVEL = 4;
     protected List<Bullet> ChargesList = new();
 
     public int ChargesCount { get; protected set; }
@@ -35,7 +38,10 @@ public abstract class Weapon : Item
 
     public override void Use()
     {
-        ImprovementLevel = 0;
+        if (ImprovementLevel < 0)
+        {
+            ImprovementLevel = 0;
+        }
     }
 
     public override void UnUse()
@@ -44,6 +50,13 @@ public abstract class Weapon : Item
     }
 
     public abstract void Improve();
+    
+    public string GetDescriptionForNextLevel() => Descriptions[ImprovementLevel + 1];
+
+    protected void UpdatePrice()
+    {
+        CurrentPrice = BasicPrice * (ImprovementLevel + 1);
+    }
 
     protected void CreateCharges(int damage, bool setParent = false)
     {
@@ -70,6 +83,7 @@ public abstract class Weapon : Item
         charge.Init(damage);
 
         ChargesList.Add(charge);
+        ChargesCount = ChargesList.Count;
     }
 
     protected void ActivateCooldown()
@@ -93,7 +107,7 @@ public abstract class Weapon : Item
             PlayerData.GetPropertieValue(PlayerData.Properties.CriticalDamage)
         );
 
-        if (Random.value <= criticalDamagePercent / 100f)
+        if (UnityEngine.Random.value <= criticalDamagePercent / 100f)
         {
             damage *= 2;
         }

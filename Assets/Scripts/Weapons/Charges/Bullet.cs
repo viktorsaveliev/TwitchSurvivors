@@ -8,7 +8,6 @@ public abstract class Bullet : MonoBehaviour
     public float CurrentLifeTime { get; protected set; }
     public int Damage { get; private set; }
 
-    public event Action OnHitEnemy;
     public event Action LifeTimeEnded;
 
     protected Vector2 Direction;
@@ -22,17 +21,6 @@ public abstract class Bullet : MonoBehaviour
         if(CurrentLifeTime <= Time.time && !_isLifeTimeEnded)
         {
             OnLifeTimeEnded();
-        }
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.TryGetComponent(out Enemy enemy))
-        {
-            int damage = (int)PlayerData.CalculateValueWithPropertie(PlayerData.Properties.Damage, Damage);
-            enemy.Health.TakeDamage(damage);
-
-            OnHitEnemy?.Invoke();
         }
     }
 

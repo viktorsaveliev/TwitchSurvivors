@@ -37,9 +37,12 @@ public abstract class ShootableWeapon : Weapon, IChargesUser
 
     protected void OnChargesEnded()
     {
-        CurrentChargesCount = ChargesCount;
-        IsActive = false;
+        if (CurrentChargesCount <= 0)
+        {
+            CurrentChargesCount = ChargesCount;
+            ActivateCooldown();
+        }
 
-        ActivateCooldown();
+        IsActive = false;
     }
 }

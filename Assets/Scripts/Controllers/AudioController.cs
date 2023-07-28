@@ -3,14 +3,16 @@ using UnityEngine;
 
 public class AudioController
 {
+    private readonly AudioSource _soundtrack;
     private readonly AudioLowPassFilter _audioFilter;
     private readonly PauseHandler _pauseHandler;
 
     private readonly float _defaultValue = 10000f;
-    private readonly float _lowPassValue = 100f;
+    private readonly float _lowPassValue = 600f;
 
-    public AudioController(AudioLowPassFilter audioFilter, PauseHandler pauseHandler)
+    public AudioController(AudioSource audioSource, AudioLowPassFilter audioFilter, PauseHandler pauseHandler)
     {
+        _soundtrack = audioSource;
         _audioFilter = audioFilter;
         _pauseHandler = pauseHandler;
     }
@@ -19,13 +21,15 @@ public class AudioController
     {
         _pauseHandler.OnPauseActive += ApplyMutedEffect;
         _pauseHandler.OnPauseDeactive += DisableMutedEffect;
+
+        PlayerSettings settings = PlayerData.Settings;
+        _soundtrack.volume = settings.BaseVolume * settings.MusicVolume;
+        _soundtrack.Play();
     }
 
     private void ApplyMutedEffect()
     {
-        DOTween.To(() => _audioFilter.cutoffFrequency, value => _audioFilter.cutoffFrequency = value, _lowPassValue, 1f)
-            .SetEase(Ease.Linear);
-
+        _audioFilter.cutoffFrequency = _lowPassValue;
     }
 
     private void DisableMutedEffect()

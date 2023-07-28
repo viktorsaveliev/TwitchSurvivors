@@ -8,34 +8,68 @@ public class PauseHandler
     public event Action OnPauseDeactive;
     
     private readonly MonoBehaviour _monoBehaviour;
-    private readonly PlayerInterface _interface;
+    private readonly ShopUI _interface;
+    private readonly PauseMenu _pauseMenu;
+
+    private readonly IInputControl _input;
 
     private readonly float _durationForChangeTimeScale = 0.5f;
-    
+    private Coroutine _coroutine;
+
     public bool IsPause { get; private set; }
 
-
-    public PauseHandler(MonoBehaviour monoBehaviour, PlayerInterface playerInterface)
+    public PauseHandler(MonoBehaviour monoBehaviour, ShopUI playerInterface, IInputControl input, PauseMenu pauseMenu)
     {
         _monoBehaviour = monoBehaviour;
         _interface = playerInterface;
+        _input = input;
+        _pauseMenu = pauseMenu;
     }
 
     public void Init()
     {
+        Time.timeScale = 1f;
+        Time.fixedDeltaTime = 0.02f;
+        IsPause = false;
+
         _interface.OnShopOpened += ActivatePause;
         _interface.OnShopClosed += DeactivatePause;
+
+        _pauseMenu.OnClickResumeButton += DeactivatePause;
+        _pauseMenu.OnMenuHide += DeactivatePause;
+
+        _input.OnCallPauseMenu += SwitchPauseState;
+    }
+
+    private void SwitchPauseState()
+    {
+        if (IsPause) DeactivatePause();
+        else ActivatePause();
     }
 
     private void ActivatePause()
     {
-        _monoBehaviour.StartCoroutine(ChangeTimeScaleOverTime(0, _durationForChangeTimeScale));
+        if (_coroutine != null)
+        {
+            _monoBehaviour.StopCoroutine(_coroutine);
+        }
+
+        Time.timeScale = 0;
+        Time.fixedDeltaTime = 0f;
+        IsPause = true;
+
+        //_monoBehaviour.StartCoroutine(ChangeTimeScaleOverTime(0, _durationForChangeTimeScale));
         OnPauseActive?.Invoke();
     }
 
     private void DeactivatePause()
     {
-        _monoBehaviour.StartCoroutine(ChangeTimeScaleOverTime(1, _durationForChangeTimeScale));
+        if (_coroutine != null)
+        {
+            _monoBehaviour.StopCoroutine(_coroutine);
+        }
+
+        _coroutine = _monoBehaviour.StartCoroutine(ChangeTimeScaleOverTime(1, _durationForChangeTimeScale));
         OnPauseDeactive?.Invoke();
     }
 
@@ -44,7 +78,7 @@ public class PauseHandler
         float startTimeScale = Time.timeScale;
         float elapsedTime = 0f;
 
-        while (elapsedTime < duration)
+        while (_coroutine != null && elapsedTime < duration)
         {
             elapsedTime += Time.unscaledDeltaTime;
             Time.timeScale = Mathf.Lerp(startTimeScale, targetValue, elapsedTime / duration);
@@ -63,5 +97,7 @@ public class PauseHandler
             Time.fixedDeltaTime = 0.02f;
             IsPause = false;
         }
+
+        _coroutine = null;
     }
 }

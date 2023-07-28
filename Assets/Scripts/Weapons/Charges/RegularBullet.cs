@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class RegularBullet : Bullet, IMoveable
+public class RegularBullet : PlayerBullet, IMoveable
 {
     protected override void FixedUpdate()
     {

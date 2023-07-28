@@ -6,56 +6,62 @@ public class Pistol : ShootableWeapon
     public override void Init()
     {
         Name = "Глок 19 \"JO-JO\"";
-        Price = 500;
+        BasicPrice = CurrentPrice = 50;
 
-        SetCooldown(2f);
+        SetCooldown(1f);
         SetDamage(5);
         SetBulletSpeed(30f);
 
-        ChargesCount = 3;
-        DelayBetweenShoots = 0.5f;
+        CurrentChargesCount = ChargesCount = 4;
+        DelayBetweenShoots = 0.3f;
 
         CreateCharges(Damage);
     }
 
     public override void Improve()
     {
-        if (ImprovementLevel > 4) return;
+        if (ImprovementLevel >= MAX_IMPROVE_LEVEL) return;
         ImprovementLevel++;
 
         switch (ImprovementLevel)
         {
             case 1:
-                SetDamage(6);
+                SetDamage(10);
                 CreateCharge(Damage, true);
+
+                SetBulletSpeed(35f);
+                break;
+
+            case 2:
+                DelayBetweenShoots = 0.2f;
+
+                SetDamage(15);
+                SetCooldown(1.5f);
 
                 SetBulletSpeed(40f);
                 break;
 
-            case 2:
-                SetDamage(8);
-                SetCooldown(2f);
+            case 3:
+                DelayBetweenShoots = 0.1f;
+
+                SetDamage(20);
+                CreateCharge(Damage, true);
 
                 SetBulletSpeed(45f);
                 break;
 
-            case 3:
-                DelayBetweenShoots = 0.2f;
-                SetDamage(10);
+            case 4:
+                DelayBetweenShoots = 0.05f;
+
+                SetCooldown(0.7f);
+                SetDamage(30);
                 CreateCharge(Damage, true);
 
                 SetBulletSpeed(50f);
                 break;
-
-            case 4:
-                SetCooldown(1f);
-                SetDamage(20);
-                CreateCharge(Damage, true);
-
-                SetBulletSpeed(60f);
-                break;
         }
 
+        UpdatePrice();
         UpdateChargesDamage();
     }
 
@@ -77,6 +83,7 @@ public class Pistol : ShootableWeapon
             if (Target == null) break;
 
             ChargesList[i].Shoot(transform.position, Target, BulletSpeed);
+            CurrentChargesCount--;
             LookAtTarget(Target);
 
             yield return delayBetweenShoots;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 public class PlayerData
 {
     public static CharacterDataConfig SelectedCharacter;
+    public static PlayerSettings Settings = new();
 
     private static readonly PropertiesData _properties = new();
     private readonly Money _money = new();

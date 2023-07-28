@@ -26,6 +26,8 @@ public class CameraShaker
 
     public void CameraShake(int damage)
     {
+        if (!PlayerData.Settings.ScreenShaking) return;
+
         if (tween != null) _camera.DOKill();
         tween = _camera.DOShakePosition(0.2f, 0.3f, 3, 10);
     }

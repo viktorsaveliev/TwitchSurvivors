@@ -1,7 +1,7 @@
 using DG.Tweening;
 using UnityEngine;
 
-public class BanHammerCharge : Bullet
+public class BanHammerCharge : PlayerBullet
 {
     public override void Init(int damage)
     {

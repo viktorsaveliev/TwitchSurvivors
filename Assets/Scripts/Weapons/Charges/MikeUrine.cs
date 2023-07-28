@@ -1,7 +1,7 @@
 using DG.Tweening;
 using UnityEngine;
 
-public class MikeUrine : Bullet
+public class MikeUrine : PlayerBullet
 {
     public override void Init(int damage)
     {

@@ -16,7 +16,7 @@ public class SkillzorRap : Weapon, IAttackable
     public override void Init()
     {
         Name = "Ðýï Ñêèëëçîðà";
-        Price = 500;
+        BasicPrice = CurrentPrice = 50;
 
         SetDamage(5);
         SetCooldown(0.8f);
@@ -24,7 +24,7 @@ public class SkillzorRap : Weapon, IAttackable
 
     public override void Improve()
     {
-        if (ImprovementLevel > 3) return;
+        if (ImprovementLevel >= MAX_IMPROVE_LEVEL) return;
         ImprovementLevel++;
 
         switch (ImprovementLevel)
@@ -49,6 +49,8 @@ public class SkillzorRap : Weapon, IAttackable
                 SetDamage(20);
                 break;
         }
+
+        UpdatePrice();
     }
 
     private void SetRadius(float value)

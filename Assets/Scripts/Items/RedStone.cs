@@ -4,7 +4,7 @@ public class RedStone : PropertyItem
     public override void Init()
     {
         Name = "Рыжий камень";
-        Price = 400;
+        CurrentPrice = 40;
 
         AddPropertie(PlayerData.Properties.Damage, 20);
         AddPropertie(PlayerData.Properties.Distance, 30);

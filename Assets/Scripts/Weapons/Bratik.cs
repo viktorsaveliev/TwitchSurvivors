@@ -1,6 +1,5 @@
 using DG.Tweening;
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class Bratik : Weapon, IChargesUser
@@ -10,7 +9,6 @@ public abstract class Bratik : Weapon, IChargesUser
     protected Transform Target;
     
     private IEnemyCounter _enemyCounter;
-    private List<Enemy> _closestEnemies = new();
 
     public float MoveDurationToTarget { get; protected set; } = 0.4f;
 
@@ -26,7 +24,7 @@ public abstract class Bratik : Weapon, IChargesUser
         if (collision.TryGetComponent(out Enemy enemy))
         {
             enemy.Health.TakeDamage(GetDamageValue());
-            ShootOnNextTarget();
+            HitTarget();
 
             OnHitEnemy?.Invoke();
         }
@@ -34,40 +32,25 @@ public abstract class Bratik : Weapon, IChargesUser
 
     public void Shoot(IEnemyCounter enemyCounter)
     {
-        if (CurrentCooldown > Time.time) return;
+        if (CurrentCooldown > Time.time || IsActive) return;
 
         IsActive = true;
 
         _enemyCounter = enemyCounter;
 
-        if (_closestEnemies.Count == 0)
+        HitTarget();
+    }
+
+    private void HitTarget()
+    {
+        if (CurrentChargesCount-- > 0)
         {
             UpdateTargets();
-        }
 
-        ShootOnNextTarget();
-        //Transform target = enemyDetection.GetClosestEnemy(transform.position);
-    }
-
-    protected void ShootBehaviour(IEnemyCounter enemyCounter)
-    {
-        
-    }
-
-    private void ShootOnNextTarget()
-    {
-        if (_closestEnemies.Count > 0 && CurrentChargesCount-- > 0)
-        {
-            SetNextTarget();
-
-            if (Target == null || !Target.gameObject.activeSelf)
+            if (Target != null)
             {
-                DisableCharge();
-                return;
+                transform.DOMove(Target.position, MoveDurationToTarget);
             }
-
-            transform.DOMove(Target.position, MoveDurationToTarget);
-            //Shoot(_enemyCounter);
         }
         else
         {
@@ -75,29 +58,17 @@ public abstract class Bratik : Weapon, IChargesUser
         }
     }
 
-    protected void SetNextTarget()
-    {
-        if (_closestEnemies.Count > 0)
-        {
-            Target = _closestEnemies[0].transform;
-            _closestEnemies.Remove(_closestEnemies[0]);
-        }
-        else
-        {
-            Target = null;
-        }
-    }
-
     private void UpdateTargets()
     {
-        _closestEnemies = _enemyCounter.FindClosestEnemies(transform.position, ChargesCount);
+        if (_enemyCounter == null) return;
+
+        Target = _enemyCounter.GetRandomEnemy();
     }
 
     private void DisableCharge()
     {
-        _closestEnemies.Clear();
-
         ActivateCooldown();
+
         CurrentChargesCount = ChargesCount;
         IsActive = false;
     }

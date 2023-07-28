@@ -16,7 +16,8 @@ public class Bits : MonoBehaviour
     public void UpdateData(Vector2 position, int givesExp, Sprite sprite)
     {
         transform.position = position;
-        _givesExperience = _givesMoney = givesExp;
+        _givesExperience = givesExp;
+        _givesMoney = givesExp;
         _sprite.sprite = sprite;
 
         Show();

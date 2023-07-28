@@ -1,9 +1,14 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public abstract class Enemy : Unit
 {
+    [SerializeField] protected EnemyDataConfig _config;
+
+    public bool IsOnSpawnProccess;
+
     public event Action<string> OnNicknameChanged;
     public event Action<Enemy> OnDead;
 
@@ -11,6 +16,7 @@ public abstract class Enemy : Unit
     protected int Damage;
 
     private Coroutine _recoverySpeed;
+    private Vector2 _regularScale;
 
     public string Nickname 
     {
@@ -39,18 +45,34 @@ public abstract class Enemy : Unit
         }
     }
 
-    public virtual void Init(Transform target)
+    public override void Init()
     {
         base.Init();
-
-        Target = target;
         IsCanMove = true;
+        _regularScale = transform.localScale;
+
+        RegularSpeed = CurrentSpeed = _config.Speed;
+        Damage = _config.Damage;
+
+        Health.SetMaxHealth(_config.Health, true);
+
+        if (_config.Shield > 0)
+        {
+            Health.SetImmunity(_config.Shield);
+        }
     }
 
     public virtual void OnSpawn()
     {
+        IsOnSpawnProccess = false;
+
         CurrentSpeed = RegularSpeed;
-        transform.localScale = Vector2.one;
+        transform.localScale = _regularScale;
+    }
+
+    public void SetTarget(Transform target)
+    {
+        Target = target;
     }
 
     protected override void DeInit()

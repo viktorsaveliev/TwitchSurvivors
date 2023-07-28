@@ -11,7 +11,7 @@ public class Condamn : Weapon, IChargesUser
 
     public override void Improve()
     {
-        if (ImprovementLevel > 4) return;
+        if (ImprovementLevel >= MAX_IMPROVE_LEVEL) return;
         ImprovementLevel++;
 
         switch (ImprovementLevel)
@@ -32,12 +32,14 @@ public class Condamn : Weapon, IChargesUser
                 SetCooldown(15f);
                 break;
         }
+
+        UpdatePrice();
     }
 
     public override void Init()
     {
         Name = "ОСУЖДАЮ";
-        Price = 400;
+        BasicPrice = CurrentPrice = 35;
 
         SetCooldown(45f);
 

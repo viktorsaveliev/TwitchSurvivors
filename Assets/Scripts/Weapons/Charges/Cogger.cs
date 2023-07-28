@@ -1,7 +1,7 @@
 using DG.Tweening;
 using UnityEngine;
 
-public class Cogger : Bullet
+public class Cogger : PlayerBullet
 {
     private readonly float _rotationSpeed = 100f;
 

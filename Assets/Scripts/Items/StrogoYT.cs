@@ -4,7 +4,7 @@ public class StrogoYT : PropertyItem
     public override void Init()
     {
         Name = "Ютуб Строго";
-        Price = 100;
+        CurrentPrice = 10;
 
         AddPropertie(PlayerData.Properties.Greed, 20);
         AddPropertie(PlayerData.Properties.Health, -1);

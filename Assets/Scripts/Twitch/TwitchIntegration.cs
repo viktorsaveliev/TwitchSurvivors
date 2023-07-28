@@ -6,27 +6,40 @@ using UnityEngine;
 public class TwitchIntegration : MonoBehaviour
 {
     public IReadOnlyList<string> ChatNicknames => _chatNicknames;
+    public string RandomNicknameForReinsurance { get; private set; }
+    
     private readonly List<string> _chatNicknames = new();
 
     private TwitchConnect _twitchConnect;
-    private Coroutine _timer;
+    private bool _isRunning = true;
 
-    public string RandomNicknameForReinsurance { get; private set; }
+    private void Awake()
+    {
+        if (!PlayerData.Settings.TwitchIntegration)
+        {
+            _isRunning = false;
+            gameObject.SetActive(false);
+        }
+        else
+        {
+            Connect();
+        }
+    }
 
-    private async void Start()
+    public async void Connect()
     {
         _twitchConnect = new();
         _twitchConnect.ConnectToTwitch();
 
-        _timer ??= StartCoroutine(ClearTimer());
+        StartCoroutine(ClearTimer());
 
         await ProcessChatAsync();
     }
 
     private IEnumerator ClearTimer()
     {
-        WaitForSeconds waitForSeconds = new(35);
-        while (true)
+        WaitForSeconds waitForSeconds = new(32);
+        while (_isRunning)
         {
             yield return waitForSeconds;
 
@@ -50,7 +63,7 @@ public class TwitchIntegration : MonoBehaviour
 
     private async Task ProcessChatAsync()
     {
-        while (true)
+        while (_isRunning)
         {
             await Task.Delay(20);
 

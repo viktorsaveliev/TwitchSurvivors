@@ -4,7 +4,7 @@ public class LoafDog : PropertyItem
     public override void Init()
     {
         Name = "Ñ ÄÐ";
-        Price = 150;
+        CurrentPrice = 15;
 
         AddPropertie(PlayerData.Properties.Fortune, 5);
         AddPropertie(PlayerData.Properties.Health, 5);

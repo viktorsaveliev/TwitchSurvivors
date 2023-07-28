@@ -100,6 +100,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _icon: {fileID: 0}
   ChargePrefab: {fileID: 0}
+  Descriptions:
+  - 
+  - 
+  - 
+  - 
+  - 
   _text: {fileID: 2905739732980411410}
 --- !u!1 &3714310680814612483
 GameObject:
@@ -272,7 +278,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u041E\u0421\u0423\u0416\u0414\u0410\u042E"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 30e23fc609440e643a02506b69a401ea, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: f41c08a30b95169469e15c1da0ad9d92, type: 2}
   m_sharedMaterial: {fileID: -6363953359331758408, guid: 30e23fc609440e643a02506b69a401ea, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -336,6 +342,6 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: -0.000000059604645, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}

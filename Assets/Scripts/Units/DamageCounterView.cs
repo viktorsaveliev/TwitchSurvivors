@@ -17,6 +17,8 @@ public class DamageCounterView : MonoBehaviour
 
     private void EnableDamageCounter(int damage)
     {
+        if (!PlayerData.Settings.ShowDamage) return;
+
         TMP_Text text = FindFreeTextObject();
         text.rectTransform.anchoredPosition = Vector2.zero;
         text.text = $"{damage}";

@@ -37,12 +37,15 @@ public class EnemyCounter : IEnemyCounter
         _enemyDistances.Clear();
         _sortedClosestEnemies.Clear();
 
-        foreach (Enemy enemy in _enemyFactory.Enemies)
+        foreach (var enemyList in _enemyFactory.Enemies.Values)
         {
-            if (!enemy.gameObject.activeSelf) continue;
+            foreach (Enemy enemy in enemyList)
+            {
+                if (!enemy.gameObject.activeSelf) continue;
 
-            float distanceToTarget = Vector3.Distance(targetPosition, enemy.transform.position);
-            _enemyDistances.Add(new EnemyDistance { Enemy = enemy, DistanceToTarget = distanceToTarget });
+                float distanceToTarget = Vector3.Distance(targetPosition, enemy.transform.position);
+                _enemyDistances.Add(new EnemyDistance { Enemy = enemy, DistanceToTarget = distanceToTarget });
+            }
         }
 
         _enemyDistances.Sort((a, b) => a.DistanceToTarget.CompareTo(b.DistanceToTarget));
@@ -57,7 +60,10 @@ public class EnemyCounter : IEnemyCounter
         return _sortedClosestEnemies;
     }
 
-    public Enemy[] GetAllEnemies() => _enemyFactory.Enemies.ToArray();
+    public Enemy[] GetAllEnemies()
+    {
+        return _enemyFactory.Enemies.Values.SelectMany(enemyList => enemyList).ToArray();
+    }
 
     public Transform GetClosestEnemy(Vector2 position)
     {

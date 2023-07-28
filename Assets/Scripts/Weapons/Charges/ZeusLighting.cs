@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ZeusLighting : Bullet, IMoveable
+public class ZeusLighting : PlayerBullet, IMoveable
 {
     public Transform LastHittedTarget { get; private set; }
 

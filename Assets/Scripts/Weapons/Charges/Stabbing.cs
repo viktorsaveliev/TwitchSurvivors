@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Stabbing : Bullet
+public class Stabbing : PlayerBullet
 {
     public override void Init(int damage)
     {

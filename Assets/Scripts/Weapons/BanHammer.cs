@@ -3,9 +3,23 @@ using UnityEngine;
 
 public class BanHammer : Weapon, IChargesUser
 {
+    public override void Init()
+    {
+        Name = "Бан хаммер";
+        BasicPrice = CurrentPrice = 40;
+
+        SetCooldown(5);
+        SetDamage(15);
+
+        CurrentChargesCount = ChargesCount = 2;
+        DelayBetweenShoots = 0.3f;
+
+        CreateCharges(Damage);
+    }
+
     public override void Improve()
     {
-        if (ImprovementLevel > 4) return;
+        if (ImprovementLevel >= MAX_IMPROVE_LEVEL) return;
         ImprovementLevel++;
 
         switch (ImprovementLevel)
@@ -29,21 +43,8 @@ public class BanHammer : Weapon, IChargesUser
                 break;
         }
 
+        UpdatePrice();
         UpdateChargesDamage();
-    }
-
-    public override void Init()
-    {
-        Name = "Бан хаммер";
-        Price = 500;
-
-        SetCooldown(5);
-        SetDamage(15);
-
-        CurrentChargesCount = ChargesCount = 2;
-        DelayBetweenShoots = 0.3f;
-
-        CreateCharges(Damage);
     }
 
     public void Shoot(IEnemyCounter enemyCounter)
@@ -62,13 +63,13 @@ public class BanHammer : Weapon, IChargesUser
 
         WaitForSeconds delayBetweenShoots = new(DelayBetweenShoots);
 
-        foreach (Bullet charge in ChargesList)
+        for(int i = 0; i < ChargesCount; i++)
         {
             Transform target = enemyCounter.GetRandomEnemy();
 
             if (target != null)
             {
-                charge.Shoot(target.position, target, 0);
+                ChargesList[i].Shoot(target.position, target, 0);
             }
 
             yield return delayBetweenShoots;

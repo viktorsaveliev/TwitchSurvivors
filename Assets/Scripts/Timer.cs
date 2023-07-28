@@ -11,7 +11,7 @@ public class Timer : MonoBehaviour, ITimerSubject
     private TMP_Text _timerText;
 
     private readonly float _timerDuration = 1f;
-    private readonly float _secondsCounterForRegeneration = 10;
+    private readonly float _secondsCounterForRegeneration = 30;
     
     private bool _isPause;
     private float _currentPlayTime;

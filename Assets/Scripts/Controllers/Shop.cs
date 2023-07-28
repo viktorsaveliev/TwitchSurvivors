@@ -5,11 +5,11 @@ public class Shop
 {
     private readonly PlayerUnit _player;
     private readonly ItemFactory _itemFactory;
-    private readonly PlayerInterface _interface;
+    private readonly ShopUI _interface;
     
     private const int MAX_ITEMS_IN_SHOP = 5;
 
-    public Shop(PlayerUnit player, ItemFactory itemFactory, PlayerInterface playerInterface)
+    public Shop(PlayerUnit player, ItemFactory itemFactory, ShopUI playerInterface)
     {
         _player = player;
         _itemFactory = itemFactory;
@@ -19,7 +19,9 @@ public class Shop
     public void Init()
     {
         _player.Experience.OnPlayerGotNewLevel += OpenShop;
+
         _interface.OnShopClosed += OnShopClosed;
+        _interface.OnClickRerollButton += RerollItems;
     }
 
     private void OpenShop()
@@ -41,24 +43,29 @@ public class Shop
         itemArray = array.MixArray(itemArray);
 
         int full = 0;
-        for (int i = 0; i < itemArray.Length; i++)
+
+        foreach (Item item in itemArray)
         {
-            if (full >= MAX_ITEMS_IN_SHOP)
+            if (full >= MAX_ITEMS_IN_SHOP) break;
+            if (item is Weapon && _player.Weapons.Count == UnitWeapons.MAX_WEAPONS) continue;
+
+            if (_player.Inventory.HasItem(item))
             {
-                break;
+                if (item is PropertyItem) continue;
+                else if (item is Weapon weapon && weapon.ImprovementLevel > 3) continue;
             }
 
-            if (_player.Inventory.HasItem(itemArray[i]))
-            {
-                if (itemArray[i] is PropertyItem) continue;
-                else if (itemArray[i] is Weapon weapon && weapon.ImprovementLevel > 3) continue;
-            }
-
-            ShopCard card = _interface.CreateCard(itemArray[i]);
+            ShopCard card = _interface.CreateCard(item);
             card.OnSelectCard += OnSelectItem;
 
             full++;
         }
+    }
+
+    private void RerollItems()
+    {
+        _interface.DeleteAllCards();
+        ShowRandomItems();
     }
 
     private void OnSelectItem(Item item, ShopCard card)

@@ -5,11 +5,12 @@ public abstract class Item : MonoBehaviour
     [SerializeField] private Sprite _icon;
 
     protected string Name;
-    protected int Price;
+    protected int CurrentPrice;
+    protected int BasicPrice;
 
     public Sprite GetIcon() => _icon;
     public string GetName() => Name;
-    public int GetPrice() => Price;
+    public int GetPrice() => CurrentPrice;
 
     public abstract void Init();
     public abstract void Use();

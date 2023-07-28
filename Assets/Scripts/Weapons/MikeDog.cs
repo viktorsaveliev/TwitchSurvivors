@@ -22,7 +22,7 @@ public class MikeDog : ShootableWeapon, IMoveable, IFollower
     public override void Init()
     {
         Name = "Майк";
-        Price = 300;
+        BasicPrice = CurrentPrice = 25;
 
         SetCooldown(5);
         SetDamage(5);
@@ -35,7 +35,7 @@ public class MikeDog : ShootableWeapon, IMoveable, IFollower
 
     public override void Improve()
     {
-        if (ImprovementLevel > 4) return;
+        if (ImprovementLevel >= MAX_IMPROVE_LEVEL) return;
         ImprovementLevel++;
 
         switch (ImprovementLevel)
@@ -60,6 +60,7 @@ public class MikeDog : ShootableWeapon, IMoveable, IFollower
                 break;
         }
 
+        UpdatePrice();
         UpdateChargesDamage();
     }
 

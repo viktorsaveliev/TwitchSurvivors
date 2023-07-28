@@ -9,12 +9,24 @@ public class Health : IDamageable
     public int CurrentValue => _health;
     public int MaxValue => _maxHealth;
 
+    private int _immunityFromShots;
     private int _maxHealth;
     private int _health;
 
+    public Health(int immunityFromShots = 0)
+    {
+        _immunityFromShots = immunityFromShots;
+    }
+
+    public void SetImmunity(int countShots)
+    {
+        if (countShots < 1 || countShots > 5) return;
+        _immunityFromShots = countShots;
+    }
+
     public void SetMaxHealth(int value, bool setCurrentHealthToMax)
     {
-        if (value < 10 || value > 1000) return;
+        if (value < 10 || value > 10000) return;
         _maxHealth = value;
 
         if (setCurrentHealthToMax)
@@ -35,12 +47,20 @@ public class Health : IDamageable
 
     public void TakeDamage(int value)
     {
-        _health -= value;
-        OnTakedDamage?.Invoke(value);
-
-        if (_health <= 0)
+        if(_immunityFromShots > 0)
         {
-            OnHealthOver?.Invoke();
+            _immunityFromShots--;
+        }
+        else
+        {
+            _health -= value;
+            OnTakedDamage?.Invoke(value);
+
+            if (_health <= 0)
+            {
+                _health = 0;
+                OnHealthOver?.Invoke();
+            }
         }
     }
 

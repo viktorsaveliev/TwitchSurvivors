@@ -8,7 +8,7 @@ public class Zeus : ShootableWeapon
 
     public override void Improve()
     {
-        if (ImprovementLevel > 4) return;
+        if (ImprovementLevel >= MAX_IMPROVE_LEVEL) return;
         ImprovementLevel++;
 
         switch (ImprovementLevel)
@@ -31,23 +31,25 @@ public class Zeus : ShootableWeapon
                 break;
         }
 
+        UpdatePrice();
         UpdateChargesDamage();
     }
 
     public override void Init()
     {
         Name = "Молнии Олимпуса";
-        Price = 500;
+        BasicPrice = CurrentPrice = 45;
 
         SetCooldown(6);
         SetDamage(10);
         SetBulletSpeed(20f);
 
-        CurrentChargesCount = ChargesCount = 2;
         CreateCharge(Damage);
+        CurrentChargesCount = ChargesCount = 2;
 
-        ChargesList[0].OnHitEnemy += ShootOnNextTarget;
-        ChargesList[0].LifeTimeEnded += OnChargesEnded;
+        PlayerBullet bullet = (PlayerBullet) ChargesList[0];
+        bullet.OnHitEnemy += ShootOnNextTarget;
+        bullet.LifeTimeEnded += OnChargesEnded;
     }
 
     protected override IEnumerator ShootBehaviour(IEnemyCounter enemyCounter)

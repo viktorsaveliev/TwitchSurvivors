@@ -23,6 +23,8 @@ public class CombineEnemyAndTwitch
 
     private void ChangeEnemyNickname(Enemy enemy)
     {
+        if (enemy is IBoss) return;
+
         string nickname = _twitch.RandomNicknameForReinsurance;
 
         if (_twitch.ChatNicknames.Count > 0)

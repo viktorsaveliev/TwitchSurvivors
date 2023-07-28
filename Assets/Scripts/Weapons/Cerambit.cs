@@ -14,7 +14,7 @@ public class Cerambit : Weapon, IChargesUser
     public override void Init()
     {
         Name = "Керамбит \"Fade\"";
-        Price = 300;
+        BasicPrice = CurrentPrice = 20;
 
         CurrentChargesCount = ChargesCount = 2;
         DelayBetweenShoots = 0.2f;
@@ -26,7 +26,7 @@ public class Cerambit : Weapon, IChargesUser
 
     public override void Improve()
     {
-        if (ImprovementLevel > 4) return;
+        if (ImprovementLevel >= MAX_IMPROVE_LEVEL) return;
         ImprovementLevel++;
 
         switch (ImprovementLevel)
@@ -52,6 +52,7 @@ public class Cerambit : Weapon, IChargesUser
                 break;
         }
 
+        UpdatePrice();
         UpdateChargesDamage();
     }
 

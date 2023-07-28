@@ -19,8 +19,8 @@ public class PlayerBehaviour : MonoBehaviour
     {
         InitPlayerProperties();
 
-        AddItem<Condamn>();
         AddItem<Pistol>();
+        //AddItem<Sword>();
 
         _isCanAttack = true;
         _attackTimer = StartCoroutine(StartAttackTimer());

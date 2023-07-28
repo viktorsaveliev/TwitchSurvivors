@@ -8,7 +8,7 @@ public class Coggers : Weapon, IChargesUser
     public override void Init()
     {
         Name = "COGGERS";
-        Price = 500;
+        BasicPrice = CurrentPrice = 50;
 
         SetDamage(5);
         SetCooldown(10f);
@@ -18,9 +18,9 @@ public class Coggers : Weapon, IChargesUser
         UpdatePositionForCoggers();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
-        transform.Rotate(_rotationSpeed * Time.deltaTime * Vector3.forward);
+        transform.Rotate(_rotationSpeed * Time.fixedDeltaTime * Vector3.forward);
     }
 
     public void Shoot(IEnemyCounter enemyDetection)
@@ -37,7 +37,7 @@ public class Coggers : Weapon, IChargesUser
 
     public override void Improve()
     {
-        if (ImprovementLevel > 4) return;
+        if (ImprovementLevel >= MAX_IMPROVE_LEVEL) return;
         ImprovementLevel++;
 
         switch (ImprovementLevel)
@@ -58,7 +58,6 @@ public class Coggers : Weapon, IChargesUser
             case 3:
                 SetCooldown(6f);
                 SetDamage(15);
-                CreateCharge(Damage, true);
                 UpdatePositionForCoggers();
                 break;
 
@@ -68,6 +67,7 @@ public class Coggers : Weapon, IChargesUser
                 break;
         }
 
+        UpdatePrice();
         UpdateChargesDamage();
     }
 
