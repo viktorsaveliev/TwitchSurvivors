@@ -39,14 +39,14 @@ public class Condamn : Weapon, IChargesUser
     public override void Init()
     {
         Name = "ОСУЖДАЮ";
-        BasicPrice = CurrentPrice = 35;
+        BasicPrice = CurrentPrice = 40;
 
         SetCooldown(45f);
 
         _camera = Camera.main;
     }
 
-    public bool IsVisible(Transform target)
+    public bool IsVisibleOnCamera(Transform target)
     {
         if (!target.TryGetComponent<Collider2D>(out var collider)) return false;
 
@@ -61,7 +61,7 @@ public class Condamn : Weapon, IChargesUser
 
         foreach (Enemy enemy in allEnemies)
         {
-            if (!enemy.gameObject.activeSelf || !IsVisible(enemy.transform)) continue;
+            if (!enemy.gameObject.activeSelf || !IsVisibleOnCamera(enemy.transform)) continue;
 
             enemy.Health.TakeDamage(1000);
         }

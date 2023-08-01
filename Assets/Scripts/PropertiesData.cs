@@ -20,7 +20,7 @@ public class PropertiesData
         Properties.Add(PlayerData.Properties.Greed,         0);
     }
 
-    public float CalculateValueWithPropertie(PlayerData.Properties propertie, float value, bool increasePercentToValue = true)
+    public float CalculatePropertieValue(PlayerData.Properties propertie, float value, bool increasePercentToValue = true)
     {
         int propertieValue = PlayerData.GetPropertieValue(propertie);
 

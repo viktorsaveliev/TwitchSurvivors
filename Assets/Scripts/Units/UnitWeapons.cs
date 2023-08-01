@@ -11,16 +11,27 @@ public class UnitWeapons
 
     private readonly MonoBehaviour _monoBehaviour;
     private readonly float _delayBetweenAnotherWeapons = 0.1f;
+    private readonly Transform[] _weaponPositions;
+    private readonly GameObject _unitGameObject;
 
-    public UnitWeapons(MonoBehaviour monoBehaviour)
+    private float _hideWeaponTime;
+
+    public UnitWeapons(MonoBehaviour monoBehaviour, Transform[] weaponPositions)
     {
         _monoBehaviour = monoBehaviour;
+        _weaponPositions = weaponPositions;
+        _unitGameObject = monoBehaviour.gameObject;
     }
 
     public void Equip(Weapon weapon)
     {
         weapon.gameObject.SetActive(true);
         _weapons.Add(weapon);
+
+        if (weapon.IsVisible)
+        {
+            weapon.transform.position = _weaponPositions[_weapons.Count - 1].position;
+        }
     }
 
     public void RemoveWeapon(Weapon weapon)
@@ -33,9 +44,17 @@ public class UnitWeapons
 
     public void Attack(IEnemyCounter enemyDetection)
     {
-        if (_monoBehaviour.gameObject.activeSelf)
+        if (_hideWeaponTime <= Time.time)
         {
-            _monoBehaviour.StartCoroutine(AttackWithDelay(enemyDetection));
+            if (_hideWeaponTime != 0)
+            {
+                ShowWeapons();
+            }
+
+            if (_unitGameObject.activeSelf)
+            {
+                _monoBehaviour.StartCoroutine(AttackWithDelay(enemyDetection));
+            }
         }
     }
 
@@ -52,5 +71,24 @@ public class UnitWeapons
 
             yield return delayBetweenAnotherWeapons;
         }
+    }
+
+    private void ShowWeapons()
+    {
+        for (int i = 0; i < _weapons.Count; i++)
+        {
+            _weapons[i].gameObject.SetActive(true);
+            _weapons[i].ResetBehaviour();
+            _hideWeaponTime = 0;
+        }
+    }
+
+    public void HideWeapons(float time)
+    {
+        for (int i = 0; i < _weapons.Count; i++)
+        {
+            _weapons[i].gameObject.SetActive(false);
+        }
+        _hideWeaponTime = Time.time + time;
     }
 }

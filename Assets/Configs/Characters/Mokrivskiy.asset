@@ -12,14 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de7e9500e98085843aec3a871b44f353, type: 3}
   m_Name: Mokrivskiy
   m_EditorClassIdentifier: 
+  _name: "\u041C\u043E\u043A\u0440\u0438\u0432\u0441\u043A\u0438\u0439"
+  _icon: {fileID: 1551449630, guid: 3b3cf8f28bdc33e459c69c9e5690010c, type: 3}
+  _description: "\u0413\u043E\u0434\u044B \u043F\u0440\u043E\u043C\u0447\u0430\u0442\u0441\u044F,
+    \u043D\u043E \u043F\u0430\u043C\u044F\u0442\u044C \u043D\u0435 \u0434\u0430\u0441\u0442
+    \u0437\u0430\u0431\u044B\u0442\u044C \u0432\u0435\u043B\u0438\u043A\u043E\u0435:
+    \"\u0414\u0430\u0448\u0430, \u0437\u0430\u0431\u0435\u0440\u0438 \u043A\u043E\u0442\u043E\u0432\""
   _health: 0
-  _regeneration: 10
-  _damage: 0
+  _regeneration: 0
+  _damage: 5
   _criticalDamage: 0
   _attackSpeed: 0
-  _distance: 15
+  _distance: 10
   _armor: 0
   _dodge: 0
-  _moveSpeed: 0
+  _moveSpeed: -5
   _fortune: 0
   _greed: 0

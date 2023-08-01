@@ -4,21 +4,21 @@ using UnityEngine;
 public abstract class Unit : MonoBehaviour
 {
     protected Animator Animator;
+    protected Rigidbody2D Rigidbody;
     
     private readonly float _spawnDelay = 2f;
-    
-    private Rigidbody2D _rigidbody;
     private UnitAnimation Animation;
 
     public Health Health { get; private set; }
     public float CurrentSpeed { get; protected set; }
     public float CurrentSpawnDelay { get; protected set; }
     public float RegularSpeed { get; protected set; }
+    public float OriginalSpeed { get; protected set; }
     public float DamageImmunity { get; set; }
 
     public virtual void Init()
     {
-        _rigidbody = GetComponent<Rigidbody2D>();
+        Rigidbody = GetComponent<Rigidbody2D>();
         Animator = GetComponent<Animator>();
 
         Health ??= new();
@@ -31,15 +31,18 @@ public abstract class Unit : MonoBehaviour
 
     protected abstract void DeInit();
 
-    public void Move(Vector2 direction)
+    public virtual void Move(Vector2 direction)
     {
         direction.Normalize();
-        _rigidbody.velocity = CurrentSpeed * direction;
+        Rigidbody.velocity = CurrentSpeed * direction;
     }
 
     protected virtual void OnTakedDamage(int damage)
     {
-        
+        if (Health.CurrentValue > 0)
+        {
+            Animator.SetTrigger("TakeDamage");
+        }
     }
 
     protected virtual void OnDeath()

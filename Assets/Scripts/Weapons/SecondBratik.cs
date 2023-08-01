@@ -4,7 +4,7 @@ public class SecondBratik : Bratik
     public override void Init()
     {
         Name = "Второй братик";
-        BasicPrice = CurrentPrice = 30;
+        BasicPrice = CurrentPrice = 40;
 
         SetCooldown(3);
         SetDamage(25);

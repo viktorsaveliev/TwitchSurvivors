@@ -38,7 +38,7 @@ public class TwitchIntegration : MonoBehaviour
 
     private IEnumerator ClearTimer()
     {
-        WaitForSeconds waitForSeconds = new(32);
+        WaitForSeconds waitForSeconds = new(62);
         while (_isRunning)
         {
             yield return waitForSeconds;

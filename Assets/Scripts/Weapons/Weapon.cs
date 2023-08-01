@@ -1,10 +1,12 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class Weapon : Item
 {
+    public bool IsVisible => _isVisible;
+    
     [SerializeField] protected GameObject ChargePrefab;
+    [SerializeField] private bool _isVisible;
     [SerializeField] protected string[] Descriptions = new string[5];
 
     protected const int MAX_IMPROVE_LEVEL = 4;
@@ -41,6 +43,7 @@ public abstract class Weapon : Item
         if (ImprovementLevel < 0)
         {
             ImprovementLevel = 0;
+            ActivateCooldown();
         }
     }
 
@@ -52,6 +55,11 @@ public abstract class Weapon : Item
     public abstract void Improve();
     
     public string GetDescriptionForNextLevel() => Descriptions[ImprovementLevel + 1];
+
+    public void ResetBehaviour()
+    {
+        IsActive = false;
+    }
 
     protected void UpdatePrice()
     {
@@ -88,21 +96,21 @@ public abstract class Weapon : Item
 
     protected void ActivateCooldown()
     {
-        float cooldown = PlayerData.CalculateValueWithPropertie(PlayerData.Properties.AttackSpeed, Cooldown, false);
+        float cooldown = PlayerData.CalculatePropertieValue(PlayerData.Properties.AttackSpeed, Cooldown, false);
         CurrentCooldown = Time.time + cooldown;
     }
 
     protected float GetCooldownValue()
     {
-        float cooldown = PlayerData.CalculateValueWithPropertie(PlayerData.Properties.AttackSpeed, Cooldown);
+        float cooldown = PlayerData.CalculatePropertieValue(PlayerData.Properties.AttackSpeed, Cooldown);
         return cooldown;
     }
 
     protected int GetDamageValue()
     {
-        int damage = (int) PlayerData.CalculateValueWithPropertie(PlayerData.Properties.Damage, Damage);
+        int damage = (int) PlayerData.CalculatePropertieValue(PlayerData.Properties.Damage, Damage);
 
-        int criticalDamagePercent = (int) PlayerData.CalculateValueWithPropertie(
+        int criticalDamagePercent = (int) PlayerData.CalculatePropertieValue(
             PlayerData.Properties.CriticalDamage, 
             PlayerData.GetPropertieValue(PlayerData.Properties.CriticalDamage)
         );

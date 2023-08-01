@@ -8,7 +8,7 @@ public class BanHammer : Weapon, IChargesUser
         Name = "Бан хаммер";
         BasicPrice = CurrentPrice = 40;
 
-        SetCooldown(5);
+        SetCooldown(3f);
         SetDamage(15);
 
         CurrentChargesCount = ChargesCount = 2;
@@ -29,7 +29,7 @@ public class BanHammer : Weapon, IChargesUser
                 break;
 
             case 2:
-                SetCooldown(3f);
+                SetCooldown(2f);
                 CreateCharge(Damage);
                 break;
 
@@ -39,6 +39,7 @@ public class BanHammer : Weapon, IChargesUser
                 break;
 
             case 4:
+                SetCooldown(1f);
                 SetDamage(50);
                 break;
         }

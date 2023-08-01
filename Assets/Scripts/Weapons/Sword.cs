@@ -8,10 +8,11 @@ public class Sword : Weapon, IChargesUser
 
     private readonly Vector2[] _improvementLevelScale =
     {
-        new Vector2(0.16f, 3.7f),
-        new Vector2(0.2f, 4.5f),
-        new Vector2(0.25f, 5.5f),
-        new Vector2(0.3f, 6.5f)
+        new Vector2(1.5f, 1.5f),
+        new Vector2(2f, 2f),
+        new Vector2(2.5f, 2.5f),
+        new Vector2(3f, 3f),
+        new Vector2(3.5f, 3.5f)
     };
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -25,13 +26,13 @@ public class Sword : Weapon, IChargesUser
     public override void Init()
     {
         Name = "Меч модератора";
-        BasicPrice = CurrentPrice = 45;
+        BasicPrice = CurrentPrice = 50;
 
         SetDamage(10);
         SetCooldown(3f);
 
         CreateCharge(Damage, true);
-        ChargesCount = CurrentChargesCount = 2;
+        ChargesCount = CurrentChargesCount = 1;
     }
 
     public void Shoot(IEnemyCounter enemyCounter)
@@ -65,6 +66,7 @@ public class Sword : Weapon, IChargesUser
 
             case 4:
                 SetDamage(45);
+                SetCooldown(1f);
                 break;
         }
 
@@ -82,7 +84,7 @@ public class Sword : Weapon, IChargesUser
         ChargesList[0].gameObject.SetActive(true);
         ChargesList[0].transform.DOScale(_improvementLevelScale[ImprovementLevel], 0.3f);
 
-        for(int i = 0; i < ChargesCount; i++)
+        for (int i = 0; i < ChargesCount; i++)
         {
             transform.rotation = Quaternion.Euler(0, 0, 0);
             float totalRotation = 0;

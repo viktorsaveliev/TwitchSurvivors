@@ -10,7 +10,7 @@ public abstract class Bratik : Weapon, IChargesUser
     
     private IEnemyCounter _enemyCounter;
 
-    public float MoveDurationToTarget { get; protected set; } = 0.4f;
+    public float MoveDurationToTarget { get; protected set; } = 0.8f;
 
     private void OnEnable()
     {
@@ -26,6 +26,7 @@ public abstract class Bratik : Weapon, IChargesUser
             enemy.Health.TakeDamage(GetDamageValue());
             HitTarget();
 
+            CurrentChargesCount--;
             OnHitEnemy?.Invoke();
         }
     }
@@ -33,9 +34,6 @@ public abstract class Bratik : Weapon, IChargesUser
     public void Shoot(IEnemyCounter enemyCounter)
     {
         if (CurrentCooldown > Time.time || IsActive) return;
-
-        IsActive = true;
-
         _enemyCounter = enemyCounter;
 
         HitTarget();
@@ -43,13 +41,15 @@ public abstract class Bratik : Weapon, IChargesUser
 
     private void HitTarget()
     {
-        if (CurrentChargesCount-- > 0)
+        if (CurrentChargesCount > 0)
         {
             UpdateTargets();
 
             if (Target != null)
             {
-                transform.DOMove(Target.position, MoveDurationToTarget);
+                IsActive = true;
+                transform.DOMove(Target.position, MoveDurationToTarget)
+                    .OnComplete(() => IsActive = false);
             }
         }
         else

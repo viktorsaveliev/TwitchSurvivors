@@ -1,11 +1,13 @@
+using DG.Tweening;
 using System;
 using System.Collections;
 using UnityEngine;
-using static UnityEngine.EventSystems.EventTrigger;
 
 public abstract class Enemy : Unit
 {
     [SerializeField] protected EnemyDataConfig _config;
+    [SerializeField] private string _nickname;
+    [SerializeField] private Transform _skinTransform;
 
     public bool IsOnSpawnProccess;
 
@@ -14,24 +16,48 @@ public abstract class Enemy : Unit
 
     protected Transform Target;
     protected int Damage;
+    protected bool OnLeft;
 
     private Coroutine _recoverySpeed;
     private Vector2 _regularScale;
+    private Tween _tweenAnim;
 
-    public string Nickname 
+    public string Nickname
     {
         get
         {
-            return Nickname;
+            return _nickname;
         }
 
         set
         {
-            OnNicknameChanged?.Invoke(value);
+            if (_nickname != value)
+            {
+                _nickname = value;
+                OnNicknameChanged?.Invoke(value);
+            }
         }
     }
 
     public bool IsCanMove { get; protected set; }
+
+    protected virtual void FixedUpdate()
+    {
+        if (IsCanMove && Target != null)
+        {
+            Vector2 direction = Target.position - transform.position;
+            Move(direction);
+
+            if (OnLeft && direction.x < 0)
+            {
+                Flip(false);
+            }
+            else if (!OnLeft && direction.x > 0)
+            {
+                Flip(true);
+            }
+        }
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -39,7 +65,9 @@ public abstract class Enemy : Unit
         {
             if (!player.IsDodged())
             {
-                int damage = (int)PlayerData.CalculateValueWithPropertie(PlayerData.Properties.Armor, Damage, false);
+                player.LastHittedEnemyNickname = Nickname;
+                
+                int damage = (int)PlayerData.CalculatePropertieValue(PlayerData.Properties.Armor, Damage, false);
                 player.Health.TakeDamage(damage);
             }
         }
@@ -48,6 +76,9 @@ public abstract class Enemy : Unit
     public override void Init()
     {
         base.Init();
+
+        _nickname = string.Empty;
+
         IsCanMove = true;
         _regularScale = transform.localScale;
 
@@ -106,5 +137,14 @@ public abstract class Enemy : Unit
         CurrentSpeed = RegularSpeed;
 
         _recoverySpeed = null;
+    }
+
+    private void Flip(bool onLeft)
+    {
+        OnLeft = onLeft;
+        _tweenAnim?.Complete();
+        _tweenAnim = _skinTransform
+            .DOScale(new Vector2(-_skinTransform.localScale.x, _skinTransform.localScale.y), 0.2f)
+            .OnComplete(() => _tweenAnim = null);
     }
 }

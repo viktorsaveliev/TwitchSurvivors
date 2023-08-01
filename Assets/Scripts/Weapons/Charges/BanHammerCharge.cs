@@ -15,6 +15,6 @@ public class BanHammerCharge : PlayerBullet
 
         transform.position = startPosition;
         transform.localScale = Vector2.zero;
-        transform.DOScale(2f, 0.2f).OnComplete(() => gameObject.SetActive(false));
+        transform.DOScale(2f, LifeTime).OnComplete(() => gameObject.SetActive(false));
     }
 }

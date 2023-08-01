@@ -1,12 +1,16 @@
+using System;
 using System.Linq;
 using UnityEngine;
 
 public class Shop
 {
+    public event Action OnShopOpened;
+    public event Action OnShopClosed;
+
     private readonly PlayerUnit _player;
     private readonly ItemFactory _itemFactory;
     private readonly ShopUI _interface;
-    
+
     private const int MAX_ITEMS_IN_SHOP = 5;
 
     public Shop(PlayerUnit player, ItemFactory itemFactory, ShopUI playerInterface)
@@ -20,7 +24,7 @@ public class Shop
     {
         _player.Experience.OnPlayerGotNewLevel += OpenShop;
 
-        _interface.OnShopClosed += OnShopClosed;
+        _interface.OnShopClosed += CloseShop;
         _interface.OnClickRerollButton += RerollItems;
     }
 
@@ -28,11 +32,13 @@ public class Shop
     {
         _interface.ShowShop();
         ShowRandomItems();
+        OnShopOpened?.Invoke();
     }
 
-    private void OnShopClosed()
+    private void CloseShop()
     {
         _player.UpdateProperties();
+        OnShopClosed?.Invoke();
     }
 
     private void ShowRandomItems()

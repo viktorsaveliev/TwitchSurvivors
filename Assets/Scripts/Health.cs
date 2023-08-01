@@ -6,9 +6,10 @@ public class Health : IDamageable
     public event Action OnHealthChanged;
     public event Action OnHealthOver;
 
+    public readonly int OriginalMaxHealth = 100;
     public int CurrentValue => _health;
     public int MaxValue => _maxHealth;
-
+    
     private int _immunityFromShots;
     private int _maxHealth;
     private int _health;
@@ -32,6 +33,10 @@ public class Health : IDamageable
         if (setCurrentHealthToMax)
         {
             SetHealth(value);
+        }
+        else
+        {
+            OnHealthChanged?.Invoke();
         }
     }
 

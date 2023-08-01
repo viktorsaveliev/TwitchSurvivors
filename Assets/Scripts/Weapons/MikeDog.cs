@@ -22,7 +22,7 @@ public class MikeDog : ShootableWeapon, IMoveable, IFollower
     public override void Init()
     {
         Name = "Майк";
-        BasicPrice = CurrentPrice = 25;
+        BasicPrice = CurrentPrice = 30;
 
         SetCooldown(5);
         SetDamage(5);

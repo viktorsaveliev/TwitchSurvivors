@@ -21,8 +21,13 @@ public class ItemCard : ShopCard
         int index = 0;
         foreach (var pair in _item.Properties)
         {
-            string percent = pair.Value > 0 ? $"<color=green>+{pair.Value}</color>" : $"<color=red>{pair.Value}</color>";
-            PropertiesText[index].text = $"{PlayerData.PropertiesName[(int)pair.Key]}: {percent}%";
+            if (index >= PropertiesText.Length)
+            {
+                break;
+            }
+
+            string percent = pair.Value > 0 ? $"<color=#9353E2>+{pair.Value}</color>" : $"<color=#E2535A>{pair.Value}</color>";
+            PropertiesText[index].text = $"{percent}% {PlayerData.PropertiesName[(int)pair.Key]}";
             index++;
         }
 

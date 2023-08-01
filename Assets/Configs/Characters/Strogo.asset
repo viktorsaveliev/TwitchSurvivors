@@ -12,14 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de7e9500e98085843aec3a871b44f353, type: 3}
   m_Name: Strogo
   m_EditorClassIdentifier: 
+  _name: "\u0421\u0442\u0440\u043E\u0433\u043E"
+  _icon: {fileID: -413539015, guid: 3b3cf8f28bdc33e459c69c9e5690010c, type: 3}
+  _description: "\u0412 \u043A\u0430\u043C\u0435\u043D\u044C \u0441\u0442\u0440\u0435\u043B\u044F\u0442\u044C
+    \u2014 \u0442\u043E\u043B\u044C\u043A\u043E \u0441\u0442\u0440\u0435\u043B\u044B
+    \u0442\u0435\u0440\u044F\u0442\u044C"
   _health: 0
   _regeneration: 0
-  _damage: 5
+  _damage: -5
   _criticalDamage: 0
   _attackSpeed: 0
   _distance: 0
-  _armor: 0
-  _dodge: 15
+  _armor: 10
+  _dodge: 5
   _moveSpeed: 0
   _fortune: 0
-  _greed: 5
+  _greed: 0

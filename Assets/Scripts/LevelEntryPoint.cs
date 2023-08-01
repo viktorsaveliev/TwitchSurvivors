@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using Zenject;
 
 public sealed class LevelEntryPoint : MonoBehaviour
@@ -18,6 +19,7 @@ public sealed class LevelEntryPoint : MonoBehaviour
     [Inject] private readonly Timer _timer;
     [Inject] private readonly DeathFXController _deathFX;
 
+    [SerializeField] private PlayerDataShower _dataShower;
     [SerializeField] private PlayerBehaviour _playerBehaviour;
     [SerializeField] private PauseMenu _pauseMenu;
 
@@ -55,15 +57,17 @@ public sealed class LevelEntryPoint : MonoBehaviour
         _cameraShaker = new(_playerUnit);
         _cameraShaker.Init();
 
+        _shop = new(_playerUnit, _itemFactory, _shopUI);
+        _shop.Init();
+
+        _dataShower.Init(_shop);
+
         _playerBehaviour.Init();
 
         _combineEnemyAndTwitch = new(_twitch, _enemySpawner);
         _combineEnemyAndTwitch.Init();
 
         _bits.Init();
-
-        _shop = new(_playerUnit, _itemFactory, _shopUI);
-        _shop.Init();
 
         _pause = new(this, _shopUI, _playerInput, _pauseMenu);
         _pause.Init();

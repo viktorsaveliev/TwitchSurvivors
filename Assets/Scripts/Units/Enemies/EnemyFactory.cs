@@ -14,21 +14,21 @@ public class EnemyFactory : MonoBehaviour
 
     private readonly Dictionary<EnemyType, int> _enemyCapacity = new()
     {
-        { EnemyType.OMEGALUL,   30 },
+        //{ EnemyType.OMEGALUL,   0 },
         { EnemyType.Clueless,   5 },
-        { EnemyType.EZ,         4 },
+        { EnemyType.EZ,         5 },
         { EnemyType.Smile_D,    6 },
         { EnemyType.catDespair, 2 },
         { EnemyType.xdd,        5 },
-        { EnemyType.EBLAN,      15 },
-        { EnemyType.Starege,    2 },
-        { EnemyType.KEKW,       2 },
-        { EnemyType.Chel,       4 },
+        { EnemyType.EBLAN,      30 },
+        { EnemyType.Starege,    30 },
+        { EnemyType.KEKW,       30 },
+        { EnemyType.Chel,       15 },
         { EnemyType.Basedge,    2 },
-        { EnemyType.Jokerge,    2 },
+        { EnemyType.Jokerge,    5 },
         { EnemyType.rjaka,      2 },
-        { EnemyType.BibleThump, 8 },
-        { EnemyType.Smile2,     1 },
+        { EnemyType.BibleThump, 10 },
+        { EnemyType.BigSmile,     1 },
         { EnemyType.Bratishkin, 1 }
     };
 
@@ -36,7 +36,7 @@ public class EnemyFactory : MonoBehaviour
 
     public enum EnemyType
     {
-        OMEGALUL,
+        //OMEGALUL,
         Clueless,
         EZ,
         Smile_D,
@@ -50,7 +50,7 @@ public class EnemyFactory : MonoBehaviour
         Jokerge,
         rjaka,
         BibleThump,
-        Smile2,
+        BigSmile,
 
         Bratishkin
     }

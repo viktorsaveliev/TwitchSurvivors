@@ -31,13 +31,13 @@ public class SettingsToggleButton : MonoBehaviour
     {
         if (!active)
         {
-            _toggleImage[0].enabled = true;
-            _toggleImage[1].enabled = false;
+            _toggleImage[0].gameObject.SetActive(true);
+            _toggleImage[1].gameObject.SetActive(false);
         }
         else
         {
-            _toggleImage[0].enabled = false;
-            _toggleImage[1].enabled = true;
+            _toggleImage[0].gameObject.SetActive(false);
+            _toggleImage[1].gameObject.SetActive(true);
         }
 
         _isActive = active;
@@ -45,18 +45,9 @@ public class SettingsToggleButton : MonoBehaviour
 
     private void OnClickButton()
     {
-        if (_isActive)
-        {
-            _toggleImage[0].enabled = true;
-            _toggleImage[1].enabled = false;
-        }
-        else
-        {
-            _toggleImage[0].enabled = false;
-            _toggleImage[1].enabled = true;
-        }
-
         _isActive = !_isActive;
+        SetActive(_isActive);
+
         OnClick?.Invoke(_isActive);
     }
 }

@@ -27,7 +27,6 @@ public class CharacterSelectButton : MonoBehaviour
     {
         if (_propertiesConfig == null) return;
 
-        PlayerData.SelectedCharacter = _propertiesConfig;
-        print(PlayerData.SelectedCharacter.name);
+        PlayerData.SelectCharacter(_propertiesConfig);
     }
 }

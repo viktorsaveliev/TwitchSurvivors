@@ -9,7 +9,7 @@ public abstract class PlayerBullet : Bullet
     {
         if (collision.TryGetComponent(out Enemy enemy))
         {
-            int damage = (int)PlayerData.CalculateValueWithPropertie(PlayerData.Properties.Damage, Damage);
+            int damage = (int)PlayerData.CalculatePropertieValue(PlayerData.Properties.Damage, Damage);
             enemy.Health.TakeDamage(damage);
 
             OnHitEnemy?.Invoke();

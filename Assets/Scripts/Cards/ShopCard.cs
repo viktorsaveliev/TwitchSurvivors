@@ -1,20 +1,38 @@
 using System;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
+using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(Button))]
-public abstract class ShopCard : MonoBehaviour, IShopCard
+public abstract class ShopCard : MonoBehaviour, IShopCard, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] protected TMP_Text NameText;
     [SerializeField] protected TMP_Text Price;
     [SerializeField] protected Image Icon;
     [SerializeField] protected TMP_Text[] PropertiesText;
 
+    [SerializeField] private Image[] _backgrounds;
+
     public event Action<Item, ShopCard> OnSelectCard;
 
     protected Button Button;
     protected Item ShopItem;
+
+    private Color _currentColor;
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (!Button.interactable) return;
+
+        _currentColor = _backgrounds[0].color;
+        SetColor(new Color(0.9f, 0.3f, 0.9f));
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        SetColor(_currentColor);
+    }
 
     private void OnDestroy()
     {
@@ -37,20 +55,28 @@ public abstract class ShopCard : MonoBehaviour, IShopCard
 
     public void UpdatePrice()
     {
-        SetButtonSettings(ShopItem.GetPrice());
+        SetInteractable(ShopItem.GetPrice());
     }
 
-    protected void SetButtonSettings(int price)
+    protected void SetInteractable(int price)
     {
         if (price <= Money.Value)
         {
             Button.interactable = true;
-            Price.text = $"<color=green>{price}$</color>";
+            Price.text = $"{price}";
         }
         else
         {
             Button.interactable = false;
-            Price.text = $"<color=red>{price}$</color>";
+            Price.text = $"<color=#D7424B>{price}</color>";
+        }
+    }
+
+    protected void SetColor(Color color)
+    {
+        foreach (Image bg in _backgrounds)
+        {
+            bg.color = color;
         }
     }
 

@@ -1,13 +1,15 @@
 using UnityEngine;
 using TMPro;
 
+[RequireComponent(typeof(Enemy))]
 public class EnemyUI : MonoBehaviour
 {
-    [SerializeField] private Enemy _enemy;
     [SerializeField] private TMP_Text _nickname;
+    private Enemy _enemy;
 
     private void Awake()
     {
+        _enemy = GetComponent<Enemy>();
         _enemy.OnNicknameChanged += SetNickname;
     }
 

@@ -10,15 +10,6 @@ public class Bratishkin : Enemy, IBoss
 
     private int _step = 0;
 
-    private void FixedUpdate()
-    {
-        if (IsCanMove && Target != null)
-        {
-            Vector2 direction = Target.position - transform.position;
-            Move(direction);
-        }
-    }
-
     public void SetFightArea(Collider2D area)
     {
         _fightArea = area;
@@ -27,7 +18,7 @@ public class Bratishkin : Enemy, IBoss
     public override void Init()
     {
         base.Init();
-
+        Nickname = "Братишкин";
         CreateWeapon();
     }
 
@@ -78,6 +69,8 @@ public class Bratishkin : Enemy, IBoss
     private void JumpTo(Vector3 position)
     {
         IsCanMove = false;
+
+        Animator.SetTrigger("Jump");
 
         transform.DOMove(position, 1.5f).SetEase(Ease.InOutBack)
             .OnComplete(() => 

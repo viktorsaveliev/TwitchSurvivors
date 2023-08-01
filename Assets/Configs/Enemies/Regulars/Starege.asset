@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29fcab4707a5c964c8bfc919e87fd5a5, type: 3}
   m_Name: Starege
   m_EditorClassIdentifier: 
-  _speed: 2
+  _speed: 7
   _damage: 15
-  _health: 25
+  _health: 4
+  _shield: 0

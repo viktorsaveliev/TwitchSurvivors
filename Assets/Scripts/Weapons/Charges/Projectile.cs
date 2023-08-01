@@ -1,7 +1,10 @@
 using UnityEngine;
 
+[RequireComponent(typeof(TrailRenderer))]
 public class Projectile : EnemyBullet, IMoveable
 {
+    private TrailRenderer _trail;
+
     protected override void FixedUpdate()
     {
         base.FixedUpdate();
@@ -12,8 +15,9 @@ public class Projectile : EnemyBullet, IMoveable
     {
         base.Init(damage);
 
+        _trail = GetComponent<TrailRenderer>();
         LifeTime = 4f;
-        OnHitPlayer += OnLifeTimeEnded;
+        OnHitPlayer += OnPlayerHitted;
     }
 
     public override void Shoot(Vector2 startPosition, Transform target, float speed)
@@ -29,6 +33,9 @@ public class Projectile : EnemyBullet, IMoveable
             direction.Normalize();
 
             Direction = direction;
+
+            _trail.Clear();
+            _trail.emitting = true;
         }
     }
 
@@ -43,9 +50,16 @@ public class Projectile : EnemyBullet, IMoveable
         Direction = direction;
     }
 
+    private void OnPlayerHitted(PlayerUnit unit)
+    {
+        OnLifeTimeEnded();
+    }
+
     protected override void OnLifeTimeEnded()
     {
         base.OnLifeTimeEnded();
+
+        _trail.emitting = false;
         gameObject.SetActive(false);
     }
 }

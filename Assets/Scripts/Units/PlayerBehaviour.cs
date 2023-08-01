@@ -7,6 +7,7 @@ public class PlayerBehaviour : MonoBehaviour
 {
     [Inject] private readonly PlayerUnit _playerUnit;
     [Inject] private readonly ItemFactory _itemFactory;
+    [Inject] private readonly Notify _notify;
 
     [Inject] private readonly IEnemyCounter _enemyCounter;
 
@@ -20,10 +21,19 @@ public class PlayerBehaviour : MonoBehaviour
         InitPlayerProperties();
 
         AddItem<Pistol>();
-        //AddItem<Sword>();
+        //AddItem<BanHammer>();
+
+        switch(SelectedCharacter.Name)
+        {
+            case "Бустер":
+                AddItem<BusterBandage>();
+                break;
+        }
 
         _isCanAttack = true;
         _attackTimer = StartCoroutine(StartAttackTimer());
+
+        _notify.Show("Не дай чату убить себя!!!");
     }
 
     public void DeInit()
@@ -52,6 +62,9 @@ public class PlayerBehaviour : MonoBehaviour
         AppendPropertieValue(Properties.MoveSpeed,      SelectedCharacter.MoveSpeed);
         AppendPropertieValue(Properties.Fortune,        SelectedCharacter.Fortune);
         AppendPropertieValue(Properties.Greed,          SelectedCharacter.Greed);
+
+        _playerUnit.UpdateProperties();
+        _playerUnit.Health.SetHealth(_playerUnit.Health.MaxValue);
     }
 
     private void AddItem<T>()

@@ -1,8 +1,11 @@
+using System;
 using System.Collections.Generic;
 
 public class PlayerData
 {
-    public static CharacterDataConfig SelectedCharacter;
+    public static CharacterDataConfig SelectedCharacter { get; private set; }
+    public static event Action<CharacterDataConfig> OnCharacterSelected;
+
     public static PlayerSettings Settings = new();
 
     private static readonly PropertiesData _properties = new();
@@ -48,6 +51,12 @@ public class PlayerData
         _money.Init();
     }
 
+    public static void SelectCharacter(CharacterDataConfig character)
+    {
+        SelectedCharacter = character;
+        OnCharacterSelected?.Invoke(character);
+    }
+
     public static int GetPropertieValue(Properties properties) => _properties.Properties[properties];
 
     public static void AppendPropertieValue(Properties properties, int percents)
@@ -64,6 +73,6 @@ public class PlayerData
         }
     }
 
-    public static float CalculateValueWithPropertie(Properties propertie, float value, bool increasePercentToValue = true) 
-        => _properties.CalculateValueWithPropertie(propertie, value, increasePercentToValue);
+    public static float CalculatePropertieValue(Properties propertie, float value, bool increasePercentToValue = true) 
+        => _properties.CalculatePropertieValue(propertie, value, increasePercentToValue);
 }

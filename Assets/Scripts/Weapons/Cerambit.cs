@@ -14,7 +14,7 @@ public class Cerambit : Weapon, IChargesUser
     public override void Init()
     {
         Name = "Керамбит \"Fade\"";
-        BasicPrice = CurrentPrice = 20;
+        BasicPrice = CurrentPrice = 30;
 
         CurrentChargesCount = ChargesCount = 2;
         DelayBetweenShoots = 0.2f;

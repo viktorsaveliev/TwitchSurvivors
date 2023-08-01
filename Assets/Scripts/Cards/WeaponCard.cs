@@ -1,11 +1,10 @@
+using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class WeaponCard : ShopCard
 {
     [SerializeField] private WeaponCardConfig _config;
-
-    [SerializeField] private Image[] _backgrounds;
+    [SerializeField] private TMP_Text _itemTypeText;
 
     private Weapon _weapon;
 
@@ -23,10 +22,7 @@ public class WeaponCard : ShopCard
 
         PropertiesText[0].text = _weapon.GetDescriptionForNextLevel();
 
-        foreach (Image bg in _backgrounds)
-        {
-            bg.color = _config.ColorForLevel[_weapon.ImprovementLevel + 1];
-        }
+        SetColor(_config.ColorForLevel[_weapon.ImprovementLevel + 1]);
+        _itemTypeText.color = _config.ColorForLevel[_weapon.ImprovementLevel + 1];
     }
-
 }

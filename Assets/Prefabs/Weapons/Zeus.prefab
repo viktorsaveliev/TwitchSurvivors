@@ -44,5 +44,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e968daff08b0d8c4eb7d1d462b6cd781, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _icon: {fileID: 0}
+  _icon: {fileID: 21300000, guid: 723c96c213fc8eb41a06ca3c0ac76ce3, type: 3}
   ChargePrefab: {fileID: 8719891429600927676, guid: 89b91963350e7244f9710faaee609425, type: 3}
+  _isVisible: 0
+  Descriptions:
+  - 
+  - 
+  - 
+  - 
+  - 

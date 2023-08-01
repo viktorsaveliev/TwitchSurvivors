@@ -15,6 +15,7 @@ public class ShopUI : MonoBehaviour
 
     [SerializeField] private Image _hpProgress;
     [SerializeField] private TMP_Text _hpText;
+    [SerializeField] private TMP_Text _moneyCount;
 
     [Header("Shop")]
     [SerializeField] private GameObject _cardsView;
@@ -39,14 +40,19 @@ public class ShopUI : MonoBehaviour
         _player.Experience.OnExpValueChanged += UpdateExpUI;
         _player.Health.OnHealthChanged += UpdateHealthUI;
         _player.Health.OnTakedDamage += UpdateHealthUI;
+        _player.OnPickupBits += UpdateMoney;
 
         _fightButton.onClick.AddListener(HideShop);
         _rerollButton.onClick.AddListener(Reroll);
+
+        UpdateHealthUI();
+        UpdateExpUI();
+        UpdateMoney();
     }
 
     public void ShowShop()
     {
-        _moneyText.text = $"{Money.Value}$";
+        _moneyText.text = $"{Money.Value}";
 
         _cardsView.SetActive(true);
         OnShopOpened?.Invoke();
@@ -63,7 +69,7 @@ public class ShopUI : MonoBehaviour
 
     public void UpdatePriceForCards()
     {
-        _moneyText.text = $"{Money.Value}$";
+        _moneyText.text = $"{Money.Value}";
 
         foreach (ShopCard card in _cards)
         {
@@ -91,9 +97,14 @@ public class ShopUI : MonoBehaviour
         OnClickRerollButton?.Invoke();
     }
 
+    private void UpdateMoney()
+    {
+        _moneyCount.text = $"{Money.Value}";
+    }
+
     private void UpdateExpUI()
     {
-        _expText.text = $"{_player.Experience.Value} / {_player.Experience.ExpForNewLevel}";
+        _expText.text = $"LVL {_player.Experience.Level}";
 
         float percentage = _player.Experience.Value / (float)_player.Experience.ExpForNewLevel;
         _expProgress.fillAmount = percentage;
@@ -103,7 +114,7 @@ public class ShopUI : MonoBehaviour
 
     private void UpdateHealthUI()
     {
-        _hpText.text = $"{_player.Health.CurrentValue} HP";
+        _hpText.text = $"{_player.Health.CurrentValue}/{_player.Health.MaxValue}";
 
         float percentage = _player.Health.CurrentValue / (float)_player.Health.MaxValue;
         _hpProgress.fillAmount = percentage;

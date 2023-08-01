@@ -75,8 +75,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.59576845, g: 0.8679245, b: 0.30704877, a: 1}
+  m_Sprite: {fileID: 21300000, guid: b29a56b743b432f42a756ee80ffb0811, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -133,5 +133,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2de5a8e82d8f6cb4194a18c3645973e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _icon: {fileID: 0}
+  _icon: {fileID: 21300000, guid: b29a56b743b432f42a756ee80ffb0811, type: 3}
   ChargePrefab: {fileID: 7625592420288992254, guid: dcffa7be633d43649a0a233ae5d9209e, type: 3}
+  Descriptions:
+  - 
+  - 
+  - 
+  - 
+  - 

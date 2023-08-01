@@ -6,15 +6,6 @@ public class BibleThump : Enemy
 
     private TearPool _tearPool;
 
-    private void FixedUpdate()
-    {
-        if (IsCanMove && Target != null)
-        {
-            Vector2 direction = Target.position - transform.position;
-            Move(direction);
-        }
-    }
-
     public override void Init()
     {
         base.Init();

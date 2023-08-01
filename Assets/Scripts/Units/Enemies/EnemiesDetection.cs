@@ -5,6 +5,8 @@ using Zenject;
 public class EnemiesDetection : MonoBehaviour
 {
     [Inject] private readonly EnemyCounter _enemyDetection;
+
+    public readonly float OriginalRadius = 8f;
     private CircleCollider2D _collider;
     
     public float CurrentRadius { get; private set; }
@@ -13,7 +15,7 @@ public class EnemiesDetection : MonoBehaviour
     {
         if(collision.TryGetComponent(out Enemy enemy))
         {
-            _enemyDetection.AddEnemy(enemy);
+            Add(enemy);
         }
     }
 
@@ -21,14 +23,14 @@ public class EnemiesDetection : MonoBehaviour
     {
         if (collision.TryGetComponent(out Enemy enemy))
         {
-            _enemyDetection.RemoveEnemy(enemy);
+            Remove(enemy);
         }
     }
 
     public void Init()
     {
         _collider = GetComponent<CircleCollider2D>();
-        SetDetectionRadius(8f);
+        SetDetectionRadius(OriginalRadius);
     }
 
     public void SetDetectionRadius(float value)
@@ -36,5 +38,17 @@ public class EnemiesDetection : MonoBehaviour
         if (value < 1 || value > 40) return;
         _collider.radius = value;
         CurrentRadius = value;
+    }
+
+    private void Add(Enemy enemy)
+    {
+        _enemyDetection.AddEnemy(enemy);
+        enemy.OnDead += Remove;
+    }
+
+    private void Remove(Enemy enemy)
+    {
+        _enemyDetection.RemoveEnemy(enemy);
+        enemy.OnDead -= Remove;
     }
 }

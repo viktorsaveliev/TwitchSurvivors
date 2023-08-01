@@ -5,18 +5,25 @@ public sealed class PlayerUnit : Unit, ITimerObserver
 {
     [SerializeField] private EnemiesDetection _enemyDetection;
     [SerializeField] private BitsDetection _bitsDetection;
+    [SerializeField] private SpriteRenderer _head;
+    [SerializeField] private Transform[] _weaponPositions;
 
     public UnitWeapons Weapons { get; private set; }
     public Experience Experience { get; private set; }
     public UnitInventory Inventory { get; private set; }
 
     public event Action OnDodgedDamage;
+    public event Action OnPickupBits;
+
+    public string LastHittedEnemyNickname = string.Empty;
 
     public override void Init()
     {
         base.Init();
 
-        RegularSpeed = CurrentSpeed = 7;
+        _head.sprite = PlayerData.SelectedCharacter.Icon;
+
+        OriginalSpeed = RegularSpeed = CurrentSpeed = 7;
 
         Experience = new();
         Experience.Init();
@@ -25,18 +32,28 @@ public sealed class PlayerUnit : Unit, ITimerObserver
         Inventory.OnAddedNewItem += OnAddedNewItem;
         Inventory.OnRemovedItem += OnRemovedItem;
 
-        Weapons = new(this);
+        Weapons = new(this, _weaponPositions);
 
         _enemyDetection.Init();
+        _bitsDetection.Init();
 
         Health.SetMaxHealth(100, true);
+    }
 
-        UpdateProperties();
+    public override void Move(Vector2 direction)
+    {
+        base.Move(direction);
+        Animator.SetFloat("Speed", Rigidbody.velocity.magnitude);
+    }
+
+    public void PickupBits()
+    {
+        OnPickupBits?.Invoke();
     }
 
     public bool IsDodged()
     {
-        int dodgePercent = (int) PlayerData.CalculateValueWithPropertie(
+        int dodgePercent = (int) PlayerData.CalculatePropertieValue(
             PlayerData.Properties.Dodge,
             PlayerData.GetPropertieValue(PlayerData.Properties.Dodge)
         );
@@ -87,21 +104,21 @@ public sealed class PlayerUnit : Unit, ITimerObserver
 
     private void UpdateMoveSpeed()
     {
-        RegularSpeed = CurrentSpeed = PlayerData.CalculateValueWithPropertie(PlayerData.Properties.MoveSpeed, RegularSpeed);
+        RegularSpeed = CurrentSpeed = PlayerData.CalculatePropertieValue(PlayerData.Properties.MoveSpeed, OriginalSpeed);
     }
 
     private void UpdateMaxHealthValue(bool setHealthToMax)
     {
-        int maxHealth = (int)PlayerData.CalculateValueWithPropertie(PlayerData.Properties.Health, Health.MaxValue);
+        int maxHealth = (int)PlayerData.CalculatePropertieValue(PlayerData.Properties.Health, Health.OriginalMaxHealth);
         Health.SetMaxHealth(maxHealth, setHealthToMax);
     }
 
     private void UpdateDistance()
     {
-        float newRadius = PlayerData.CalculateValueWithPropertie(PlayerData.Properties.Distance, _enemyDetection.CurrentRadius);
+        float newRadius = PlayerData.CalculatePropertieValue(PlayerData.Properties.Distance, _enemyDetection.OriginalRadius);
         _enemyDetection.SetDetectionRadius(newRadius);
 
-        newRadius = PlayerData.CalculateValueWithPropertie(PlayerData.Properties.Distance, _bitsDetection.CurrentRadius);
+        newRadius = PlayerData.CalculatePropertieValue(PlayerData.Properties.Distance, _bitsDetection.OriginalRadius);
         _bitsDetection.SetDetectionRadius(newRadius);
     }
 }
