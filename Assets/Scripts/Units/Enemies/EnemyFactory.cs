@@ -28,8 +28,9 @@ public class EnemyFactory : MonoBehaviour
         { EnemyType.Jokerge,    5 },
         { EnemyType.rjaka,      2 },
         { EnemyType.BibleThump, 10 },
-        { EnemyType.BigSmile,     1 },
-        { EnemyType.Bratishkin, 1 }
+        { EnemyType.BigSmile,   1 },
+        { EnemyType.Bratishkin, 1 },
+        { EnemyType.WhiteRa,    1 }
     };
 
     private readonly Dictionary<EnemyType, List<Enemy>> _enemies = new();
@@ -52,7 +53,8 @@ public class EnemyFactory : MonoBehaviour
         BibleThump,
         BigSmile,
 
-        Bratishkin
+        Bratishkin,
+        WhiteRa
     }
 
     public void CreateEnemies()

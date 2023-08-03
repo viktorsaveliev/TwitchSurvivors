@@ -46,9 +46,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _icon: {fileID: 0}
   ChargePrefab: {fileID: 7634577805274061739, guid: 3e0d3bf4b9f289847bed0bf32c91cc5d, type: 3}
+  _isVisible: 0
   Descriptions:
   - 
   - 
   - 
   - 
   - 
+  _shootingWithDelay: 1
+  _chargesCount: 15

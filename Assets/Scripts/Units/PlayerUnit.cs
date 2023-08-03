@@ -1,8 +1,11 @@
 using System;
 using UnityEngine;
+using Zenject;
 
 public sealed class PlayerUnit : Unit, ITimerObserver
 {
+    [Inject] private readonly Notify _notify;
+
     [SerializeField] private EnemiesDetection _enemyDetection;
     [SerializeField] private BitsDetection _bitsDetection;
     [SerializeField] private SpriteRenderer _head;
@@ -33,6 +36,7 @@ public sealed class PlayerUnit : Unit, ITimerObserver
         Inventory.OnRemovedItem += OnRemovedItem;
 
         Weapons = new(this, _weaponPositions);
+        Weapons.OnWeaponsHiden += OnWeaponsHiden;
 
         _enemyDetection.Init();
         _bitsDetection.Init();
@@ -82,6 +86,11 @@ public sealed class PlayerUnit : Unit, ITimerObserver
     protected override void DeInit()
     {
         Health.SetHealth(Health.MaxValue);
+    }
+
+    private void OnWeaponsHiden()
+    {
+        _notify.Show("Вор Братишкин украл у вас оружие! Оно будет недоступно в течении 5 секунд");
     }
 
     private void OnAddedNewItem(Item item)

@@ -55,7 +55,6 @@ public class PlayerDataShower : MonoBehaviour
             Image icon = Instantiate(_itemIconPrefab, _itemsContent);
             icon.sprite = item.GetIcon();
             _itemIcons.Add(icon);
-            print("vidal " + item);
 
             foreach (PropertySlot propertie in _propertySlots)
             {

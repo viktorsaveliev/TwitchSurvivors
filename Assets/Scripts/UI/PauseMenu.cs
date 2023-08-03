@@ -20,6 +20,7 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] private Button _exitButton;
 
     private bool _isMenuActive;
+    public bool IsActive => _isMenuActive;
 
     private void OnEnable()
     {

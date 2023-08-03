@@ -49,6 +49,7 @@ public abstract class ShopCard : MonoBehaviour, IShopCard, IPointerEnterHandler,
     {
         NameText.text = ShopItem.GetName();
         Icon.sprite = ShopItem.GetIcon();
+        Icon.SetNativeSize();
 
         UpdatePrice();
     }

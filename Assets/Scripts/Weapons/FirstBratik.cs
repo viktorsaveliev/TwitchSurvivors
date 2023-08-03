@@ -6,7 +6,7 @@ public class FirstBratik : Bratik
         Name = "Первый братик";
         BasicPrice = CurrentPrice = 40;
 
-        SetCooldown(2);
+        SetCooldown(4);
         SetDamage(25);
 
         CurrentChargesCount = ChargesCount = 2;
@@ -30,7 +30,7 @@ public class FirstBratik : Bratik
 
             case 3:
                 ChargesCount = 5;
-                SetCooldown(1f);
+                SetCooldown(2f);
                 break;
 
             case 4:

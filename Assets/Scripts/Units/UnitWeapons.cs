@@ -1,9 +1,12 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class UnitWeapons
 {
+    public event Action OnWeaponsHiden;
+
     public const int MAX_WEAPONS = 6;
     public int Count => _weapons.Count;
 
@@ -85,10 +88,14 @@ public class UnitWeapons
 
     public void HideWeapons(float time)
     {
+        if (_hideWeaponTime != 0) return;
+
         for (int i = 0; i < _weapons.Count; i++)
         {
             _weapons[i].gameObject.SetActive(false);
         }
         _hideWeaponTime = Time.time + time;
+
+        OnWeaponsHiden?.Invoke();
     }
 }

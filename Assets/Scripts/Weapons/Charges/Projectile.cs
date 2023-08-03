@@ -16,6 +16,8 @@ public class Projectile : EnemyBullet, IMoveable
         base.Init(damage);
 
         _trail = GetComponent<TrailRenderer>();
+        _trail.emitting = false;
+
         LifeTime = 4f;
         OnHitPlayer += OnPlayerHitted;
     }
@@ -33,10 +35,10 @@ public class Projectile : EnemyBullet, IMoveable
             direction.Normalize();
 
             Direction = direction;
-
-            _trail.Clear();
-            _trail.emitting = true;
         }
+
+        _trail.Clear();
+        _trail.emitting = true;
     }
 
     public void Move()

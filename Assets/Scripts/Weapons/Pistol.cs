@@ -9,7 +9,7 @@ public class Pistol : ShootableWeapon
         BasicPrice = CurrentPrice = 50;
 
         SetCooldown(1f);
-        SetDamage(5);
+        SetDamage(6);
         SetBulletSpeed(30f);
 
         CurrentChargesCount = ChargesCount = 4;

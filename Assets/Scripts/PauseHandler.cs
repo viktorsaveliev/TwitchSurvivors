@@ -8,7 +8,7 @@ public class PauseHandler
     public event Action OnPauseDeactive;
     
     private readonly MonoBehaviour _monoBehaviour;
-    private readonly ShopUI _interface;
+    private readonly ShopUI _shopUI;
     private readonly PauseMenu _pauseMenu;
 
     private readonly IInputControl _input;
@@ -21,7 +21,7 @@ public class PauseHandler
     public PauseHandler(MonoBehaviour monoBehaviour, ShopUI playerInterface, IInputControl input, PauseMenu pauseMenu)
     {
         _monoBehaviour = monoBehaviour;
-        _interface = playerInterface;
+        _shopUI = playerInterface;
         _input = input;
         _pauseMenu = pauseMenu;
     }
@@ -32,8 +32,8 @@ public class PauseHandler
         Time.fixedDeltaTime = 0.02f;
         IsPause = false;
 
-        _interface.OnShopOpened += ActivatePause;
-        _interface.OnShopClosed += DeactivatePause;
+        _shopUI.OnShopOpened += ActivatePause;
+        _shopUI.OnShopClosed += DeactivatePause;
 
         _pauseMenu.OnClickResumeButton += DeactivatePause;
         _pauseMenu.OnMenuHide += DeactivatePause;
@@ -64,6 +64,8 @@ public class PauseHandler
 
     private void DeactivatePause()
     {
+        if (_pauseMenu.IsActive || _shopUI.IsActive) return;
+
         if (_coroutine != null)
         {
             _monoBehaviour.StopCoroutine(_coroutine);

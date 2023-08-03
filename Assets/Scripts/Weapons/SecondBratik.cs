@@ -6,7 +6,7 @@ public class SecondBratik : Bratik
         Name = "Второй братик";
         BasicPrice = CurrentPrice = 40;
 
-        SetCooldown(3);
+        SetCooldown(5);
         SetDamage(25);
 
         CurrentChargesCount = ChargesCount = 3;

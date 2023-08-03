@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System;
 using System.Collections.Generic;
 using TMPro;
@@ -19,6 +20,7 @@ public class ShopUI : MonoBehaviour
 
     [Header("Shop")]
     [SerializeField] private GameObject _cardsView;
+    [SerializeField] private Image _shopBG;
 
     [SerializeField] private ItemCard _itemCardPrefab;
     [SerializeField] private WeaponCard _weaponCardPrefab;
@@ -34,6 +36,9 @@ public class ShopUI : MonoBehaviour
     public event Action OnShopOpened;
     public event Action OnShopClosed;
     public event Action OnClickRerollButton;
+
+    private bool _isActive;
+    public bool IsActive => _isActive;
 
     public void Init()
     {
@@ -55,6 +60,11 @@ public class ShopUI : MonoBehaviour
         _moneyText.text = $"{Money.Value}";
 
         _cardsView.SetActive(true);
+        _shopBG.gameObject.SetActive(true);
+        _shopBG.DOFade(0.95f, 0.2f).SetUpdate(true);
+
+        _isActive = true;
+
         OnShopOpened?.Invoke();
     }
 
@@ -62,6 +72,10 @@ public class ShopUI : MonoBehaviour
     {
         ShopCard card = (ShopCard) Instantiate(item is PropertyItem ? _itemCardPrefab : _weaponCardPrefab, _content);
         card.Init(item);
+
+        card.transform.localScale = Vector2.zero;
+        card.transform.DOScale(1, 0.4f).SetUpdate(true).SetEase(Ease.OutBack);
+
         _cards.Add(card);
 
         return card;
@@ -80,16 +94,41 @@ public class ShopUI : MonoBehaviour
     public void DeleteCard(ShopCard card)
     {
         _cards.Remove(card);
-        Destroy(card.gameObject);
+
+        HideOtherCards();
+
+        card.transform.DOScale(0, 0.4f).SetUpdate(true).SetEase(Ease.InBack)
+            .OnComplete(() =>
+            {
+                Destroy(card.gameObject);
+                ShowOtherCards();
+            });
     }
 
     public void DeleteAllCards()
     {
         foreach (ShopCard card in _cards)
         {
-            Destroy(card.gameObject);
+            card.transform.DOScale(0, 0.4f).SetUpdate(true).SetEase(Ease.InBack)
+            .OnComplete(() => Destroy(card.gameObject));
         }
         _cards.Clear();
+    }
+
+    private void HideOtherCards()
+    {
+        foreach (ShopCard card in _cards)
+        {
+            card.transform.DOScaleX(0, 0.1f).SetUpdate(true);
+        }
+    }
+
+    private void ShowOtherCards()
+    {
+        foreach (ShopCard card in _cards)
+        {
+            card.transform.DOScaleX(1, 0.1f).SetUpdate(true);
+        }
     }
 
     private void Reroll()
@@ -122,6 +161,9 @@ public class ShopUI : MonoBehaviour
 
     private void HideShop()
     {
+        _shopBG.DOFade(0, 0.2f).SetUpdate(true)
+            .OnComplete(() => _shopBG.gameObject.SetActive(false));
+
         _cardsView.SetActive(false);
 
         if (_cards.Count > 0)
@@ -133,7 +175,9 @@ public class ShopUI : MonoBehaviour
 
             _cards.Clear();
         }
- 
+
+        _isActive = false;
+
         OnShopClosed?.Invoke();
     }
 }

@@ -53,3 +53,5 @@ MonoBehaviour:
   - 
   - 
   - 
+  _shootingWithDelay: 0
+  _chargesCount: 10

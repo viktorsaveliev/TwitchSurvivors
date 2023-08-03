@@ -106,7 +106,7 @@ public class EnemySpawner
 
             if (_currentWave == 0)
             {
-                FirstEnemyWave(timerLength);
+                SecondEnemyWave(timerLength); //FirstEnemyWave(timerLength);
             }
             else
             {
@@ -119,6 +119,11 @@ public class EnemySpawner
     {
         switch (time)
         {
+            /*case 4:
+                SpawnEnemyInRandomPoint(EnemyFactory.EnemyType.WhiteRa);
+                StopSpawnEnemies();
+                break;*/
+
             case 20:
             case 30:
                 SpawnEnemiesInRandomPoints(EnemyFactory.EnemyType.EBLAN, 5);
@@ -160,6 +165,12 @@ public class EnemySpawner
                 SpawnEnemiesInRandomPoints(EnemyFactory.EnemyType.Jokerge, 10);
                 break;
 
+            case 100:
+                SpawnEnemiesInRandomPoints(EnemyFactory.EnemyType.EBLAN, 10);
+                SpawnEnemiesInRandomPoints(EnemyFactory.EnemyType.Jokerge, 5);
+                //SpawnGroupInRandomPoint(EnemyFactory.EnemyType.xdd, 5);
+                break;
+
             case 98:
             case 106:
             case 110:
@@ -167,6 +178,7 @@ public class EnemySpawner
             case 116:
             case 120:
                 SpawnEnemiesInRandomPoints(EnemyFactory.EnemyType.Starege, 10);
+                SpawnEnemiesInRandomPoints(EnemyFactory.EnemyType.EBLAN, 2);
                 break;
 
             case 130:
@@ -222,50 +234,26 @@ public class EnemySpawner
         {
             case 20:
             case 30:
-                SpawnEnemiesInRandomPoints(EnemyFactory.EnemyType.KEKW, 5);
-                break;
-
             case 40:
-            case 50:
-                SpawnEnemiesInRandomPoints(EnemyFactory.EnemyType.BibleThump, 5);
-                break;
-
-            case 60:
-                SpawnEnemiesInRandomPoints(EnemyFactory.EnemyType.EZ, 5);
-                break;
-
-            case 66:
-            case 68:
-                SpawnEnemyInRandomPoint(EnemyFactory.EnemyType.Smile_D);
+                SpawnEnemiesInRandomPoints(EnemyFactory.EnemyType.Chel, 5);
                 break;
 
             case 70:
-                SpawnEnemiesInRandomPoints(EnemyFactory.EnemyType.Smile_D, 5);
-                break;
-
-            case 72:
-            case 74:
-                SpawnEnemiesInRandomPoints(EnemyFactory.EnemyType.KEKW, 3);
-                break;
-
-            case 76:
             case 80:
-            case 84:
-                SpawnEnemiesInRandomPoints(EnemyFactory.EnemyType.Jokerge, 2);
-                break;
-
-            case 86:
             case 90:
-                SpawnEnemiesInRandomPoints(EnemyFactory.EnemyType.Jokerge, 4);
+                SpawnEnemiesInRandomPoints(EnemyFactory.EnemyType.BibleThump, 5);
                 break;
 
             case 98:
+                SpawnEnemiesInRandomPoints(EnemyFactory.EnemyType.Jokerge, 4);
+                break;
+
             case 106:
             case 110:
             case 114:
             case 116:
             case 120:
-                SpawnEnemiesInRandomPoints(EnemyFactory.EnemyType.Chel, 5);
+                SpawnEnemiesInRandomPoints(EnemyFactory.EnemyType.KEKW, 5);
                 break;
 
             case 130:
@@ -283,11 +271,12 @@ public class EnemySpawner
                 break;
 
             case 186:
-                SpawnEnemiesInRandomPoints(EnemyFactory.EnemyType.KEKW, 20);
+                SpawnEnemiesInRandomPoints(EnemyFactory.EnemyType.Chel, 15);
                 SpawnEnemiesInRandomPoints(EnemyFactory.EnemyType.Starege, 10);
                 break;
 
             case 194:
+                SpawnEnemyInRandomPoint(EnemyFactory.EnemyType.BigSmile);
                 SpawnGroupInRandomPoint(EnemyFactory.EnemyType.xdd, 5);
                 SpawnEnemiesInRandomPoints(EnemyFactory.EnemyType.Clueless, 10);
                 break;
@@ -297,20 +286,19 @@ public class EnemySpawner
                 SpawnEnemiesInRandomPoints(EnemyFactory.EnemyType.Starege, 5);
                 break;
 
-            case 230:
+            case 210:
                 SpawnEnemiesInRandomPoints(EnemyFactory.EnemyType.KEKW, 10);
-                SpawnEnemiesInRandomPoints(EnemyFactory.EnemyType.Jokerge, 5);
-                SpawnGroupInRandomPoint(EnemyFactory.EnemyType.xdd, 5);
+                SpawnEnemiesInRandomPoints(EnemyFactory.EnemyType.Jokerge, 10);
                 SpawnEnemiesInRandomPoints(EnemyFactory.EnemyType.Starege, 5);
                 break;
 
-            case 300:
-                SpawnEnemyInRandomPoint(EnemyFactory.EnemyType.Bratishkin);
+            case 250:
+                SpawnEnemyInRandomPoint(EnemyFactory.EnemyType.WhiteRa);
                 StopSpawnEnemies();
                 break;
 
             default:
-                SpawnEnemyInRandomPoint(EnemyFactory.EnemyType.KEKW);
+                SpawnEnemyInRandomPoint(EnemyFactory.EnemyType.Chel);
                 break;
         }
     }
