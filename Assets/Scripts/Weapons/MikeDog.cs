@@ -91,6 +91,7 @@ public class MikeDog : ShootableWeapon, IMoveable, IFollower
             if (ChargesList[i].gameObject.activeSelf) continue;
 
             ChargesList[i].Shoot(transform.position, null, BulletSpeed);
+            SoundFX.Play();
             yield return delayBetweenShoots;
         }
 

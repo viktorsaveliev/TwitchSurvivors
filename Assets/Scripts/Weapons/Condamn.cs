@@ -65,7 +65,7 @@ public class Condamn : Weapon, IChargesUser
 
             enemy.Health.TakeDamage(1000);
         }
-
+        SoundFX.Play();
         StartCoroutine(ShakeAndFadeOutText());
         ActivateCooldown();
     }

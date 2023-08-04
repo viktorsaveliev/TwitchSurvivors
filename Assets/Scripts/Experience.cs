@@ -8,7 +8,7 @@ public class Experience
 
     public int ExpForNewLevel => (int)(24 * Mathf.Pow(_expMultipleForNextLevel, Level - 1)); // Level * _expMultipleForNextLevel * 3;
 
-    private readonly float _expMultipleForNextLevel = 1.3f;
+    private readonly float _expMultipleForNextLevel = 1.15f;
 
     public int Level { get; private set; }
     public int Value { get; private set; }

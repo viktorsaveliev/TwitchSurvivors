@@ -37,8 +37,8 @@ public class Sword : Weapon, IChargesUser
 
     public void Shoot(IEnemyCounter enemyCounter)
     {
-        if (Time.time < CurrentCooldown) return;
-
+        if (Time.time < CurrentCooldown || !gameObject.activeSelf) return;
+        SoundFX.Play();
         StartRotation();
     }
 

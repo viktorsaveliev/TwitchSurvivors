@@ -32,6 +32,7 @@ public class Coggers : Weapon, IChargesUser
             charge.Shoot(Vector2.zero, null, 0);
         }
 
+        SoundFX.Play();
         ActivateCooldown();
     }
 

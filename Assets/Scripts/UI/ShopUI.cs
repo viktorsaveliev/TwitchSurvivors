@@ -97,7 +97,7 @@ public class ShopUI : MonoBehaviour
 
         HideOtherCards();
 
-        card.transform.DOScale(0, 0.4f).SetUpdate(true).SetEase(Ease.InBack)
+        card.transform.DOScale(0, 0.2f).SetUpdate(true).SetEase(Ease.InBack)
             .OnComplete(() =>
             {
                 Destroy(card.gameObject);
@@ -109,7 +109,7 @@ public class ShopUI : MonoBehaviour
     {
         foreach (ShopCard card in _cards)
         {
-            card.transform.DOScale(0, 0.4f).SetUpdate(true).SetEase(Ease.InBack)
+            card.transform.DOScale(0, 0.2f).SetUpdate(true).SetEase(Ease.InBack)
             .OnComplete(() => Destroy(card.gameObject));
         }
         _cards.Clear();
@@ -119,7 +119,7 @@ public class ShopUI : MonoBehaviour
     {
         foreach (ShopCard card in _cards)
         {
-            card.transform.DOScaleX(0, 0.1f).SetUpdate(true);
+            card.transform.DOScaleX(0, 0.05f).SetUpdate(true);
         }
     }
 
@@ -127,7 +127,7 @@ public class ShopUI : MonoBehaviour
     {
         foreach (ShopCard card in _cards)
         {
-            card.transform.DOScaleX(1, 0.1f).SetUpdate(true);
+            card.transform.DOScaleX(1, 0.05f).SetUpdate(true);
         }
     }
 

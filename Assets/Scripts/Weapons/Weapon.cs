@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(AudioSource))]
 public abstract class Weapon : Item
 {
     public bool IsVisible => _isVisible;
@@ -11,6 +12,8 @@ public abstract class Weapon : Item
 
     protected const int MAX_IMPROVE_LEVEL = 4;
     protected List<Bullet> ChargesList = new();
+
+    protected AudioSource SoundFX;
 
     public int ChargesCount { get; protected set; }
     public float DelayBetweenShoots { get; protected set; }
@@ -42,6 +45,7 @@ public abstract class Weapon : Item
     {
         if (ImprovementLevel < 0)
         {
+            SoundFX = GetComponent<AudioSource>();
             ImprovementLevel = 0;
             ActivateCooldown();
         }
@@ -115,7 +119,7 @@ public abstract class Weapon : Item
             PlayerData.GetPropertieValue(PlayerData.Properties.CriticalDamage)
         );
 
-        if (UnityEngine.Random.value <= criticalDamagePercent / 100f)
+        if (Random.value <= criticalDamagePercent / 100f)
         {
             damage *= 2;
         }

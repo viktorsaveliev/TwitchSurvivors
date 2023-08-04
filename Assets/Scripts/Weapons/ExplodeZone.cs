@@ -17,16 +17,12 @@ public class ExplodeZone : MonoBehaviour
 
     private bool _isActive;
 
-    private Color _zoneColor;
-
     public void Init(float delayForExplode, int damage)
     {
         _zone = GetComponent<SpriteRenderer>();
 
         _delayForExplode = delayForExplode;
         _damage = damage;
-
-        _zoneColor = _zone.color;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -77,9 +73,9 @@ public class ExplodeZone : MonoBehaviour
 
         if (_targets.Count > 0)
         {
-            foreach (Unit unit in _targets)
+            for(int i = 0; i < _targets.Count; i++)
             {
-                GiveDamage(unit);
+                GiveDamage(_targets[i]);
             }
         }
 

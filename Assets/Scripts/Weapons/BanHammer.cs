@@ -55,6 +55,7 @@ public class BanHammer : Weapon, IChargesUser
         IsActive = true;
         StartCoroutine(ShootWithDelay(enemyCounter));
 
+        SoundFX.Play();
         ActivateCooldown();
     }
 

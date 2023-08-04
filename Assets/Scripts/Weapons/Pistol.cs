@@ -85,6 +85,7 @@ public class Pistol : ShootableWeapon
             ChargesList[i].Shoot(transform.position, Target, BulletSpeed);
             CurrentChargesCount--;
             LookAtTarget(Target);
+            SoundFX.Play();
 
             yield return delayBetweenShoots;
         }

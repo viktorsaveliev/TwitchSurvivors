@@ -19,13 +19,13 @@ public abstract class Bratik : Weapon, IChargesUser
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (CurrentCooldown > Time.time) return;
+        if (CurrentCooldown > Time.time || CurrentChargesCount <= 0) return;
 
         if (collision.TryGetComponent(out Enemy enemy))
         {
             enemy.Health.TakeDamage(GetDamageValue());
             HitTarget();
-
+            SoundFX.Play();
             CurrentChargesCount--;
             OnHitEnemy?.Invoke();
         }

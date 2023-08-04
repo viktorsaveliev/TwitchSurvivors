@@ -46,7 +46,9 @@ public class Bratishkin : Enemy, IBoss
 
     private void Action()
     {
-        switch(_step)
+        if (!gameObject.activeSelf) return;
+
+        switch (_step)
         {
             case 0:
             case 1:

@@ -6,7 +6,7 @@ public class WhiteRa : Enemy, IBoss
     [SerializeField] private EnemyBlaster _weaponPrefab;
     [SerializeField] private ExplodeZone _explodeZone;
 
-    private const int _explodeZonesCount = 7;
+    private const int _explodeZonesCount = 10;
 
     private readonly ExplodeZone[] _explodeZones = new ExplodeZone[_explodeZonesCount];
 
@@ -57,7 +57,9 @@ public class WhiteRa : Enemy, IBoss
 
     private void Action()
     {
-        switch(_step)
+        if (!gameObject.activeSelf) return;
+
+        switch (_step)
         {
             case 0:
                 _step++;
@@ -67,10 +69,17 @@ public class WhiteRa : Enemy, IBoss
                 _step++;
 
                 Attack();
-                Invoke(nameof(Action), 8);
+                Invoke(nameof(Action), 1);
                 break;
 
             case 2:
+                _step++;
+
+                Attack();
+                Invoke(nameof(Action), 4);
+                break;
+
+            case 3:
                 _step = 0;
 
                 for (int i = 0; i < _explodeZonesCount; i++)
@@ -78,6 +87,7 @@ public class WhiteRa : Enemy, IBoss
                     _explodeZones[i].Active(GetRandomPoint());
                 }
 
+                Animator.SetTrigger("UseBanHammer");
                 Invoke(nameof(Action), 4);
                 break;
         }

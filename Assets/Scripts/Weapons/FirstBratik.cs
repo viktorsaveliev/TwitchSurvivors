@@ -9,7 +9,7 @@ public class FirstBratik : Bratik
         SetCooldown(4);
         SetDamage(25);
 
-        CurrentChargesCount = ChargesCount = 2;
+        CurrentChargesCount = ChargesCount = 1;
     }
 
     public override void Improve()
@@ -20,16 +20,16 @@ public class FirstBratik : Bratik
         switch (ImprovementLevel)
         {
             case 1:
-                ChargesCount = 3;
+                ChargesCount = 2;
                 break;
 
             case 2:
-                ChargesCount = 4;
+                ChargesCount = 3;
                 SetDamage(30);
                 break;
 
             case 3:
-                ChargesCount = 5;
+                ChargesCount = 4;
                 SetCooldown(2f);
                 break;
 

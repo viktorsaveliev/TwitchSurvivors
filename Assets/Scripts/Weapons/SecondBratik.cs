@@ -6,10 +6,10 @@ public class SecondBratik : Bratik
         Name = "Второй братик";
         BasicPrice = CurrentPrice = 40;
 
-        SetCooldown(5);
-        SetDamage(25);
+        SetCooldown(4);
+        SetDamage(15);
 
-        CurrentChargesCount = ChargesCount = 3;
+        CurrentChargesCount = ChargesCount = 2;
     }
 
     public override void Improve()
@@ -20,20 +20,21 @@ public class SecondBratik : Bratik
         switch (ImprovementLevel)
         {
             case 1:
-                ChargesCount = 4;
+                ChargesCount = 3;
                 break;
 
             case 2:
-                ChargesCount = 5;
+                ChargesCount = 4;
                 SetDamage(30);
                 break;
 
             case 3:
-                ChargesCount = 6;
+                ChargesCount = 5;
                 SetCooldown(1.5f);
                 break;
 
             case 4:
+                ChargesCount = 6;
                 SetDamage(45);
                 break;
         }
