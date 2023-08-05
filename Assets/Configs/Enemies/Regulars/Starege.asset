@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speed: 7
   _damage: 15
-  _health: 4
+  _health: 6
   _shield: 0
+  _enemyLevel: 0

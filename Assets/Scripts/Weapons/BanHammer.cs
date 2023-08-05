@@ -69,7 +69,7 @@ public class BanHammer : Weapon, IChargesUser
         {
             Transform target = enemyCounter.GetRandomEnemy();
 
-            if (target != null)
+            if (target != null && target.position != Vector3.zero)
             {
                 ChargesList[i].Shoot(target.position, target, 0);
             }

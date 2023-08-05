@@ -8,9 +8,16 @@ public class BitsController : MonoBehaviour
 
     [SerializeField] private Bits _prefab;
     [SerializeField] private Transform _container;
-    [SerializeField] private Sprite[] _spritesForBits = new Sprite[3];
+    [SerializeField] private Sprite[] _spritesForBits = new Sprite[4];
 
     private readonly List<Bits> _bitsList = new();
+    private readonly int[] _bitsCost = new int[4]
+    {
+        2,
+        4,
+        12,
+        126
+    };
 
     public void Init()
     {
@@ -42,7 +49,8 @@ public class BitsController : MonoBehaviour
             bits = FindInactiveBits();
         }
 
-        bits.UpdateData(enemy.transform.position, 2, _spritesForBits[0]);
+        int enemyLevel = enemy.EnemyLevel;
+        bits.UpdateData(enemy.transform.position, _bitsCost[enemyLevel], _spritesForBits[enemyLevel]);
     }
 
     private Bits FindInactiveBits()

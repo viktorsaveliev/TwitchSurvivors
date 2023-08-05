@@ -18,7 +18,7 @@ public class EnemyFactory : MonoBehaviour
         { EnemyType.Clueless,   5 },
         { EnemyType.EZ,         5 },
         { EnemyType.Smile_D,    6 },
-        { EnemyType.catDespair, 2 },
+        { EnemyType.catDespair, 40 },
         { EnemyType.xdd,        5 },
         { EnemyType.EBLAN,      30 },
         { EnemyType.Starege,    30 },

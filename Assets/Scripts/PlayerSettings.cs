@@ -18,9 +18,9 @@ public class PlayerSettings
     private bool _screenShaking = true;
     private bool _twitchIntegration = true;
 
-    private float _baseVolume = 0.8f;
-    private float _musicVolume = 0.76f;
-    private float _soundVolume = 1f;
+    private float _baseVolume = 1f;
+    private float _musicVolume = 0.1f;
+    private float _soundVolume = 0.3f;
 
     public void SetShowDamageSetting(bool enable)
     {

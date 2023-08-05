@@ -7,7 +7,6 @@ public class PlayerBehaviour : MonoBehaviour
 {
     [Inject] private readonly PlayerUnit _playerUnit;
     [Inject] private readonly ItemFactory _itemFactory;
-    [Inject] private readonly Notify _notify;
 
     [Inject] private readonly IEnemyCounter _enemyCounter;
 
@@ -32,8 +31,6 @@ public class PlayerBehaviour : MonoBehaviour
 
         _isCanAttack = true;
         _attackTimer = StartCoroutine(StartAttackTimer());
-
-        _notify.Show("Не дай чату убить себя!!!");
     }
 
     public void DeInit()

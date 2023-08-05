@@ -5,6 +5,7 @@ public class Health : IDamageable
     public event Action<int> OnTakedDamage;
     public event Action OnHealthChanged;
     public event Action OnHealthOver;
+    public event Action OnImmunityDamage;
 
     public readonly int OriginalMaxHealth = 100;
     public int CurrentValue => _health;
@@ -13,6 +14,8 @@ public class Health : IDamageable
     private int _immunityFromShots;
     private int _maxHealth;
     private int _health;
+
+    public int Immunity => _immunityFromShots;
 
     public Health(int immunityFromShots = 0)
     {
@@ -55,6 +58,7 @@ public class Health : IDamageable
         if(_immunityFromShots > 0)
         {
             _immunityFromShots--;
+            OnImmunityDamage?.Invoke();
         }
         else
         {

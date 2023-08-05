@@ -6,7 +6,7 @@ public abstract class Bullet : MonoBehaviour
     public float Speed { get; protected set; }
     public float LifeTime { get; protected set; }
     public float CurrentLifeTime { get; protected set; }
-    public int Damage { get; private set; }
+    public int Damage { get; protected set; }
 
     public event Action LifeTimeEnded;
 

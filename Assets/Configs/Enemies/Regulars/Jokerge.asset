@@ -15,3 +15,5 @@ MonoBehaviour:
   _speed: 2
   _damage: 24
   _health: 30
+  _shield: 0
+  _enemyLevel: 1

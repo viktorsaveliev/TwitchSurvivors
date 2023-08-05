@@ -6,7 +6,8 @@ public class CharacterDataConfig : ScriptableObject
 {
     [Header("Base")]
     [SerializeField] private string _name;
-    [SerializeField] private Sprite _icon;
+    [SerializeField] private Sprite _iconLeft;
+    [SerializeField] private Sprite _iconRight;
     [SerializeField] private string _description;
 
     [Header("Properties")]
@@ -23,7 +24,8 @@ public class CharacterDataConfig : ScriptableObject
     [SerializeField, Range(0, 30)] private int _greed;
 
     public string Name => _name;
-    public Sprite Icon => _icon;
+    public Sprite IconLeft => _iconLeft;
+    public Sprite IconRight => _iconRight;
     public string Description => _description;
 
     public int Health => _health;

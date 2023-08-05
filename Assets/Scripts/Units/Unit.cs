@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(Animator))]
@@ -9,7 +10,9 @@ public abstract class Unit : MonoBehaviour
     protected AudioSource SoundTakeDamage;
     
     private readonly float _spawnDelay = 2f;
+
     private UnitAnimation Animation;
+    private Tween _deathAnim;
 
     public Health Health { get; private set; }
     public float CurrentSpeed { get; protected set; }
@@ -53,9 +56,19 @@ public abstract class Unit : MonoBehaviour
 
     protected virtual void OnDeath()
     {
+        if (_deathAnim != null) return;
+
         DeInit();
 
         CurrentSpawnDelay = Time.time + _spawnDelay;
-        gameObject.SetActive(false);
+
+        if (SoundTakeDamage.clip != null)
+            SoundTakeDamage.Play();
+
+        _deathAnim = transform.DOScale(0, 0.2f).OnComplete(() => 
+        {
+            gameObject.SetActive(false);
+            _deathAnim = null;
+        });
     }
 }

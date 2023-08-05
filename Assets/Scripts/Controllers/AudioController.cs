@@ -22,9 +22,7 @@ public class AudioController
         _pauseHandler.OnPauseActive += ApplyMutedEffect;
         _pauseHandler.OnPauseDeactive += DisableMutedEffect;
 
-        PlayerSettings settings = PlayerData.Settings;
-        _soundtrack.volume = settings.BaseVolume * settings.MusicVolume;
-        _soundtrack.Play();
+        PlayMusic();
     }
 
     private void ApplyMutedEffect()
@@ -36,5 +34,17 @@ public class AudioController
     {
         DOTween.To(() => _audioFilter.cutoffFrequency, value => _audioFilter.cutoffFrequency = value, _defaultValue, 1f)
             .SetEase(Ease.Linear);
+    }
+
+    public void PlayMusic()
+    {
+        PlayerSettings settings = PlayerData.Settings;
+        _soundtrack.volume = settings.BaseVolume * settings.MusicVolume;
+        _soundtrack.Play();
+    }
+
+    public void StopMusic()
+    {
+        _soundtrack.Stop();
     }
 }

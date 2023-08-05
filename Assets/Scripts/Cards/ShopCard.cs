@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.EventSystems;
+using DG.Tweening;
 
 [RequireComponent(typeof(Button))]
 public abstract class ShopCard : MonoBehaviour, IShopCard, IPointerEnterHandler, IPointerExitHandler
@@ -19,19 +20,22 @@ public abstract class ShopCard : MonoBehaviour, IShopCard, IPointerEnterHandler,
     protected Button Button;
     protected Item ShopItem;
 
-    private Color _currentColor;
+    //private Color _currentColor;
+    private bool _onSelect;
 
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (!Button.interactable) return;
 
-        _currentColor = _backgrounds[0].color;
-        SetColor(new Color(0.9f, 0.3f, 0.9f));
+        //_currentColor = _backgrounds[0].color;
+        //SetColor(new Color(0.9f, 0.3f, 0.9f));
+        transform.DOScale(1.1f, 0.2f).SetUpdate(true);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        SetColor(_currentColor);
+        if (!Button.interactable || _onSelect) return;
+        transform.DOScale(1, 0.2f).SetUpdate(true);
     }
 
     private void OnDestroy()
@@ -50,6 +54,7 @@ public abstract class ShopCard : MonoBehaviour, IShopCard, IPointerEnterHandler,
         NameText.text = ShopItem.GetName();
         Icon.sprite = ShopItem.GetIcon();
         Icon.SetNativeSize();
+        _onSelect = false;
 
         UpdatePrice();
     }
@@ -89,6 +94,7 @@ public abstract class ShopCard : MonoBehaviour, IShopCard, IPointerEnterHandler,
 
     private void OnSelect()
     {
+        _onSelect = true;
         OnSelectCard?.Invoke(ShopItem, this);
     }
 }

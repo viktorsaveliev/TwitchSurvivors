@@ -24,7 +24,7 @@ public class CharacterInfo : MonoBehaviour
 
     private void UpdateInfo(CharacterDataConfig character)
     {
-        _icon.sprite = character.Icon;
+        _icon.sprite = character.IconLeft;
         _icon.color = Color.white;
 
         _name.text = character.Name;

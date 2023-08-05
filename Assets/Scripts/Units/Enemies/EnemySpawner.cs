@@ -119,10 +119,10 @@ public class EnemySpawner
     {
         switch (time)
         {
-            /*case 4:
-                SpawnEnemyInRandomPoint(EnemyFactory.EnemyType.WhiteRa);
-                StopSpawnEnemies();
-                break;*/
+            case 4:
+                SpawnEnemyInRandomPoint(EnemyFactory.EnemyType.EZ);
+                //StopSpawnEnemies();
+                break;
 
             case 20:
             case 30:
@@ -211,18 +211,26 @@ public class EnemySpawner
                 break;
 
             case 230:
-                SpawnEnemiesInRandomPoints(EnemyFactory.EnemyType.EBLAN, 10);
-                SpawnEnemiesInRandomPoints(EnemyFactory.EnemyType.Jokerge, 5);
+            case 240:
+                SpawnEnemiesInRandomPoints(EnemyFactory.EnemyType.Jokerge, 10);
+                break;
+
+            case 260:
+            case 264:
+            case 268:
+                SpawnEnemiesInRandomPoints(EnemyFactory.EnemyType.catDespair, 20);
+                break;
+
+            case 280:
+                SpawnGroupInRandomPoint(EnemyFactory.EnemyType.xdd, 5);
                 SpawnGroupInRandomPoint(EnemyFactory.EnemyType.xdd, 5);
                 SpawnEnemiesInRandomPoints(EnemyFactory.EnemyType.Starege, 5);
                 break;
 
-            case 260:
-                SpawnEnemiesInRandomPoints(EnemyFactory.EnemyType.EBLAN, 10);
-                SpawnEnemiesInRandomPoints(EnemyFactory.EnemyType.Jokerge, 10);
-                SpawnGroupInRandomPoint(EnemyFactory.EnemyType.xdd, 3);
-                SpawnGroupInRandomPoint(EnemyFactory.EnemyType.xdd, 3);
-                SpawnEnemiesInRandomPoints(EnemyFactory.EnemyType.Starege, 10);
+            case 290:
+                SpawnGroupInRandomPoint(EnemyFactory.EnemyType.xdd, 5);
+                SpawnGroupInRandomPoint(EnemyFactory.EnemyType.xdd, 5);
+                SpawnEnemiesInRandomPoints(EnemyFactory.EnemyType.Jokerge, 5);
                 break;
 
             case 300:

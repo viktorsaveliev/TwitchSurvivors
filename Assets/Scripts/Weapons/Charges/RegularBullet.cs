@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class RegularBullet : PlayerBullet, IMoveable
 {
+    private int _penetration;
+    private int _baseDamage;
+
     protected override void FixedUpdate()
     {
         base.FixedUpdate();
@@ -12,10 +15,12 @@ public class RegularBullet : PlayerBullet, IMoveable
     {
         base.Init(damage);
 
+        _baseDamage = Damage;
+        _penetration = 1;
         Speed = 30f;
         LifeTime = 0.8f;
 
-        OnHitEnemy += OnLifeTimeEnded;
+        OnHitEnemy += OnHit;
     }
 
     public override void Shoot(Vector2 startPosition, Transform target, float speed)
@@ -31,15 +36,31 @@ public class RegularBullet : PlayerBullet, IMoveable
         Direction = direction;
     }
 
-    protected override void OnLifeTimeEnded()
-    {
-        base.OnLifeTimeEnded();
-        gameObject.SetActive(false);
-    }
-
     public void Move()
     {
         Vector3 movement = Speed * Time.fixedDeltaTime * Direction;
         transform.position -= movement;
     }
+
+    protected override void OnLifeTimeEnded()
+    {
+        base.OnLifeTimeEnded();
+
+        Damage = _baseDamage;
+        _penetration = 1;
+        gameObject.SetActive(false);
+    }
+
+    private void OnHit()
+    {
+        if (--_penetration == 0)
+        {
+            Damage /= 2;
+        }
+        else
+        {
+            OnLifeTimeEnded();
+        }
+    }
+
 }

@@ -61,7 +61,7 @@ public class ShopUI : MonoBehaviour
 
         _cardsView.SetActive(true);
         _shopBG.gameObject.SetActive(true);
-        _shopBG.DOFade(0.95f, 0.2f).SetUpdate(true);
+        _shopBG.DOFade(0.99f, 0.2f).SetUpdate(true);
 
         _isActive = true;
 
@@ -109,8 +109,7 @@ public class ShopUI : MonoBehaviour
     {
         foreach (ShopCard card in _cards)
         {
-            card.transform.DOScale(0, 0.2f).SetUpdate(true).SetEase(Ease.InBack)
-            .OnComplete(() => Destroy(card.gameObject));
+            Destroy(card.gameObject);
         }
         _cards.Clear();
     }
@@ -178,6 +177,7 @@ public class ShopUI : MonoBehaviour
 
         _isActive = false;
 
+        UpdateMoney();
         OnShopClosed?.Invoke();
     }
 }

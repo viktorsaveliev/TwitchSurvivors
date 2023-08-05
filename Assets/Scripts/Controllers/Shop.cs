@@ -53,9 +53,14 @@ public class Shop
         foreach (Item item in itemArray)
         {
             if (full >= MAX_ITEMS_IN_SHOP) break;
-            if (item is Weapon && _player.Weapons.Count == UnitWeapons.MAX_WEAPONS) continue;
 
-            if (_player.Inventory.HasItem(item))
+            bool isHaveItem = _player.Inventory.HasItem(item);
+            if (item is Weapon cweapon
+                && _player.Weapons.Count == UnitWeapons.MAX_WEAPONS 
+                && !isHaveItem) 
+                continue;
+
+            if (isHaveItem)
             {
                 if (item is PropertyItem) continue;
                 else if (item is Weapon weapon && weapon.ImprovementLevel > 3) continue;
@@ -76,6 +81,11 @@ public class Shop
 
     private void OnSelectItem(Item item, ShopCard card)
     {
+        if (item is Weapon
+                && _player.Weapons.Count == UnitWeapons.MAX_WEAPONS
+                && !_player.Inventory.HasItem(item))
+            return;
+
         if (!Money.TrySpend(item.GetPrice()))
         {
             Debug.Log("Нет денег чел");

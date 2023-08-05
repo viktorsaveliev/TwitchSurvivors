@@ -24,7 +24,7 @@ public sealed class PlayerUnit : Unit, ITimerObserver
     {
         base.Init();
 
-        _head.sprite = PlayerData.SelectedCharacter.Icon;
+        _head.sprite = PlayerData.SelectedCharacter.IconLeft;
 
         OriginalSpeed = RegularSpeed = CurrentSpeed = 7;
 
@@ -47,6 +47,16 @@ public sealed class PlayerUnit : Unit, ITimerObserver
     public override void Move(Vector2 direction)
     {
         base.Move(direction);
+
+        if (direction.x > 0)
+        {
+            _head.sprite = PlayerData.SelectedCharacter.IconRight;
+        }
+        else
+        {
+            _head.sprite = PlayerData.SelectedCharacter.IconLeft;
+        }
+
         Animator.SetFloat("Speed", Rigidbody.velocity.magnitude);
     }
 

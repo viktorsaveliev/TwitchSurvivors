@@ -16,3 +16,4 @@ MonoBehaviour:
   _damage: 20
   _health: 4000
   _shield: 0
+  _enemyLevel: 3

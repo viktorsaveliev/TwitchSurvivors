@@ -21,14 +21,14 @@ public class Experience
 
     public void GiveExp(int value)
     {
-        if (value < 1 || value > 50) return;
+        if (value < 1 || value > 350) return;
 
         Value += value;
 
         if (Value >= ExpForNewLevel)
         {
+            Value -= ExpForNewLevel;
             Level++;
-            Value = 0;
 
             OnPlayerGotNewLevel?.Invoke();
         }

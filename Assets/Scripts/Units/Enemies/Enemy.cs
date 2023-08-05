@@ -22,6 +22,8 @@ public abstract class Enemy : Unit
     private Vector2 _regularScale;
     private Tween _tweenAnim;
 
+    public int EnemyLevel { get; private set; }
+
     public string Nickname
     {
         get
@@ -76,6 +78,8 @@ public abstract class Enemy : Unit
     public override void Init()
     {
         base.Init();
+
+        EnemyLevel = _config.EnemyLevel;
 
         _nickname = string.Empty;
 

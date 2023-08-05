@@ -1,16 +1,19 @@
 using DG.Tweening;
 using UnityEngine;
 
-[RequireComponent(typeof(SpriteRenderer))]
+[RequireComponent(typeof(SpriteRenderer), typeof(AudioSource))]
 public class Bits : MonoBehaviour
 {
     private SpriteRenderer _sprite;
+    private AudioSource _audio;
+
     private int _givesExperience = 2;
     private int _givesMoney = 2;
 
     public void Init()
     {
         _sprite = GetComponent<SpriteRenderer>();
+        _audio = GetComponent<AudioSource>();
     }
 
     public void UpdateData(Vector2 position, int givesExp, Sprite sprite)
@@ -28,11 +31,12 @@ public class Bits : MonoBehaviour
         int exp = (int)PlayerData.CalculatePropertieValue(PlayerData.Properties.Fortune, _givesExperience);
         int money = (int)PlayerData.CalculatePropertieValue(PlayerData.Properties.Greed, _givesMoney);
 
+        Money.Give(money);
+
         player.Experience.GiveExp(exp);
         player.PickupBits();
 
-        Money.Give(money);
-
+        _audio.Play();
         transform.DOScale(0, 0.2f);
         transform.DOMove(player.transform.position, 0.2f).OnComplete(()
             => Hide());
@@ -41,7 +45,7 @@ public class Bits : MonoBehaviour
     private void Show()
     {
         gameObject.SetActive(true);
-        transform.DOScale(1, 0.4f).SetEase(Ease.OutBack);
+        transform.DOScale(0.7f, 0.4f).SetEase(Ease.OutBack);
     }
 
     private void Hide()

@@ -349,7 +349,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.0627451, g: 0.0627451, b: 0.07058824, a: 1}
+  m_Color: {r: 0.18431373, g: 0.18431373, b: 0.20784314, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -391,7 +391,7 @@ MonoBehaviour:
     m_HighlightedColor: {r: 1, g: 1, b: 1, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.0627451, g: 0.0627451, b: 0.07058824, a: 1}
+    m_DisabledColor: {r: 1, g: 1, b: 1, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -427,10 +427,10 @@ MonoBehaviour:
   Icon: {fileID: 8567812325229286817}
   PropertiesText:
   - {fileID: 929216919190773350}
-  _config: {fileID: 11400000, guid: 12a6bcbe6a08b5942be2df3100937f91, type: 2}
   _backgrounds:
   - {fileID: 4182772072124376076}
   - {fileID: 6680577225372675467}
+  _config: {fileID: 11400000, guid: 12a6bcbe6a08b5942be2df3100937f91, type: 2}
   _itemTypeText: {fileID: 6030305913465531999}
 --- !u!1 &3466763124447086386
 GameObject:
@@ -975,7 +975,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.18431373, g: 0.18431373, b: 0.20784314, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
