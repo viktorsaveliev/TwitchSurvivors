@@ -30,7 +30,7 @@ public class Health : IDamageable
 
     public void SetMaxHealth(int value, bool setCurrentHealthToMax)
     {
-        if (value < 2 || value > 10000) return;
+        if (value < 2 || value > 15000) return;
         _maxHealth = value;
 
         if (setCurrentHealthToMax)
