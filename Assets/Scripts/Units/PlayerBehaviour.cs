@@ -20,14 +20,6 @@ public class PlayerBehaviour : MonoBehaviour
         InitPlayerProperties();
 
         AddItem<Pistol>();
-        //AddItem<BanHammer>();
-
-        switch(SelectedCharacter.Name)
-        {
-            case "Бустер":
-                AddItem<BusterBandage>();
-                break;
-        }
 
         _isCanAttack = true;
         _attackTimer = StartCoroutine(StartAttackTimer());

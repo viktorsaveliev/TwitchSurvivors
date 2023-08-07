@@ -16,7 +16,7 @@ public class MikeUrine : PlayerBullet
         transform.parent = null;
         transform.position = startPosition;
         transform.localScale = Vector2.zero;
-        transform.DOScale(3f, 0.5f);
+        transform.DOScale(4f, 0.5f);
     }
 
     protected override void OnLifeTimeEnded()

@@ -3,7 +3,7 @@ using UnityEngine;
 
 public abstract class PlayerBullet : Bullet
 {
-    public event Action OnHitEnemy;
+    public event Action<Enemy> OnHitEnemy;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -12,7 +12,7 @@ public abstract class PlayerBullet : Bullet
             int damage = (int)PlayerData.CalculatePropertieValue(PlayerData.Properties.Damage, Damage);
             enemy.Health.TakeDamage(damage);
 
-            OnHitEnemy?.Invoke();
+            OnHitEnemy?.Invoke(enemy);
         }
     }
 }

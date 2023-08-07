@@ -1,9 +1,10 @@
 using UnityEngine;
 
+[RequireComponent(typeof(TrailRenderer))]
 public class RegularBullet : PlayerBullet, IMoveable
 {
+    private TrailRenderer _trail;
     private int _penetration;
-    private int _baseDamage;
 
     protected override void FixedUpdate()
     {
@@ -15,7 +16,10 @@ public class RegularBullet : PlayerBullet, IMoveable
     {
         base.Init(damage);
 
-        _baseDamage = Damage;
+        _trail = GetComponent<TrailRenderer>();
+        _trail.emitting = false;
+
+        BaseDamage = Damage;
         _penetration = 1;
         Speed = 30f;
         LifeTime = 0.8f;
@@ -34,6 +38,9 @@ public class RegularBullet : PlayerBullet, IMoveable
         direction.Normalize();
 
         Direction = direction;
+
+        _trail.Clear();
+        _trail.emitting = true;
     }
 
     public void Move()
@@ -46,14 +53,16 @@ public class RegularBullet : PlayerBullet, IMoveable
     {
         base.OnLifeTimeEnded();
 
-        Damage = _baseDamage;
+        Damage = BaseDamage;
         _penetration = 1;
+
+        _trail.emitting = false;
         gameObject.SetActive(false);
     }
 
-    private void OnHit()
+    private void OnHit(Enemy enemy)
     {
-        if (--_penetration == 0)
+        if (enemy.EnemyLevel < 1 && --_penetration == 0)
         {
             Damage /= 2;
         }

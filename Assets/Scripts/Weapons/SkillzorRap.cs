@@ -18,7 +18,7 @@ public class SkillzorRap : Weapon, IAttackable
         Name = "Рэп Скиллзора";
         BasicPrice = CurrentPrice = 50;
 
-        SetDamage(5);
+        SetDamage(4);
         SetCooldown(0.8f);
     }
 
@@ -31,12 +31,12 @@ public class SkillzorRap : Weapon, IAttackable
         {
             case 1:
                 SetRadius(7f);
-                SetDamage(8);
+                SetDamage(6);
                 break;
 
             case 2:
                 SetRadius(9f);
-                SetDamage(10);
+                SetDamage(8);
                 break;
 
             case 3:

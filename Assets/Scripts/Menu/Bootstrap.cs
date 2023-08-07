@@ -7,6 +7,7 @@ public class Bootstrap : MonoBehaviour
 
     private void Awake()
     {
+        Cursor.visible = true;
         _playerData.Init();
     }
 

@@ -12,8 +12,8 @@ public class ExplodeZone : MonoBehaviour
     private SpriteRenderer _zone;
     private readonly List<Unit> _targets = new();
 
-    private float _delayForExplode = 2f;
-    private int _damage = 25;
+    private float _delayForExplode = 1f;
+    private int _damage = 35;
 
     private bool _isActive;
 

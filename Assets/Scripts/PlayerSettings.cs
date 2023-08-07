@@ -19,7 +19,7 @@ public class PlayerSettings
     private bool _twitchIntegration = true;
 
     private float _baseVolume = 1f;
-    private float _musicVolume = 0.1f;
+    private float _musicVolume = 0.05f;
     private float _soundVolume = 0.3f;
 
     public void SetShowDamageSetting(bool enable)

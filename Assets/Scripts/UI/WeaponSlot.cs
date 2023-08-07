@@ -10,8 +10,11 @@ public class WeaponSlot : MonoBehaviour
 
     public void SetIcon(Sprite icon)
     {
-        _icon.gameObject.SetActive(true);
         _icon.sprite = icon;
+        _icon.transform.localScale = new Vector2(0.6f, 0.6f);
+        _icon.SetNativeSize();
+        _icon.gameObject.SetActive(true);
+
         _isUsed = true;
     }
 }

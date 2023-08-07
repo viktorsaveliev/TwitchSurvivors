@@ -10,7 +10,7 @@ public class InteractiveSound : MonoBehaviour, IPointerEnterHandler
 
     private Button _button;
 
-    void Awake()
+    private void Awake()
     {
         _button = GetComponent<Button>();
     }
@@ -37,6 +37,7 @@ public class InteractiveSound : MonoBehaviour, IPointerEnterHandler
 
     private void PlaySound(AudioClip clip)
     {
+        if (!_audio.gameObject.activeSelf) return;
         _audio.clip = clip;
         _audio.Play();
     }

@@ -63,7 +63,7 @@ public class WhiteRa : Enemy, IBoss
         {
             case 0:
                 _step++;
-                Invoke(nameof(Action), 4);
+                Invoke(nameof(Action), 2);
                 break;
             case 1:
                 _step++;
@@ -76,7 +76,7 @@ public class WhiteRa : Enemy, IBoss
                 _step++;
 
                 Attack();
-                Invoke(nameof(Action), 4);
+                Invoke(nameof(Action), 2);
                 break;
 
             case 3:
@@ -88,7 +88,7 @@ public class WhiteRa : Enemy, IBoss
                 }
 
                 Animator.SetTrigger("UseBanHammer");
-                Invoke(nameof(Action), 4);
+                Invoke(nameof(Action), 2);
                 break;
         }
     }

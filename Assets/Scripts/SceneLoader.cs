@@ -1,4 +1,5 @@
 using DG.Tweening;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class SceneLoader
@@ -11,6 +12,7 @@ public class SceneLoader
 
     public void LoadMenu()
     {
+        Cursor.visible = true;
         ResetData();
         SceneManager.LoadSceneAsync((int) Scene.Menu, LoadSceneMode.Single);
     }

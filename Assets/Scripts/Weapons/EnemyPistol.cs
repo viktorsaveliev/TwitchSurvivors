@@ -14,7 +14,7 @@ public class EnemyPistol : Weapon
         Name = "Enemy pistol";
 
         SetCooldown(3.5f);
-        SetDamage(15);
+        SetDamage(8);
 
         CreateCharge(Damage, true);
     }

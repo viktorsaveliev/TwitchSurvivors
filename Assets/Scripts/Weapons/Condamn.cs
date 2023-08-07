@@ -17,19 +17,19 @@ public class Condamn : Weapon, IChargesUser
         switch (ImprovementLevel)
         {
             case 1:
-                SetCooldown(35f);
+                SetCooldown(40);
                 break;
 
             case 2:
-                SetCooldown(25f);
+                SetCooldown(35);
                 break;
 
             case 3:
-                SetCooldown(20f);
+                SetCooldown(30);
                 break;
 
             case 4:
-                SetCooldown(15f);
+                SetCooldown(20);
                 break;
         }
 

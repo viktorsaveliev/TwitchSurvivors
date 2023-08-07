@@ -18,7 +18,7 @@ public class Zeus : ShootableWeapon
                 break;
 
             case 2:
-                SetCooldown(4f);
+                SetCooldown(3f);
                 break;
 
             case 3:
@@ -37,10 +37,10 @@ public class Zeus : ShootableWeapon
 
     public override void Init()
     {
-        Name = "Молнии Олимпуса";
-        BasicPrice = CurrentPrice = 45;
+        Name = "Молнии McQueen'a";
+        BasicPrice = CurrentPrice = 35;
 
-        SetCooldown(6);
+        SetCooldown(3);
         SetDamage(10);
         SetBulletSpeed(20f);
 
@@ -63,12 +63,12 @@ public class Zeus : ShootableWeapon
             UpdateTargets();
         }
 
-        ShootOnNextTarget();
+        ShootOnNextTarget(null);
 
         yield break;
     }
 
-    private void ShootOnNextTarget()
+    private void ShootOnNextTarget(Enemy enemy)
     {
         if (_closestEnemies.Count > 0 && CurrentChargesCount-- > 0)
         {
@@ -80,6 +80,7 @@ public class Zeus : ShootableWeapon
                 return;
             }
 
+            SoundFX.Play();
             ChargesList[0].Shoot(transform.position, Target, BulletSpeed);
         }
         else

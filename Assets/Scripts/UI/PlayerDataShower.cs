@@ -13,14 +13,14 @@ public class PlayerDataShower : MonoBehaviour
     [SerializeField] private WeaponSlot[] _weaponSlots;
     
     private readonly List<Image> _itemIcons = new();
-    private Shop _shop;
+    private bool _updateItems;
 
-    public void Init(Shop shop)
+    public void Init(IOpenedMenu menu, bool updateItems)
     {
-        _shop = shop;
+        menu.OnOpened += ShowAvailableItemsIcon;
+        menu.OnClosed += DeleteAvailableItemsIcon;
+        _updateItems = updateItems;
 
-        _shop.OnShopOpened += ShowAvailableItemsIcon;
-        _shop.OnShopClosed += DeleteAvailableItemsIcon;
         _player.Inventory.OnAddedNewItem += UpdateData;
     }
 
@@ -50,7 +50,7 @@ public class PlayerDataShower : MonoBehaviour
 
     private void UpdateData(Item item)
     {
-        if (item is PropertyItem)
+        if (_updateItems && item is PropertyItem)
         {
             Image icon = Instantiate(_itemIconPrefab, _itemsContent);
             icon.sprite = item.GetIcon();

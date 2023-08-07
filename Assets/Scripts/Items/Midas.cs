@@ -3,7 +3,7 @@ public class Midas : PropertyItem
     public override void Init()
     {
         Name = "Мидас";
-        CurrentPrice = 20;
+        CurrentPrice = 30;
 
         AddPropertie(PlayerData.Properties.Greed, 15);
         AddPropertie(PlayerData.Properties.AttackSpeed, 5);

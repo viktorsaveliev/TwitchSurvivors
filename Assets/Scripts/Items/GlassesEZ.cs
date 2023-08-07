@@ -3,7 +3,7 @@ public class GlassesEZ : PropertyItem
     public override void Init()
     {
         Name = "Очки EZ";
-        CurrentPrice = 30;
+        CurrentPrice = 60;
 
         AddPropertie(PlayerData.Properties.Damage, 5);
         AddPropertie(PlayerData.Properties.Armor, 5);

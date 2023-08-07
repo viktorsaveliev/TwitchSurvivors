@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29fcab4707a5c964c8bfc919e87fd5a5, type: 3}
   m_Name: WhiteRa
   m_EditorClassIdentifier: 
-  _speed: 4
-  _damage: 20
-  _health: 4000
+  _speed: 6
+  _damage: 50
+  _health: 12000
   _shield: 0
   _enemyLevel: 3

@@ -7,6 +7,7 @@ public abstract class Bullet : MonoBehaviour
     public float LifeTime { get; protected set; }
     public float CurrentLifeTime { get; protected set; }
     public int Damage { get; protected set; }
+    public int BaseDamage { get; protected set; }
 
     public event Action LifeTimeEnded;
 
@@ -26,7 +27,7 @@ public abstract class Bullet : MonoBehaviour
 
     public void SetDamage(int value)
     {
-        Damage = value;
+        BaseDamage = Damage = value;
     }
 
     public virtual void Init(int damage)

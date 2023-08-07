@@ -114,12 +114,9 @@ public abstract class Weapon : Item
     {
         int damage = (int) PlayerData.CalculatePropertieValue(PlayerData.Properties.Damage, Damage);
 
-        int criticalDamagePercent = (int) PlayerData.CalculatePropertieValue(
-            PlayerData.Properties.CriticalDamage, 
-            PlayerData.GetPropertieValue(PlayerData.Properties.CriticalDamage)
-        );
+        int criticalDamagePercent = PlayerData.GetPropertieValue(PlayerData.Properties.CriticalDamage);
 
-        if (Random.value <= criticalDamagePercent / 100f)
+        if (criticalDamagePercent > 0 && Random.value <= criticalDamagePercent / 100f)
         {
             damage *= 2;
         }

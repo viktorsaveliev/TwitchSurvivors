@@ -31,6 +31,8 @@ public class ShopUI : MonoBehaviour
     [SerializeField] private Button _rerollButton;
     [SerializeField] private TMP_Text _moneyText;
 
+    [SerializeField] private TMP_Text _rerollPrice;
+
     private readonly List<ShopCard> _cards = new();
 
     public event Action OnShopOpened;
@@ -66,6 +68,12 @@ public class ShopUI : MonoBehaviour
         _isActive = true;
 
         OnShopOpened?.Invoke();
+    }
+
+    public void UpdateRerollPrice(int price)
+    {
+        _rerollPrice.text = $"{price}";
+        _moneyText.text = $"{Money.Value}";
     }
 
     public ShopCard CreateCard(Item item)

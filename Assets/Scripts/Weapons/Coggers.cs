@@ -8,14 +8,16 @@ public class Coggers : Weapon, IChargesUser
     public override void Init()
     {
         Name = "COGGERS";
-        BasicPrice = CurrentPrice = 50;
+        BasicPrice = CurrentPrice = 45;
 
         SetDamage(5);
-        SetCooldown(10f);
+        SetCooldown(5f);
         ChargesCount = 2;
 
         CreateCharges(Damage, true);
         UpdatePositionForCoggers();
+
+        ChargesList[0].LifeTimeEnded += Reset;
     }
 
     private void FixedUpdate()
@@ -25,15 +27,15 @@ public class Coggers : Weapon, IChargesUser
 
     public void Shoot(IEnemyCounter enemyDetection)
     {
-        if (Time.time < CurrentCooldown) return;
+        if (Time.time < CurrentCooldown || IsActive) return;
 
         foreach (Bullet charge in ChargesList)
         {
             charge.Shoot(Vector2.zero, null, 0);
         }
 
+        IsActive = true;
         SoundFX.Play();
-        ActivateCooldown();
     }
 
     public override void Improve()
@@ -44,20 +46,19 @@ public class Coggers : Weapon, IChargesUser
         switch (ImprovementLevel)
         {
             case 1:
-                SetCooldown(9f);
                 SetDamage(10);
                 CreateCharge(Damage, true);
                 UpdatePositionForCoggers();
                 break;
 
             case 2:
-                SetCooldown(8f);
+                SetCooldown(4f);
                 CreateCharge(Damage, true);
                 UpdatePositionForCoggers();
                 break;
 
             case 3:
-                SetCooldown(6f);
+                SetCooldown(3f);
                 SetDamage(15);
                 UpdatePositionForCoggers();
                 break;
@@ -79,5 +80,11 @@ public class Coggers : Weapon, IChargesUser
             Cogger cogger = (Cogger)ChargesList[i];
             cogger.SetPosition(_positionsForCoggers[i]);
         }
+    }
+
+    private void Reset()
+    {
+        ResetBehaviour();
+        ActivateCooldown();
     }
 }

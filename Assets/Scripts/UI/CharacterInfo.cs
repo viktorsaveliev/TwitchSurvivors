@@ -42,6 +42,7 @@ public class CharacterInfo : MonoBehaviour
     private void ResetInfo()
     {
         _icon.sprite = null;
+        _icon.color = new Color(0, 0, 0, 0);
         _name.text = "-";
         _description.text = "-";
 

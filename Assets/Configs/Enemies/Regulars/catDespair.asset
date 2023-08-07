@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29fcab4707a5c964c8bfc919e87fd5a5, type: 3}
   m_Name: catDespair
   m_EditorClassIdentifier: 
-  _speed: 5
+  _speed: 8
   _damage: 15
   _health: 3
   _shield: 0

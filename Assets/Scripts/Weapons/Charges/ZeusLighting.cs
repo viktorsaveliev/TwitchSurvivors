@@ -17,7 +17,7 @@ public class ZeusLighting : PlayerBullet, IMoveable
         Speed = 30f;
         LifeTime = 3f;
 
-        OnHitEnemy += () => LastHittedTarget = Target;
+        OnHitEnemy += OnHit;
     }
 
     public override void Shoot(Vector2 startPosition, Transform target, float speed)
@@ -42,5 +42,10 @@ public class ZeusLighting : PlayerBullet, IMoveable
     {
         base.OnLifeTimeEnded();
         gameObject.SetActive(false);
+    }
+
+    private void OnHit(Enemy enemy)
+    {
+        LastHittedTarget = Target;
     }
 }

@@ -20,15 +20,13 @@ public abstract class ShopCard : MonoBehaviour, IShopCard, IPointerEnterHandler,
     protected Button Button;
     protected Item ShopItem;
 
-    //private Color _currentColor;
+    private InteractiveSound _sound;
     private bool _onSelect;
 
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (!Button.interactable) return;
 
-        //_currentColor = _backgrounds[0].color;
-        //SetColor(new Color(0.9f, 0.3f, 0.9f));
         transform.DOScale(1.1f, 0.2f).SetUpdate(true);
     }
 
@@ -45,6 +43,7 @@ public abstract class ShopCard : MonoBehaviour, IShopCard, IPointerEnterHandler,
 
     public virtual void Init(Item item)
     {
+        _sound = GetComponent<InteractiveSound>();
         ShopItem = item;
         InitButton();
     }
@@ -68,11 +67,21 @@ public abstract class ShopCard : MonoBehaviour, IShopCard, IPointerEnterHandler,
     {
         if (price <= Money.Value)
         {
+            if (_sound != null)
+            {
+                _sound.enabled = true;
+            }
+
             Button.interactable = true;
             Price.text = $"{price}";
         }
         else
         {
+            if (_sound != null)
+            {
+                _sound.enabled = false;
+            }
+
             Button.interactable = false;
             Price.text = $"<color=#D7424B>{price}</color>";
         }

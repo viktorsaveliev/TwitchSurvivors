@@ -2,22 +2,25 @@ using System;
 using System.Linq;
 using UnityEngine;
 
-public class Shop
+public class Shop : IOpenedMenu
 {
-    public event Action OnShopOpened;
-    public event Action OnShopClosed;
+    public event Action OnOpened;
+    public event Action OnClosed;
 
     private readonly PlayerUnit _player;
     private readonly ItemFactory _itemFactory;
     private readonly ShopUI _interface;
+    private readonly AudioController _audio;
 
     private const int MAX_ITEMS_IN_SHOP = 5;
+    private int _priceForReroll = 10;
 
-    public Shop(PlayerUnit player, ItemFactory itemFactory, ShopUI playerInterface)
+    public Shop(PlayerUnit player, ItemFactory itemFactory, ShopUI playerInterface, AudioController audio)
     {
         _player = player;
         _itemFactory = itemFactory;
         _interface = playerInterface;
+        _audio = audio;
     }
 
     public void Init()
@@ -30,15 +33,21 @@ public class Shop
 
     private void OpenShop()
     {
+        Cursor.visible = true;
+
         _interface.ShowShop();
+        _interface.UpdateRerollPrice(_priceForReroll);
+
         ShowRandomItems();
-        OnShopOpened?.Invoke();
+        OnOpened?.Invoke();
     }
 
     private void CloseShop()
     {
+        Cursor.visible = false;
+
         _player.UpdateProperties();
-        OnShopClosed?.Invoke();
+        OnClosed?.Invoke();
     }
 
     private void ShowRandomItems()
@@ -75,8 +84,16 @@ public class Shop
 
     private void RerollItems()
     {
+        if (!Money.TrySpend(_priceForReroll))
+        {
+            return;
+        }
+
         _interface.DeleteAllCards();
         ShowRandomItems();
+
+        _priceForReroll += 10;
+        _interface.UpdateRerollPrice(_priceForReroll);
     }
 
     private void OnSelectItem(Item item, ShopCard card)
@@ -90,6 +107,12 @@ public class Shop
         {
             Debug.Log("Нет денег чел");
             return;
+        }
+
+        if (item is SkillzorRap rap && rap.ImprovementLevel < 0)
+        {
+            _audio.StopMusic();
+            _audio.PlaySkillzorRap();
         }
 
         item.Use();

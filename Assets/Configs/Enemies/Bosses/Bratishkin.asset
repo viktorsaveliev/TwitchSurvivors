@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29fcab4707a5c964c8bfc919e87fd5a5, type: 3}
   m_Name: Bratishkin
   m_EditorClassIdentifier: 
-  _speed: 3
-  _damage: 15
+  _speed: 4
+  _damage: 25
   _health: 2300
   _shield: 0
   _enemyLevel: 3

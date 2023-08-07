@@ -9,11 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29fcab4707a5c964c8bfc919e87fd5a5, type: 3}
-  m_Name: Smile
+  m_Script: {fileID: 11500000, guid: 3f70037174cdedf469ea9b2801a3e7ac, type: 3}
+  m_Name: RerollButtonConfig
   m_EditorClassIdentifier: 
-  _speed: 2
-  _damage: 30
-  _health: 1500
-  _shield: 0
-  _enemyLevel: 2
+  _onEnter: {fileID: 8300000, guid: 9ce3263c1257ca442a3204c435e1316d, type: 3}
+  _onClick: {fileID: 8300000, guid: 1b2d453d46f1b6245bc6bedb2f19cfc0, type: 3}

@@ -13,6 +13,10 @@ public class LoseScreen : MonoBehaviour
     [SerializeField] private Button _restartButton;
     [SerializeField] private Button _menuButton;
 
+    [Header("SoundFX")]
+    [SerializeField] private AudioClip _soundFX;
+    [SerializeField] private AudioSource _sound;
+
     private void OnEnable()
     {
         _player.Health.OnHealthOver += Show;
@@ -31,13 +35,18 @@ public class LoseScreen : MonoBehaviour
 
     public void Show()
     {
+        _sound.clip = _soundFX;
+        _sound.Play();
+
         string nickname = _player.LastHittedEnemyNickname ?? "Анон";
         _killerNickname.text = nickname;
         _screen.SetActive(true);
+        Cursor.visible = true;
     }
 
     public void Hide()
     {
+        Cursor.visible = false;
         _screen.SetActive(false);
     }
 

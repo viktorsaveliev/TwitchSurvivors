@@ -12,12 +12,17 @@ public class PauseMenu : MonoBehaviour
 
     [Header("Pause menu")]
     [SerializeField] private GameObject _pauseMenu;
+    [SerializeField] private ShopUI _shopUI;
 
     [Header("Buttons")]
     [SerializeField] private Button _resumeButton;
     [SerializeField] private Button _restartButton;
     [SerializeField] private Button _settingsButton;
     [SerializeField] private Button _exitButton;
+
+    [Header("SoundFX")]
+    [SerializeField] private AudioClip _soundFX;
+    [SerializeField] private AudioSource _sound;
 
     private bool _isMenuActive;
     public bool IsActive => _isMenuActive;
@@ -52,12 +57,24 @@ public class PauseMenu : MonoBehaviour
         }
         else
         {
+            _sound.clip = _soundFX;
+            _sound.Play();
+
+            Cursor.visible = true;
             _pauseMenu.SetActive(true);
         }
     }
 
     private void HideMenu()
     {
+        _sound.clip = _soundFX;
+        _sound.Play();
+
+        if (!_shopUI.IsActive)
+        {
+            Cursor.visible = false;
+        }
+
         _pauseMenu.SetActive(false);
         SettingsUI.Hide();
         OnMenuHide?.Invoke();
@@ -65,6 +82,11 @@ public class PauseMenu : MonoBehaviour
 
     private void ResumeGame()
     {
+        if (!_shopUI.IsActive)
+        {
+            Cursor.visible = false;
+        }
+
         _isMenuActive = false;
         _pauseMenu.SetActive(false);
 

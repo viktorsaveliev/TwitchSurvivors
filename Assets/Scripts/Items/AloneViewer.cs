@@ -4,7 +4,7 @@ public class AloneViewer : PropertyItem
     public override void Init()
     {
         Name = "Единственный зритель";
-        CurrentPrice = 25;
+        CurrentPrice = 40;
 
         AddPropertie(PlayerData.Properties.Health, 3);
         AddPropertie(PlayerData.Properties.Regeneration, 3);
