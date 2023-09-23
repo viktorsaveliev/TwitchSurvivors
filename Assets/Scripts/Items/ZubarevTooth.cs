@@ -3,7 +3,7 @@ public class ZubarevTooth : PropertyItem
 {
     public override void Init()
     {
-        Name = "«уб «убарева";
+        Name = "«уб";
         CurrentPrice = 30;
 
         AddPropertie(PlayerData.Properties.Damage, 20);

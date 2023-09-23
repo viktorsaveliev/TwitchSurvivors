@@ -3,7 +3,7 @@ public class Stray : PropertyItem
 {
     public override void Init()
     {
-        Name = "Стрэй";
+        Name = "Крыса";
         CurrentPrice = 20;
 
         AddPropertie(PlayerData.Properties.Greed, 10);

@@ -37,7 +37,7 @@ public class Zeus : ShootableWeapon
 
     public override void Init()
     {
-        Name = "Молнии McQueen'a";
+        Name = "Молния Зевса";
         BasicPrice = CurrentPrice = 35;
 
         SetCooldown(3);

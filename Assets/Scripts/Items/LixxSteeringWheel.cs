@@ -3,7 +3,7 @@ public class LixxSteeringWheel : PropertyItem
 {
     public override void Init()
     {
-        Name = "Руль Ликса";
+        Name = "Руль";
         CurrentPrice = 35;
 
         AddPropertie(PlayerData.Properties.Distance, 10);
